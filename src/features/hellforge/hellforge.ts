@@ -21,8 +21,8 @@ export class Hellforge {
       Ready.getInstance().log(this._client.user?.tag)
     })
 
-    this._client.on('message', (msg: Discord.Message): void => {
-      MessageManager.getInstance().manageMessage(msg)
+    this._client.on('message', async (msg: Discord.Message): Promise<void> => {
+      await MessageManager.getInstance().manageMessage(msg)
     })
 
     this._client.login(token)
