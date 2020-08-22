@@ -13,16 +13,20 @@ export class MessageManager {
     return MessageManager._instance
   }
 
-  public answerMessage(message: Message): void {
+  public manageMessage(message: Message): void {
     if (message.guild) {
       if (message.author.bot) return
 
       for (const prefix of prefixes) {
         if (message.content.startsWith(prefix)) {
-          message.channel.send(':smiling_imp:')
-          return
+          this.answerMessage(message)
         }
       }
     }
+  }
+
+  public answerMessage(message: Message) {
+    message.channel.send(':smiling_imp:')
+    return
   }
 }

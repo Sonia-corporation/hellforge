@@ -22,7 +22,7 @@ export class Hellforge {
     })
 
     this._client.on('message', (msg: Discord.Message): void => {
-      MessageManager.getInstance().answerMessage(msg)
+      MessageManager.getInstance().manageMessage(msg)
     })
 
     this._client.login(token)
