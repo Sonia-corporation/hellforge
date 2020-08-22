@@ -1,6 +1,7 @@
 import _ from "lodash"
 import * as Discord from "discord.js"
-import { token } from "../../credentials.json"
+import { token } from "../../../credentials.json"
+import { Ready } from "../ready/ready"
 
 export class Hellforge {
   private static _instance: Hellforge
@@ -15,8 +16,8 @@ export class Hellforge {
 
   public init(): void {
     this._client.on('ready', () => {
-      this._client.user?.setActivity("!hell help", {type: "PLAYING"})
-      console.log(`Logged in as ${this._client.user?.tag}!`)
+      Ready.getInstance().setActivity(this._client.user, "WATCHING")
+      Ready.getInstance().log(this._client.user?.tag)
     })
 
     this._client.login(token)
