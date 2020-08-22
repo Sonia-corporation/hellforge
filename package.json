@@ -2,8 +2,9 @@
   "name": "hellforge",
   "version": "0.0.1",
   "description": "A Discord bot game set in Hell",
-  "main": "hellforge.js",
+  "main": "./src/features/hellforge.js",
   "scripts": {
+    "start": "concurrently \"tsc --watch\" \"nodemon ./dist/src/features/hellforge.js\"",
     "test": "jest"
   },
   "repository": {
