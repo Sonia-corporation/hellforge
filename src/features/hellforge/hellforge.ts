@@ -2,6 +2,7 @@ import _ from "lodash"
 import * as Discord from "discord.js"
 import { token } from "../../../credentials.json"
 import { Ready } from "../ready/ready"
+import { MessageManager } from "../message-manager/message-manager"
 
 export class Hellforge {
   private static _instance: Hellforge
@@ -15,9 +16,13 @@ export class Hellforge {
   }
 
   public init(): void {
-    this._client.on('ready', () => {
+    this._client.on('ready', (): void => {
       Ready.getInstance().setActivity(this._client.user, "WATCHING")
       Ready.getInstance().log(this._client.user?.tag)
+    })
+
+    this._client.on('message', (msg: Discord.Message): void => {
+      MessageManager.getInstance().answerMessage(msg)
     })
 
     this._client.login(token)
