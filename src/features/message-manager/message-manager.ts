@@ -26,11 +26,13 @@ export class MessageManager {
           if (!command) return
 
           if (command.toLowerCase() === 'character') {
-            const characterCommandAnswer = await Promise
-            .resolve(Character.getInstance().checkCharacter(message.author.id))
-            .catch(() => { return 'Character not found' })
+            let characterCommandAnswer
+            await Promise
+            .resolve(() => { characterCommandAnswer = Character.getInstance().checkCharacter(message.author.id) })
+            .catch(() => { characterCommandAnswer = null })
 
-            this.displayMessage(message, characterCommandAnswer?.toString() || 'Character not found')
+            if (characterCommandAnswer) this.displayMessage(message, `Your character's name is: ${characterCommandAnswer}`)
+            else this.displayMessage(message, `Character not found.`)
           }
           else this.displayMessage(message, ':smiling_imp:')
         }

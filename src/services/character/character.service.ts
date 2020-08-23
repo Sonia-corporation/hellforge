@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import character from '../../data/models/character'
-import { DocumentQuery, Document, Query } from 'mongoose'
+import { Query } from 'mongoose'
 import { CharacterType } from '../../types/character/character-type'
+import { Character } from 'src/features/commands/character/character'
 
 export class CharacterService {
   private static _instance: CharacterService
@@ -13,8 +14,8 @@ export class CharacterService {
     return CharacterService._instance
   }
 
-  public async getCharacter(id: string): Promise<DocumentQuery<Document | null, Document>> {
-    return await character.findOne({ ownerId: id }, (err: Error, character: Document | null): Document | null => {
+  public async getCharacter(id: string) {
+    return await character.findOne({ ownerId: id }, (err: Error, character: Character) => {
       if (err) throw err
       return character || null
     })

@@ -13,10 +13,8 @@ export class Character {
   }
 
   public async checkCharacter(authorId: string): Promise<Document | null> {
-    let message
+    let character = await CharacterService.getInstance().getCharacter(authorId)
 
-    message = await CharacterService.getInstance().getCharacter(authorId)
-
-    return Promise.resolve(message)
+    return Promise.resolve(character)
   }
 }
