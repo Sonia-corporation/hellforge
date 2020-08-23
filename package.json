@@ -4,7 +4,7 @@
   "description": "A Discord bot game set in Hell",
   "main": "./src/features/hellforge.js",
   "scripts": {
-    "start": "concurrently \"tsc --watch\" \"nodemon ./dist/src/features/hellforge.js\"",
+    "start": "concurrently \"tsc --watch\" \"nodemon ./dist/src/features/hellforge/hellforge.js\"",
     "test": "jest"
   },
   "repository": {
