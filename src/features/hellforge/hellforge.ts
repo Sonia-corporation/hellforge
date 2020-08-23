@@ -6,10 +6,6 @@ class Hellforge {
   private _client = new Discord.Client()
 
   constructor() {
-    this.init()
-  }
-
-  public init(): void {
     AppReadyServivce.getInstance().init(this._client)
   }
 }
