@@ -1,8 +1,8 @@
 import _ from 'lodash'
-import { Message } from 'discord.js'
+import { Message, Client } from 'discord.js'
 import { prefixes } from "../prefix.json"
 
-import { Character } from "../commands/character/character";
+import { CharacterCommand } from "../commands/character/character";
 
 export class MessageManager {
   private static _instance: MessageManager
@@ -14,7 +14,13 @@ export class MessageManager {
     return MessageManager._instance
   }
 
-  public async manageMessage(message: Message): Promise<void> {
+  public async messageEvent(client: Client) {
+    await client.on('message', async (msg: Message) => {
+      await this.manageMessage(msg)
+    })
+  }
+
+  public async manageMessage(message: Message) {
     if (message.guild) {
       if (message.author.bot) return
 
@@ -26,13 +32,7 @@ export class MessageManager {
           if (!command) return
 
           if (command.toLowerCase() === 'character') {
-            let characterCommandAnswer
-            await Promise
-            .resolve(() => { characterCommandAnswer = Character.getInstance().checkCharacter(message.author.id) })
-            .catch(() => { characterCommandAnswer = null })
-
-            if (characterCommandAnswer) this.displayMessage(message, `Your character's name is: ${characterCommandAnswer}`)
-            else this.displayMessage(message, `Character not found.`)
+            await CharacterCommand.getInstance().displayCharacterMessage(message)
           }
           else this.displayMessage(message, ':smiling_imp:')
         }
