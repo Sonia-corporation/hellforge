@@ -12,8 +12,8 @@ export class MongooseConnect {
     return MongooseConnect._instance
   }
 
-  public init() {
-    mongoose.connect(`mongodb+srv://${login}:${password}@cluster0.zmch1.gcp.mongodb.net/hellforge-bot-db?retryWrites=true&w=majority`,
+  public async init() {
+    await mongoose.connect(`mongodb+srv://${login}:${password}@cluster0.zmch1.gcp.mongodb.net/hellforge-bot-db?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true

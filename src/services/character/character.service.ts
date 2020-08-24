@@ -13,8 +13,8 @@ export class CharacterService {
     return CharacterService._instance
   }
 
-  public async getCharacter(id: string) {
-    return await character.findOne({ ownerId: id }, (err: Error, character) => {
+  public getCharacter(id: string) {
+    return character.findOne({ ownerId: id }, (err: Error, character) => {
       if (err) throw err
 
       if (character) return Promise.resolve(character)
@@ -22,8 +22,8 @@ export class CharacterService {
     })
   }
 
-  public async setCharacter(id: string, characterToInsert: CharacterType) {
-    await character.update({ ownerId: id }, characterToInsert, (err: Error, characterUpdated: any): Query<CharacterType> => {
+  public setCharacter(id: string, characterToInsert: CharacterType) {
+    character.update({ ownerId: id }, characterToInsert, (err: Error, characterUpdated: any): Query<CharacterType> => {
       if (err) throw err
 
       return characterUpdated

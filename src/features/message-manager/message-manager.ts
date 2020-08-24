@@ -14,29 +14,30 @@ export class MessageManager {
     return MessageManager._instance
   }
 
-  public async messageEvent(client: Client) {
-    await client.on('message', async (msg: Message) => {
+  public messageEvent(client: Client) {
+    client.on('message', async (msg: Message) => {
       await this.manageMessage(msg)
     })
   }
 
-  public async manageMessage(message: Message) {
+  public manageMessage(message: Message) {
     if (message.guild) {
       if (message.author.bot) return
 
       for (const prefix of prefixes) {
         if (message.content.startsWith(prefix)) {
+          message.channel.startTyping()
           const args = message.content.slice(prefix.length).split(/ +/)
           const command = args.shift()
 
           if (!command) return
 
           if (command.toLowerCase() === 'character') {
-            await CharacterCommand.getInstance().displayCharacterMessage(message)
+            CharacterCommand.getInstance().displayCharacterMessage(message)
           }
           else this.displayMessage(message, ':smiling_imp:')
         }
-        return
+        return message.channel.stopTyping(true)
       }
     }
   }
