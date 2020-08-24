@@ -13,5 +13,5 @@ export type CharacterType = {
   inventorySpace: number,
   inventoryMax: number,
   inventory: Item[],
-  ailments: Effect[]
+  effects: Effect[]
 }

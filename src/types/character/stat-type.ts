@@ -1,5 +1,7 @@
+import { StatNamesEnum } from '../../enums/stat-names.enum';
+
 export type Stat = {
-  name: 'Health Points' | 'Ætheris Points' | 'Strength' | 'Dexterity' | 'Defense' | 'Reflexes' | 'Senses' | 'Charisma' | 'Mind' | 'Spirit' | 'Willpower' | 'Luck' ,
+  name: StatNamesEnum
   description: string,
   value: number
 }
