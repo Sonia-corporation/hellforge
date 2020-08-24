@@ -1,17 +1,17 @@
-import { Stat } from './stat-type'
-import { Item } from '../shop/item-type'
-import { Effect } from '../skills/effect-type'
+import { IStat } from './stat-type'
+import { IItem } from '../shop/item-type'
+import { IEffect } from '../skills/effect-type'
 
-export type CharacterType = {
+export interface ICharacter {
   ownerId: string,
   name: string,
   gender: string,
   level: number,
   experience: number,
   credits: number,
-  stats: Stat[],
+  stats: IStat[],
   inventorySpace: number,
   inventoryMax: number,
-  inventory: Item[],
-  effects: Effect[]
+  inventory: IItem[],
+  effects: IEffect[]
 }

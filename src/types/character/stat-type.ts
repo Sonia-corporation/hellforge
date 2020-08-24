@@ -1,6 +1,6 @@
 import { StatNamesEnum } from '../../enums/stat-names.enum';
 
-export type Stat = {
+export interface IStat {
   name: StatNamesEnum
   description: string,
   value: number

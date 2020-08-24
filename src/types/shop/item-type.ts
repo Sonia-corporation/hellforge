@@ -1,7 +1,7 @@
-import { Effect } from '../skills/effect-type'
+import { IEffect } from '../skills/effect-type'
 
-export type Item = {
+export interface IItem {
   name: string,
   description: string,
-  effects: Effect[]
+  effects: IEffect[]
 }
