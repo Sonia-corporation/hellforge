@@ -1,6 +1,6 @@
-import { Stat } from './stat'
-import { Item } from '../shop/item'
-import { Effect } from '../skills/effects'
+import { Stat } from './stat-type'
+import { Item } from '../shop/item-type'
+import { Effect } from '../skills/effect-type'
 
 export type CharacterType = {
   ownerId: string,

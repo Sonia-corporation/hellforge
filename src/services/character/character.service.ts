@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { Query } from 'mongoose'
-import characters from '../../data/models/character'
+import characters from '../../data/models/character-schema'
 import { CharacterType } from '../../types/character/character-type'
 
 export class CharacterService {

@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { Message, Client } from 'discord.js'
 import { Prefixes } from "../../features/prefixes"
 
-import { CharacterCommand } from "../../features/commands/character/character";
+import { CharacterCommand } from "../../features/commands/character/character-command";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
