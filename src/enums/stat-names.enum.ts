@@ -1,14 +1,14 @@
 export enum StatNamesEnum {
-  healthPoints = 'Health Points',
-  AethrisPoints = 'Ætheris Points',
-  strength = 'Strength',
-  desterity = 'Dexterity',
-  defense = 'Defense',
-  reflexes = 'Reflexes',
-  senses = 'Senses',
-  charisma = 'Charisma',
-  mind = 'Mind',
-  spirit = 'Spirit',
-  willpower = 'Willpower',
-  luck = 'Luck'
+  HEALTHPOINTS = 'Health Points',
+  AETHERISPOINTS = 'Ætheris Points',
+  STRENGTH = 'Strength',
+  DEXTERITY = 'Dexterity',
+  DEFENSE = 'Defense',
+  REFLEXES = 'Reflexes',
+  SENSES = 'Senses',
+  CHARISMA = 'Charisma',
+  MIND = 'Mind',
+  SPIRIT = 'Spirit',
+  WILLPOWER = 'Willpower',
+  LUCK = 'Luck'
 }
