@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { Message, Client } from 'discord.js'
-import { Prefixes } from "../../features/prefixes"
+import { PrefixesEnum } from "../../features/prefixes"
 
 import { CharacterCommand } from "../../features/commands/character/character-command";
 
@@ -24,11 +24,11 @@ export class MessageManagerService {
     if (message.guild) {
       if (message.author.bot) return
       
-      for (const prefix in Prefixes) {
-        if (message.content.startsWith(Prefixes[prefix])) {
+      for (const prefix in PrefixesEnum) {
+        if (message.content.startsWith(prefix)) {
           message.channel.startTyping()
 
-          const args = message.content.slice(Prefixes[prefix].length).split(/ +/)
+          const args = message.content.slice(prefix.length).split(/ +/)
           const command = args.shift()
 
           if (!command) return

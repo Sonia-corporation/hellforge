@@ -1,6 +1,6 @@
-export enum Prefixes {
-  "!hellforge",
-  "!hell",
-  "!hf",
-  "!h"
+export enum PrefixesEnum {
+  long = "!hellforge",
+  average = "!hell",
+  short = "!hf",
+  tiny = "!h"
 }
