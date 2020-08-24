@@ -13,14 +13,14 @@ export class CharacterService {
     return CharacterService._instance
   }
 
-  public async getCharacter(id: string) {
+  public async getEntity(id: string) {
     return await characters.findOne({ ownerId: id }, (err: Error, characterFound) => {        
       if (characterFound) return characterFound
       else throw err
     })
   }
 
-  public setCharacter(id: string, characterToInsert: CharacterType) {
+  public setEntity(id: string, characterToInsert: CharacterType) {
     characters.update({ ownerId: id }, characterToInsert, (err: Error, characterUpdated: any): Query<CharacterType> => {
       if (err) throw err
 
