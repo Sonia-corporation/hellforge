@@ -22,7 +22,7 @@ export class CharacterService {
     })
   }
 
-  public async setCharacter(id: string, characterToInsert: CharacterType): void {
+  public async setCharacter(id: string, characterToInsert: CharacterType) {
     await character.update({ ownerId: id }, characterToInsert, (err: Error, characterUpdated: any): Query<CharacterType> => {
       if (err) throw err
 

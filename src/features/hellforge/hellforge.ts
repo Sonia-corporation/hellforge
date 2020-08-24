@@ -1,12 +1,13 @@
 import _ from "lodash"
-import * as Discord from "discord.js"
+import { Client } from "discord.js"
 import { token } from "../../../credentials.json"
 import { Ready } from "../ready/ready"
 import { MessageManager } from "../message-manager/message-manager"
+import { MongooseConnect } from '../../services/mongoose-connect/mongoose-connect.service'
 
 export class Hellforge {
   private static _instance: Hellforge
-  private _client = new Discord.Client()
+  private _client = new Client()
 
   public static getInstance(): Hellforge {
     if(_.isNil(Hellforge._instance)) {
@@ -16,6 +17,8 @@ export class Hellforge {
   }
 
   public init(): void {
+    MongooseConnect.getInstance().init()
+
     this._client.on('ready', (): void => {
       Ready.getInstance().setActivity(this._client.user, "WATCHING")
       Ready.getInstance().log(this._client.user?.tag)
