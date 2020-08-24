@@ -13,7 +13,7 @@ export class CharacterService {
     return CharacterService._instance
   }
 
-  public async getEntity(id: string):Promise<Document | null> {
+  public async getEntity(id: string):Promise<Document> {
     return await characters.findOne({ ownerId: id }, (err: Error, characterFound) => {        
       if (characterFound) return characterFound
       else throw err
@@ -21,10 +21,8 @@ export class CharacterService {
   }
 
   public setEntity(id: string, characterToInsert: ICharacter): void {
-    characters.update({ ownerId: id }, characterToInsert, (err: Error, characterUpdated: any): Query<ICharacter> => {
+    characters.update({ ownerId: id }, characterToInsert, (err: Error): void => {
       if (err) throw err
-
-      return characterUpdated
     })
   }
 }
