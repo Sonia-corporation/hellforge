@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { Message, Client } from 'discord.js'
-import { PrefixesEnum } from "../../features/prefixes"
+import { BotPrefixesEnum } from "../../features/bot-prefixes.enum"
 
 import { CharacterCommand } from "../../features/commands/character/character-command";
 
@@ -24,7 +24,7 @@ export class MessageManagerService {
     if (message.guild) {
       if (message.author.bot) return
       
-      for (const prefix of Object.values(PrefixesEnum)) {
+      for (const prefix of Object.values(BotPrefixesEnum)) {
         if (message.content.startsWith(prefix)) {
           message.channel.startTyping()
 
