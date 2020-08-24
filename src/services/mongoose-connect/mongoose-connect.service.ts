@@ -2,14 +2,14 @@ import _ from 'lodash'
 import mongoose from "mongoose"
 import { login, password } from "../../../credentials.json"
 
-export class MongooseConnect {
-  private static _instance: MongooseConnect
+export class MongooseConnectService {
+  private static _instance: MongooseConnectService
 
-  public static getInstance(): MongooseConnect {
-    if(_.isNil(MongooseConnect._instance)) {
-      MongooseConnect._instance = new MongooseConnect()
+  public static getInstance(): MongooseConnectService {
+    if(_.isNil(MongooseConnectService._instance)) {
+      MongooseConnectService._instance = new MongooseConnectService()
     }
-    return MongooseConnect._instance
+    return MongooseConnectService._instance
   }
 
   public init() {

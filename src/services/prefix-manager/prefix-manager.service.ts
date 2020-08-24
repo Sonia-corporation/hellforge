@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Prefixes } from '../../prefixes'
+import { BotPrefixesEnum } from '../../enums/bot-prefixes.enum'
 
 export class PrefixManagerService {
   private static _instance: PrefixManagerService
@@ -16,8 +16,8 @@ export class PrefixManagerService {
   }
 
   public setPrefix(message: string): string {
-    for (const prefixIndex in Prefixes) {
-      if (Prefixes[prefixIndex] === this._getPrefix(message)) return `${Prefixes[prefixIndex]} `
+    for (const prefix of Object.values(BotPrefixesEnum)) {
+      if (prefix === this._getPrefix(message)) return `${prefix} `
     }
     return ''
   }

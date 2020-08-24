@@ -1,8 +1,7 @@
 import _ from 'lodash'
 import { Message, Client } from 'discord.js'
-
-import { CharacterCommand } from "../../features/commands/character/character";
 import { PrefixManagerService } from '../prefix-manager/prefix-manager.service';
+import { CharacterCommand } from "../../features/commands/character/character-command";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
@@ -14,16 +13,16 @@ export class MessageManagerService {
     return MessageManagerService._instance
   }
 
-  public messageEvent(client: Client) {
+  public messageEvent(client: Client): void {
     client.on('message', (msg: Message) => {
       this._manageMessage(msg)
     })
   }
 
-  private _manageMessage(message: Message) {
+  private _manageMessage(message: Message): void {
     if (message.guild) {
       if (message.author.bot) return
-      
+
       const prefix: string = PrefixManagerService.getInstance().setPrefix(message.content)
 
       if (message.content.startsWith(prefix)) {
@@ -35,7 +34,7 @@ export class MessageManagerService {
         if (!command) return
 
         if (command.toLowerCase() === 'character') {
-          CharacterCommand.getInstance().displayCharacterMessage(message)
+          CharacterCommand.getInstance().message(message)
         }
         else this.displayMessage(message, ':smiling_imp:')
 
@@ -45,7 +44,7 @@ export class MessageManagerService {
     }
   }
 
-  public displayMessage(messageToAnswer: Message, messageToSend: string) {
+  public displayMessage(messageToAnswer: Message, messageToSend: string): void {
     messageToAnswer.channel.send(messageToSend)
   }
 }

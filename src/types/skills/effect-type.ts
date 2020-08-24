@@ -1,4 +1,4 @@
-export type Effect = {
+export interface IEffect {
   name: string,
   description: string,
   spread: number,
