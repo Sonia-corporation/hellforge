@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import { Message, Client } from 'discord.js'
-import { Prefixes } from "../../prefixes"
 
 import { CharacterCommand } from "../../features/commands/character/character";
+import { PrefixManagerService } from '../prefix-manager/prefix-manager.service';
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
@@ -24,23 +24,23 @@ export class MessageManagerService {
     if (message.guild) {
       if (message.author.bot) return
       
-      for (const prefix in Prefixes) {
-        if (message.content.startsWith(Prefixes[prefix])) {
-          message.channel.startTyping()
+      const prefix: string = PrefixManagerService.getInstance().setPrefix(message.content)
 
-          const args = message.content.slice(Prefixes[prefix].length).split(/ +/)
-          const command = args.shift()
+      if (message.content.startsWith(prefix)) {
+        message.channel.startTyping(1)
 
-          if (!command) return
+        const args = message.content.slice(prefix.length).split(/ +/)
+        const command = args.shift()
 
-          if (command.toLowerCase() === 'character') {
-            CharacterCommand.getInstance().displayCharacterMessage(message)
-          }
-          else this.displayMessage(message, ':smiling_imp:')
+        if (!command) return
 
-          message.channel.stopTyping(true)
-          return
+        if (command.toLowerCase() === 'character') {
+          CharacterCommand.getInstance().displayCharacterMessage(message)
         }
+        else this.displayMessage(message, ':smiling_imp:')
+
+        message.channel.stopTyping(true)
+        return
       }
     }
   }
