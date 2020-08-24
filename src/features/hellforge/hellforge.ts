@@ -5,7 +5,6 @@ import { MessageManagerService } from '../../services/message-manager/message-ma
 
 class Hellforge {
   private _client = new Client()
-
   constructor() {
     AppReadyServivce.getInstance().init(this._client)
     MessageManagerService.getInstance().messageEvent(this._client)
