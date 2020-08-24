@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { ActivityType, ClientUser } from 'discord.js'
 
 export class ActivityService {
   private static _instance: ActivityService

@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { ClientUser, ActivityType, Client } from "discord.js"
+import { Client } from "discord.js"
 import { token } from "../../../../credentials.json"
 import { ActivityService } from '../activity/activity.service'
 
