@@ -34,7 +34,7 @@ export class MessageManagerService {
           if (!command) return
 
           if (command.toLowerCase() === 'character') {
-            CharacterCommand.getInstance().displayCharacterMessage(message)
+            CharacterCommand.getInstance().message(message)
           }
           else this.displayMessage(message, ':smiling_imp:')
 

@@ -13,7 +13,7 @@ export class CharacterCommand {
     return CharacterCommand._instance
   }
 
-  public displayCharacterMessage(message: Message) {
+  public message(message: Message) {
     CharacterService.getInstance().getCharacter(message.author.id)
     .then((characterFound) => {
       MessageManagerService.getInstance().displayMessage(message, `Your character's name is: ${characterFound.name}`)
