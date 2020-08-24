@@ -14,7 +14,7 @@ export class AppReadyServivce {
     return AppReadyServivce._instance
   }
 
-  public init(client: Client) {
+  public init(client: Client): void {
     MongooseConnectService.getInstance().init()
 
     client.on('ready', () => {

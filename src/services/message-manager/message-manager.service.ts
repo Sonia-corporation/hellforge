@@ -14,13 +14,13 @@ export class MessageManagerService {
     return MessageManagerService._instance
   }
 
-  public messageEvent(client: Client) {
+  public messageEvent(client: Client): void {
     client.on('message', (msg: Message) => {
       this._manageMessage(msg)
     })
   }
 
-  private _manageMessage(message: Message) {
+  private _manageMessage(message: Message): void {
     if (message.guild) {
       if (message.author.bot) return
       
@@ -45,7 +45,7 @@ export class MessageManagerService {
     }
   }
 
-  public displayMessage(messageToAnswer: Message, messageToSend: string) {
+  public displayMessage(messageToAnswer: Message, messageToSend: string): void {
     messageToAnswer.channel.send(messageToSend)
   }
 }
