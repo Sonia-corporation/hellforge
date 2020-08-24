@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { Message, Client } from 'discord.js'
 import { BotPrefixesEnum } from "../../features/bot-prefixes.enum"
 
-import { CharacterCommand } from "../../features/commands/character/character-command";
+import { CharacterCommandService } from "../../features/commands/character/character-command.service";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
@@ -34,7 +34,7 @@ export class MessageManagerService {
           if (!command) return
 
           if (command.toLowerCase() === 'character') {
-            CharacterCommand.getInstance().message(message)
+            CharacterCommandService.getInstance().message(message)
           }
           else this.displayMessage(message, ':smiling_imp:')
 
