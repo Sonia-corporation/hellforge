@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { Query, Document } from 'mongoose'
 import characters from '../../data/models/character-schema'
-import { ICharacter } from '../../types/character/character-type'
+import { ICharacter } from '../../types/character/character'
 
 export class CharacterService {
   private static _instance: CharacterService
