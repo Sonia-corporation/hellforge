@@ -14,7 +14,7 @@ export class CharacterCommand {
   }
 
   public message(message: Message) {
-    CharacterService.getInstance().getCharacter(message.author.id)
+    CharacterService.getInstance().getEntity(message.author.id)
     .then((characterFound) => {
       MessageManagerService.getInstance().displayMessage(message, `Your character's name is: ${characterFound.name}`)
     })
