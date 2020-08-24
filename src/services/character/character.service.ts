@@ -13,7 +13,7 @@ export class CharacterService {
     return CharacterService._instance
   }
 
-  public async getEntity(id: string):Promise<Document> {
+  public async getEntity(id: string):Promise<Document | null> {
     return await characters.findOne({ ownerId: id }, (err: Error, characterFound) => {        
       if (characterFound) return characterFound
       else throw err
