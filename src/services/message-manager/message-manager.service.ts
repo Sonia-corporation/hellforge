@@ -24,7 +24,7 @@ export class MessageManagerService {
     if (message.guild) {
       if (message.author.bot) return
       
-      for (const prefix in PrefixesEnum) {
+      for (const prefix of Object.values(PrefixesEnum)) {
         if (message.content.startsWith(prefix)) {
           message.channel.startTyping()
 
