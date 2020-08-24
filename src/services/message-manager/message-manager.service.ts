@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { Message, Client } from 'discord.js'
-import { Prefixes } from "../../features/prefixes"
+import { Prefixes } from "../../prefixes"
 
 import { CharacterCommand } from "../../features/commands/character/character";
 
