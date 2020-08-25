@@ -34,6 +34,7 @@ export class MessageFormattingService {
         break
       }
     }
+
     return text
   }
 }
