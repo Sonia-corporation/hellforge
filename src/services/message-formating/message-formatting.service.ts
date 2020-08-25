@@ -1,6 +1,4 @@
 import _ from "lodash"
-import { TextFormats } from '../../enums/text-formats.enum'
-import { BoldererService } from './bolderer/bolderer.service'
 
 export class MessageFormattingService {
   private static _instance: MessageFormattingService
@@ -13,28 +11,30 @@ export class MessageFormattingService {
   }
 
   public format(formatToApply: string, text: string) {
-    switch (formatToApply) {
-      case TextFormats.BOLD: {
-        text = BoldererService.getInstance().bold(text)
-        break
-      }
-      case TextFormats.ITALIC: {
-        break
-      }
-      case TextFormats.ITALIC_BOLD: {
-        break
-      }
-      case TextFormats.LINE_THROUGH: {
-        break
-      }
-      case TextFormats.STRIKE: {
-        break
-      }
-      case TextFormats.UNDERLINE: {
-        break
-      }
-    }
+    return text = this[formatToApply](text)
+  }
 
-    return text
+  public bold(text: string) {
+    return `**${text}**`
+  }
+
+  public italic(text: string) {
+    return `**${text}**`
+  }
+
+  public italicBold(text: string) {
+    return `**${text}**`
+  }
+
+  public lineThrough(text: string) {
+    return `**${text}**`
+  }
+
+  public strike(text: string) {
+    return `**${text}**`
+  }
+
+  public underline(text: string) {
+    return `**${text}**`
   }
 }

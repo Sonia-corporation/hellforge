@@ -1,8 +1,8 @@
 export enum TextFormats {
   BOLD = 'bold',
   ITALIC = 'italic',
-  ITALIC_BOLD = 'italic-bold',
-  LINE_THROUGH = 'line-through',
+  ITALIC_BOLD = 'italicBold',
+  LINE_THROUGH = 'lineThrough',
   STRIKE = 'strike',
   UNDERLINE = 'underline'
 }
