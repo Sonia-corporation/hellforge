@@ -4,7 +4,7 @@ import { PrefixManagerService } from "../prefix-manager/prefix-manager.service"
 
 import { CharacterCommandService } from "../../features/commands/character/character-command.service"
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service"
-import { DisplayMessageService } from '../display-message/display-message.sevice'
+import { DisplayMessageService } from '../display-message/display-message.service'
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
