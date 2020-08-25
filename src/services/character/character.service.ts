@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Query, Document } from 'mongoose'
+import { Document } from 'mongoose'
 import characters from '../../data/models/character-schema'
 import { ICharacter } from '../../types/character/character'
 
