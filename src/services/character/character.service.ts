@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { Query, Document } from 'mongoose'
 import characters from '../../data/models/character-schema'
-import { ICharacter } from '../../types/character/character-type'
+import { ICharacter } from '../../types/character/character'
 
 export class CharacterService {
   private static _instance: CharacterService
@@ -21,10 +21,8 @@ export class CharacterService {
   }
 
   public setEntity(id: string, characterToInsert: ICharacter): void {
-    characters.update({ ownerId: id }, characterToInsert, (err: Error, characterUpdated: any): Query<ICharacter> => {
+    characters.update({ ownerId: id }, characterToInsert, (err: Error): void => {
       if (err) throw err
-
-      return characterUpdated
     })
   }
 }

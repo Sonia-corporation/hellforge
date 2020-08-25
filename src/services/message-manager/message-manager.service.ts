@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import { Message, Client } from 'discord.js'
 import { PrefixManagerService } from '../prefix-manager/prefix-manager.service';
-import { CharacterCommand } from "../../features/commands/character/character-command";
+
+import { CharacterCommandService } from "../../features/commands/character/character-command.service";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
@@ -31,15 +32,14 @@ export class MessageManagerService {
         const args = message.content.slice(prefix.length).split(/ +/)
         const command = args.shift()
 
-        if (!command) return
+        if (!command) return this.displayMessage(message, 'Yes?')
 
         if (command.toLowerCase() === 'character') {
-          CharacterCommand.getInstance().message(message)
+          CharacterCommandService.getInstance().message(message)
         }
         else this.displayMessage(message, ':smiling_imp:')
 
-        message.channel.stopTyping(true)
-        return
+        return message.channel.stopTyping(true)
       }
     }
   }

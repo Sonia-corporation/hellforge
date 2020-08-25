@@ -1,6 +1,6 @@
-import { IStat } from './stat-type'
-import { IItem } from '../shop/item-type'
-import { IEffect } from '../skills/effect-type'
+import { IStat } from './stat'
+import { IItem } from '../shop/item'
+import { IEffect } from '../skills/effect'
 
 export interface ICharacter {
   ownerId: string,

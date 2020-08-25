@@ -45,8 +45,7 @@
     ]
   },
   "include": [
-    "./src/**/*.ts",
-    "./jest.config.js"
+    "./src/**/*.ts"
   ],
   "exclude": [
     "./jest.config.js",

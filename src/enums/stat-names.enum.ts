@@ -1,6 +1,6 @@
 export enum StatNamesEnum {
-  HEALTHPOINTS = 'Health Points',
-  AETHERISPOINTS = 'Ætheris Points',
+  HEALTH_POINTS = 'Health Points',
+  AETHERIS_POINTS = 'Ætheris Points',
   STRENGTH = 'Strength',
   DEXTERITY = 'Dexterity',
   DEFENSE = 'Defense',

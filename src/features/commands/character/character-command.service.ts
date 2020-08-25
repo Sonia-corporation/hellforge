@@ -3,14 +3,14 @@ import { Message } from 'discord.js'
 import { CharacterService } from '../../../services/character/character.service'
 import { MessageManagerService } from '../../../services/message-manager/message-manager.service'
 
-export class CharacterCommand {
-  private static _instance: CharacterCommand
+export class CharacterCommandService {
+  private static _instance: CharacterCommandService
 
-  public static getInstance(): CharacterCommand {
-    if(_.isNil(CharacterCommand._instance)) {
-      CharacterCommand._instance = new CharacterCommand()
+  public static getInstance(): CharacterCommandService {
+    if(_.isNil(CharacterCommandService._instance)) {
+      CharacterCommandService._instance = new CharacterCommandService()
     }
-    return CharacterCommand._instance
+    return CharacterCommandService._instance
   }
 
   public message(message: Message): void {
