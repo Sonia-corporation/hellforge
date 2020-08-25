@@ -16,7 +16,7 @@ export class CharacterService {
   public async getEntity(id: string):Promise<Document | null> {
     return await characters.findOne({ ownerId: id }, (err: Error, characterFound) => {        
       if (characterFound) return characterFound
-      else throw err
+      else return console.log(`Error: Character not found because: ${err}`)
     })
   }
 

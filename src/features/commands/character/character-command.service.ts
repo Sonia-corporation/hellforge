@@ -18,11 +18,13 @@ export class CharacterCommandService {
   public message(message: Message): void {
     CharacterService.getInstance().getEntity(message.author.id)
     .then((characterFound) => {
-      const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
-      DisplayMessageService.getInstance().displayMessage(message, `Your character's name is: ${boldCharacterName}`)
-    })
-    .catch(() => {
-      DisplayMessageService.getInstance().displayMessage(message, `Character not found.`)
+      if (characterFound) {
+        const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
+        DisplayMessageService.getInstance().message(message, `Your character's name is: ${boldCharacterName}`)
+      }
+      else {
+        DisplayMessageService.getInstance().message(message, `Character not found.`)
+      }
     })
   }
 }

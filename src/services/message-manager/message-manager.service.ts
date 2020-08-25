@@ -5,6 +5,8 @@ import { PrefixManagerService } from "../prefix-manager/prefix-manager.service"
 import { CharacterCommandService } from "../../features/commands/character/character-command.service"
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service"
 import { DisplayMessageService } from '../display-message/display-message.service'
+import { CharacterCreationService } from '../creation/character/character-creation.service'
+import { StateManagerService } from '../state-manager/state-manager.service'
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
@@ -27,6 +29,7 @@ export class MessageManagerService {
       if (message.author.bot) return
 
       const prefix: string = PrefixManagerService.getInstance().getReadablePrefix(message.content)
+      const currentState = StateManagerService.getInstance().getBotState()
 
       if (message.content.startsWith(prefix)) {
         message.channel.startTyping(1)
@@ -35,11 +38,19 @@ export class MessageManagerService {
         const command = ArgumentsManagerService.getInstance().extractCommand(args)
 
         if (command === 'character') {
-          CharacterCommandService.getInstance().message(message)
+          const createArg = args.find(arg => arg === 'create')
+
+          if (createArg) CharacterCreationService.getInstance().init(message)
+          else CharacterCommandService.getInstance().message(message)
         }
-        else DisplayMessageService.getInstance().displayMessage(message, ':smiling_imp:')
+        else DisplayMessageService.getInstance().message(message, ':smiling_imp:')
 
         return message.channel.stopTyping(true)
+      }
+      else if (currentState.state === 'CharacterCreation') {
+        if (currentState.step === 1) {
+          CharacterCreationService.getInstance().setCharacterName(message)
+        }
       }
     }
   }
