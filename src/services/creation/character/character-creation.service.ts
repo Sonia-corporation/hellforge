@@ -6,7 +6,6 @@ import { CharacterService } from "../../character/character.service"
 import { MessageFormattingService } from "../../message-formating/message-formatting.service"
 import { StateManagerService } from "../../state-manager/state-manager.service"
 import { StateNamesEnum } from "../../../enums/state-names.enum"
-import { StatNamesEnum } from 'src/enums/stat-names.enum'
 
 export class CharacterCreationService {
   private static _instance: CharacterCreationService
