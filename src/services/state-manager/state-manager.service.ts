@@ -25,7 +25,7 @@ export class StateManagerService {
     }
   }
 
-  public setBotState(memberId: string, stateName: StateNamesEnum, step: number, data?: string) : void{
+  public setBotState(memberId: string, stateName: StateNamesEnum, step: number, data?: string): void{
     this._currentMemberId = memberId
     this._currentBotState = stateName
     this._currentBotStep = step
