@@ -19,6 +19,6 @@ export class ArgumentsManagerService {
   public extractCommand(entries: string[]) {
     const usableBotCommand = entries.shift()
     if (usableBotCommand) return usableBotCommand.toLowerCase()
-    else return ' '
+    return
   }
 }
