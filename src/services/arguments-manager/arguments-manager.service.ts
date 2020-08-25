@@ -1,6 +1,5 @@
 import _ from "lodash"
 import { Message } from "discord.js"
-import { DisplayMessageService } from "../display-message/display-message.sevice"
 
 export class ArgumentsManagerService {
   private static _instance: ArgumentsManagerService

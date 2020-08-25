@@ -1,7 +1,8 @@
 import _ from 'lodash'
 import { Message } from 'discord.js'
 import { CharacterService } from '../../../services/character/character.service'
-import { DisplayMessageService } from '../../../services/display-message/display-message.sevice'
+import { DisplayMessageService } from '../../../services/display-message/display-message.service'
+import { MessageFormattingBoldererService } from '../../../services/message-formating/bolderer/message-formatting-bolderer.service'
 
 export class CharacterCommandService {
   private static _instance: CharacterCommandService
@@ -16,7 +17,8 @@ export class CharacterCommandService {
   public message(message: Message): void {
     CharacterService.getInstance().getEntity(message.author.id)
     .then((characterFound) => {
-      DisplayMessageService.getInstance().displayMessage(message, `Your character's name is: ${characterFound.name}`)
+      const boldCharacterName = MessageFormattingBoldererService.getInstance().makeItBold(characterFound.name)
+      DisplayMessageService.getInstance().displayMessage(message, `Your character's name is: ${boldCharacterName}`)
     })
     .catch(() => {
       DisplayMessageService.getInstance().displayMessage(message, `Character not found.`)
