@@ -1,8 +1,10 @@
 import _ from "lodash"
+import { IState } from '../../types/global/state'
+import { StateNamesEnum } from 'src/enums/state-names.enum'
 
 export class StateManagerService {
   private static _instance: StateManagerService
-  private _currentBotState: string = 'Normal'
+  private _currentBotState: StateNamesEnum = StateNamesEnum.NORMAL
   private _currentBotStep: number = 0
   private _currentData: string = ''
 
@@ -13,7 +15,7 @@ export class StateManagerService {
     return StateManagerService._instance
   }
 
-  public getBotState() {
+  public getBotState(): IState {
     return {
       state: this._currentBotState,
       step: this._currentBotStep,
@@ -21,7 +23,7 @@ export class StateManagerService {
     }
   }
 
-  public setBotState(stateName: string, step: number, data?: string) {
+  public setBotState(stateName: StateNamesEnum, step: number, data?: string) : void{
     this._currentBotState = stateName
     this._currentBotStep = step
     if (data) this._currentData = data
