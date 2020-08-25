@@ -17,7 +17,7 @@ export class CharacterCommandService {
   public message(message: Message): void {
     CharacterService.getInstance().getEntity(message.author.id)
     .then((characterFound) => {
-      const boldCharacterName = MessageFormattingBoldererService.getInstance().makeItBold(characterFound.name)
+      const boldCharacterName = MessageFormattingBoldererService.getInstance().bold(characterFound.name)
       DisplayMessageService.getInstance().displayMessage(message, `Your character's name is: ${boldCharacterName}`)
     })
     .catch(() => {

@@ -10,7 +10,7 @@ export class MessageFormattingBoldererService {
     return MessageFormattingBoldererService._instance
   }
 
-  public makeItBold(text: string) {
+  public bold(text: string) {
     return `**${text}**`
   }
 }
