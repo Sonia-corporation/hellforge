@@ -4,6 +4,7 @@ import { StateNamesEnum } from 'src/enums/state-names.enum'
 
 export class StateManagerService {
   private static _instance: StateManagerService
+  private _currentMemberId: string = ''
   private _currentBotState: StateNamesEnum = StateNamesEnum.NORMAL
   private _currentBotStep: number = 0
   private _currentData: string = ''
@@ -17,13 +18,15 @@ export class StateManagerService {
 
   public getBotState(): IState {
     return {
+      memberId: this._currentMemberId,
       state: this._currentBotState,
       step: this._currentBotStep,
       data: this._currentData
     }
   }
 
-  public setBotState(stateName: StateNamesEnum, step: number, data?: string) : void{
+  public setBotState(memberId: string, stateName: StateNamesEnum, step: number, data?: string) : void{
+    this._currentMemberId = memberId
     this._currentBotState = stateName
     this._currentBotStep = step
     if (data) this._currentData = data
