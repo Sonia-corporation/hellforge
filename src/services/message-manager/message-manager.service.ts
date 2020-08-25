@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import { Message, Client } from 'discord.js'
-import { BotPrefixesEnum } from "../../features/bot-prefixes.enum"
+import { PrefixManagerService } from '../prefix-manager/prefix-manager.service';
 
 import { CharacterCommandService } from "../../features/commands/character/character-command.service";
 
@@ -23,24 +23,23 @@ export class MessageManagerService {
   private _manageMessage(message: Message): void {
     if (message.guild) {
       if (message.author.bot) return
-      
-      for (const prefix of Object.values(BotPrefixesEnum)) {
-        if (message.content.startsWith(prefix)) {
-          message.channel.startTyping()
 
-          const args = message.content.slice(prefix.length).split(/ +/)
-          const command = args.shift()
+      const prefix: string = PrefixManagerService.getInstance().getReadablePrefix(message.content)
 
-          if (!command) return
+      if (message.content.startsWith(prefix)) {
+        message.channel.startTyping(1)
 
-          if (command.toLowerCase() === 'character') {
-            CharacterCommandService.getInstance().message(message)
-          }
-          else this.displayMessage(message, ':smiling_imp:')
+        const args = message.content.slice(prefix.length).split(/ +/)
+        const command = args.shift()
 
-          message.channel.stopTyping(true)
-          return
+        if (!command) return this.displayMessage(message, 'Yes?')
+
+        if (command.toLowerCase() === 'character') {
+          CharacterCommandService.getInstance().message(message)
         }
+        else this.displayMessage(message, ':smiling_imp:')
+
+        return message.channel.stopTyping(true)
       }
     }
   }
