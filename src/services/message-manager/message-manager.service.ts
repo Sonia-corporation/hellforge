@@ -6,6 +6,7 @@ import { CharacterCommandService } from "../../features/commands/character/chara
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service"
 import { DisplayMessageService } from '../display-message/display-message.service'
 import { CharacterCreationService } from '../creation/character/character-creation.service'
+import { StateManagerService } from '../state-manager/state-manager.service'
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
@@ -28,6 +29,7 @@ export class MessageManagerService {
       if (message.author.bot) return
 
       const prefix: string = PrefixManagerService.getInstance().getReadablePrefix(message.content)
+      const currentState = StateManagerService.getInstance().getBotState()
 
       if (message.content.startsWith(prefix)) {
         message.channel.startTyping(1)
@@ -44,6 +46,11 @@ export class MessageManagerService {
         else DisplayMessageService.getInstance().message(message, ':smiling_imp:')
 
         return message.channel.stopTyping(true)
+      }
+      else if (currentState.state === 'CharacterCreation') {
+        if (currentState.step === 1) {
+          CharacterCreationService.getInstance().setCharacterName(message)
+        }
       }
     }
   }
