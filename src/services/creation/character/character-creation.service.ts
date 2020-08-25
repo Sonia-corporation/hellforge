@@ -23,15 +23,21 @@ export class CharacterCreationService {
         const currentState = StateManagerService.getInstance().getBotState()
 
         if (currentState.state === 'Normal') {
-          StateManagerService.getInstance().setBotState('characterCreation', 1)
+          StateManagerService.getInstance().setBotState('CharacterCreation', 1, `${message.author.id},`) // The data from the state will have a CSV format value.
           DisplayMessageService.getInstance().message(message, `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.`)
         }
-
       }
       else {
         const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
         DisplayMessageService.getInstance().message(message, `You already have a character, their name is: ${boldCharacterName}`)
       }
     })
+  }
+
+  public setCharacterName(message: Message) {
+    const newData = StateManagerService.getInstance().getBotState().data + `${message.content},`
+    StateManagerService.getInstance().setBotState('Normal', 0, newData) // TODO: Create step 2.
+    const formattedCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, message.content)
+    DisplayMessageService.getInstance().message(message, `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`)
   }
 }
