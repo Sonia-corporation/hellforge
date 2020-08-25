@@ -19,6 +19,7 @@ export class PrefixManagerService {
     for (const prefix of Object.values(BotPrefixesEnum)) {
       if (prefix === this._getPrefix(message)) return `${prefix} `
     }
-    return ''
+    // Discord messages can't start with a space, so this prevents bot reacting when there isn't a valid prefix.
+    return ' '
   }
 }

@@ -26,7 +26,7 @@ export class MessageManagerService {
 
       const prefix: string = PrefixManagerService.getInstance().setPrefix(message.content)
 
-      if (prefix !== '' && message.content.startsWith(prefix)) {
+      if (message.content.startsWith(prefix)) {
         message.channel.startTyping(1)
 
         const args = message.content.slice(prefix.length).split(/ +/)
