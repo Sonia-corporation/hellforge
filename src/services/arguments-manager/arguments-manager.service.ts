@@ -16,9 +16,9 @@ export class ArgumentsManagerService {
     return message.content.slice(botPrefix.length).split(/ +/)
   }
 
-  public extractCommand(messageToSend: Message, entries: string[]) {
+  public extractCommand(entries: string[]) {
     const usableBotCommand = entries.shift()
     if (usableBotCommand) return usableBotCommand.toLowerCase()
-    else return DisplayMessageService.getInstance().displayMessage(messageToSend, 'Yes?')
+    else return ' '
   }
 }

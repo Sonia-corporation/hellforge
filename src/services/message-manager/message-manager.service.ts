@@ -32,7 +32,7 @@ export class MessageManagerService {
         message.channel.startTyping(1)
 
         const args = ArgumentsManagerService.getInstance().getArguments(message, prefix)
-        const command = ArgumentsManagerService.getInstance().extractCommand(message, args)
+        const command = ArgumentsManagerService.getInstance().extractCommand(args)
 
         if (command === 'character') {
           CharacterCommandService.getInstance().message(message)
