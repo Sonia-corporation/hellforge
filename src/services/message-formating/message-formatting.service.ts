@@ -11,7 +11,7 @@ export class MessageFormattingService {
   }
 
   public format(formatToApply: string, text: string) {
-    return text = this[formatToApply](text)
+    return this[formatToApply](text)
   }
 
   public bold(text: string) {
