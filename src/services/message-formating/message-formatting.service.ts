@@ -1,4 +1,5 @@
 import _ from "lodash"
+import { TextFormats } from '../../enums/text-formats.enum'
 
 export class MessageFormattingService {
   private static _instance: MessageFormattingService
@@ -10,7 +11,7 @@ export class MessageFormattingService {
     return MessageFormattingService._instance
   }
 
-  public format(formatToApply: string, text: string) {
+  public format(formatToApply: TextFormats, text: string) {
     return this[formatToApply](text)
   }
 
