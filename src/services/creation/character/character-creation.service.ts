@@ -24,7 +24,12 @@ export class CharacterCreationService {
         const currentState = StateManagerService.getInstance().getBotState()
 
         if (currentState.state === 'Normal') {
-          StateManagerService.getInstance().setBotState(message.author.id, StateNamesEnum.CHARACTER_CREATION, 1, `${message.author.id},`) // The data from the state will have a CSV format value.
+          StateManagerService.getInstance().setBotState({
+            memberId: message.author.id,
+            state: StateNamesEnum.CHARACTER_CREATION,
+            step: 1,
+            data: ''
+          }) // The data from the state will have a CSV format value.
           DisplayMessageService.getInstance().message(message, `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.`)
         }
       }
@@ -36,15 +41,27 @@ export class CharacterCreationService {
   }
 
   public setCharacterName(message: Message): void {
-    const newData = `${StateManagerService.getInstance().getBotState().data}${message.content},`
-    StateManagerService.getInstance().setBotState(message.author.id, StateNamesEnum.CHARACTER_CREATION, 2, newData)
+    const newData = `${message.content},`
+    const oldData = StateManagerService.getInstance().getBotState().data
+    StateManagerService.getInstance().setBotState({
+      memberId: message.author.id,
+      state: StateNamesEnum.CHARACTER_CREATION,
+      step: 2,
+      data: `${oldData},${newData},`
+    })
     const formattedCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, message.content)
     DisplayMessageService.getInstance().message(message, `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`)
   }
 
   public setCharacterFirstBonus(message: Message): void {
     const newData = `${StateManagerService.getInstance().getBotState().data}${message.content},`
-    StateManagerService.getInstance().setBotState(message.author.id, StateNamesEnum.CHARACTER_CREATION, 3, newData)
+    const oldData = StateManagerService.getInstance().getBotState().data
+    StateManagerService.getInstance().setBotState({
+      memberId: message.author.id,
+      state: StateNamesEnum.CHARACTER_CREATION,
+      step: 3,
+      data: `${oldData},${newData},`
+    })
     const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(TextFormats.ITALIC_BOLD, message.content)
     DisplayMessageService.getInstance().message(message, `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`)
   }
