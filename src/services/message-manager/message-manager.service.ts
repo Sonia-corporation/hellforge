@@ -2,6 +2,9 @@ import _ from "lodash"
 import { Message, Client } from "discord.js"
 import { PrefixManagerService } from "../prefix-manager/prefix-manager.service"
 
+import { StateNamesEnum } from '../../enums/state-names.enum'
+import { SubcommandsEnum } from '../../enums/subcommands.enum'
+import { CommandsEnum } from '../../enums/commands.enum'
 import { CharacterCommandService } from "../../features/commands/character/character-command.service"
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service"
 import { DisplayMessageService } from '../display-message/display-message.service'
@@ -37,8 +40,8 @@ export class MessageManagerService {
         const args = ArgumentsManagerService.getInstance().getArguments(message, prefix)
         const command = ArgumentsManagerService.getInstance().extractCommand(args)
 
-        if (command === 'character') {
-          const createArg = args.find(arg => arg === 'create')
+        if (command === CommandsEnum.CHARACTER) {
+          const createArg = args.find(arg => arg === SubcommandsEnum.CHARACTER_CREATION)
 
           if (createArg) CharacterCreationService.getInstance().init(message)
           else CharacterCommandService.getInstance().message(message)
@@ -47,7 +50,7 @@ export class MessageManagerService {
 
         return message.channel.stopTyping(true)
       }
-      else if (currentState.state === 'CharacterCreation') {
+      else if (currentState.memberId === message.author.id && currentState.state === StateNamesEnum.CHARACTER_CREATION) {
         if (currentState.step === 1) {
           CharacterCreationService.getInstance().setCharacterName(message)
         }
