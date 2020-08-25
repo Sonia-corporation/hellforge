@@ -1,7 +1,8 @@
 import _ from "lodash"
 import { Client } from "discord.js"
-import { token } from "../../../../credentials.json"
+import { token } from "../../../credentials.json"
 import { ActivityService } from '../activity/activity.service'
+import { MongooseConnectService } from '../../services/mongoose-connect/mongoose-connect.service'
 
 export class AppReadyServivce {
   private static _instance: AppReadyServivce
@@ -13,7 +14,9 @@ export class AppReadyServivce {
     return AppReadyServivce._instance
   }
 
-  public init(client: Client) {
+  public init(client: Client): void {
+    MongooseConnectService.getInstance().init()
+
     client.on('ready', () => {
       if (client.user) {
         ActivityService.getInstance().setActivity(client.user, "WATCHING")
