@@ -15,7 +15,7 @@ export class PrefixManagerService {
     return message.split(/ +/)[0]
   }
 
-  public setPrefix(message: string): string {
+  public getReadablePrefix(message: string): string {
     for (const prefix of Object.values(BotPrefixesEnum)) {
       if (prefix === this._getPrefix(message)) return `${prefix} `
     }

@@ -26,7 +26,7 @@ export class MessageManagerService {
     if (message.guild) {
       if (message.author.bot) return
 
-      const prefix: string = PrefixManagerService.getInstance().setPrefix(message.content)
+      const prefix: string = PrefixManagerService.getInstance().getReadablePrefix(message.content)
 
       if (message.content.startsWith(prefix)) {
         message.channel.startTyping(1)
