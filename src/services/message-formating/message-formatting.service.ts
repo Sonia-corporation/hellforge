@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { TextFormats } from '../../enums/text-format.enum'
+import { TextFormats } from '../../enums/text-formats.enum'
 import { BoldererService } from './bolderer/bolderer.service'
 
 export class MessageFormattingService {

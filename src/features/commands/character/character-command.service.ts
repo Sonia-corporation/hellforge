@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import { Message } from 'discord.js'
+import { TextFormats } from '../../../enums/text-formats.enum'
 import { CharacterService } from '../../../services/character/character.service'
 import { DisplayMessageService } from '../../../services/display-message/display-message.service'
 import { MessageFormattingService } from '../../../services/message-formating/message-formatting.service'
@@ -17,7 +18,7 @@ export class CharacterCommandService {
   public message(message: Message): void {
     CharacterService.getInstance().getEntity(message.author.id)
     .then((characterFound) => {
-      const boldCharacterName = MessageFormattingService.getInstance().format('bold', characterFound.name)
+      const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
       DisplayMessageService.getInstance().displayMessage(message, `Your character's name is: ${boldCharacterName}`)
     })
     .catch(() => {
