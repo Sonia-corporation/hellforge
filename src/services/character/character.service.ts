@@ -1,5 +1,7 @@
 import _ from "lodash";
+import { Document } from 'mongoose';
 import { ICharacter } from "../../types/character/character";
+import characterSchema from "../../data/models/character-schema";
 
 export class CharacterService {
   private static _instance: CharacterService;
@@ -11,7 +13,7 @@ export class CharacterService {
     return CharacterService._instance;
   }
 
-  public async getEntity(_ownerId: string): Promise<Document | void> {
+  public getEntity(_ownerId: string): void {
     // @todo fix it
     // return await characterSchema
     //   .findOne(
@@ -28,9 +30,13 @@ export class CharacterService {
   }
 
   public setEntity(_ownerId: string, _characterToInsert: ICharacter): void {
-    // @todo fix it
-    // characterSchema.update({ ownerId }, characterToInsert, (err: Error): void => {
-    //   if (err) throw err;
-    // });
+    characterSchema
+      .update({ ownerId: _ownerId }, _characterToInsert)
+      .then((): void => {
+        console.info(`A user created their character`);
+      })
+      .catch((err: string): void => {
+        console.error(`An error occured: ${err}`);
+      });
   }
 }
