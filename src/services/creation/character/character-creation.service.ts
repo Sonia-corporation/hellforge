@@ -51,6 +51,7 @@ export class CharacterCreationService {
         data: `${stateFound.state.data},${message.content},`
       }
     })
+
     const formattedCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, message.content)
     DisplayMessageService.getInstance().message(message, `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`)
   }
@@ -66,6 +67,7 @@ export class CharacterCreationService {
         data: `${stateFound.state.data},${message.content},`
       }
     })
+
     const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(TextFormats.ITALIC_BOLD, message.content)
     DisplayMessageService.getInstance().message(message, `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`)
   }
