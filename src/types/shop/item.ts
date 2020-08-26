@@ -1,4 +1,4 @@
-import { IEffect } from '../skills/effect'
+import { IEffect } from "../skills/effect"
 
 export interface IItem {
   name: string,

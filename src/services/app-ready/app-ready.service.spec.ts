@@ -1,10 +1,10 @@
 import { AppReadyServivce } from "./app-ready.service"
 
-describe('AppReadyServivce', () => {
+describe("AppReadyServivce", () => {
   let appReady: AppReadyServivce
 
-  describe('getInstance()', () => {
-    it('should instanciate AppReadyService', () => {
+  describe("getInstance()", () => {
+    it("should instanciate AppReadyService", () => {
       expect.assertions(1)
 
       appReady = AppReadyServivce.getInstance()

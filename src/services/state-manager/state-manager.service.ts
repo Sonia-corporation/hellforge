@@ -17,23 +17,21 @@ export class StateManagerService {
     return await states.findOne({ memberId }, (err: Error, stateFound: Document): IState => {
       if (stateFound) return stateFound.schema.obj
     })
-    .catch((err): void => {
-      console.log(`Error: State not found because: ${err}`)
-      return
-    })
+      .catch((err): void => {
+        console.log(`Error: State not found because: ${err}`)
+      })
   }
 
   public setBotState(memberId: string, newState: IState): void {
     this.getBotState(memberId)
-    .then((stateFound): void => {
-      if (stateFound) {
-        states.update({ memberId }, newState, (err: Error) => {
-          if (err) throw err
-        })
-      }
-      else {
-        states.create(newState)
-      }
-    })
+      .then((stateFound): void => {
+        if (stateFound) {
+          states.update({ memberId }, newState, (err: Error) => {
+            if (err) throw err
+          })
+        } else {
+          states.create(newState)
+        }
+      })
   }
 }

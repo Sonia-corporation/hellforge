@@ -1,4 +1,4 @@
-import { StateNamesEnum } from '../../enums/state-names.enum';
+import { StateNamesEnum } from "../../enums/state-names.enum"
 
 export interface IState {
   memberId: string,

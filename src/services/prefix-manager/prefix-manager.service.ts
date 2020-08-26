@@ -1,11 +1,11 @@
 import _ from "lodash"
-import { BotPrefixesEnum } from '../../enums/bot-prefixes.enum'
+import { BotPrefixesEnum } from "../../enums/bot-prefixes.enum"
 
 export class PrefixManagerService {
   private static _instance: PrefixManagerService
 
   public static getInstance(): PrefixManagerService {
-    if(_.isNil(PrefixManagerService._instance)) {
+    if (_.isNil(PrefixManagerService._instance)) {
       PrefixManagerService._instance = new PrefixManagerService()
     }
     return PrefixManagerService._instance
@@ -20,6 +20,6 @@ export class PrefixManagerService {
       if (prefix === this._getPrefix(message)) return `${prefix} `
     }
     // Discord messages can't start with a space, so this prevents bot reacting when there isn't a valid prefix.
-    return ' '
+    return " "
   }
 }

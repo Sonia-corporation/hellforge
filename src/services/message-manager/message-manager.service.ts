@@ -2,27 +2,27 @@ import _ from "lodash"
 import { Message, Client } from "discord.js"
 import { PrefixManagerService } from "../prefix-manager/prefix-manager.service"
 
-import { StateNamesEnum } from '../../enums/state-names.enum'
-import { SubcommandsEnum } from '../../enums/subcommands.enum'
-import { CommandsEnum } from '../../enums/commands.enum'
+import { StateNamesEnum } from "../../enums/state-names.enum"
+import { SubcommandsEnum } from "../../enums/subcommands.enum"
+import { CommandsEnum } from "../../enums/commands.enum"
 import { CharacterCommandService } from "../../features/commands/character/character-command.service"
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service"
-import { DisplayMessageService } from '../display-message/display-message.service'
-import { CharacterCreationService } from '../creation/character/character-creation.service'
-import { StateManagerService } from '../state-manager/state-manager.service'
+import { DisplayMessageService } from "../display-message/display-message.service"
+import { CharacterCreationService } from "../creation/character/character-creation.service"
+import { StateManagerService } from "../state-manager/state-manager.service"
 
 export class MessageManagerService {
   private static _instance: MessageManagerService
 
   public static getInstance(): MessageManagerService {
-    if(_.isNil(MessageManagerService._instance)) {
+    if (_.isNil(MessageManagerService._instance)) {
       MessageManagerService._instance = new MessageManagerService()
     }
     return MessageManagerService._instance
   }
 
   public messageEvent(client: Client): void {
-    client.on('message', (msg: Message) => {
+    client.on("message", (msg: Message) => {
       this._manageMessage(msg)
     })
   }
@@ -40,19 +40,18 @@ export class MessageManagerService {
         const command = ArgumentsManagerService.getInstance().extractCommand(args)
 
         if (command === CommandsEnum.CHARACTER) {
-          const createArg = args.find(arg => arg === SubcommandsEnum.CHARACTER_CREATION)
+          const createArg = args.find((arg) => arg === SubcommandsEnum.CHARACTER_CREATION)
 
           if (createArg) CharacterCreationService.getInstance().init(message)
           else CharacterCommandService.getInstance().message(message)
-        }
-        else DisplayMessageService.getInstance().message(message, ':smiling_imp:')
+        } else DisplayMessageService.getInstance().message(message, ":smiling_imp:")
 
         return message.channel.stopTyping(true)
       }
-      else {
-        StateManagerService.getInstance().getBotState(message.author.id)
+
+      StateManagerService.getInstance().getBotState(message.author.id)
         .then((stateFound): void => {
-          if (message.content.startsWith('exit') && stateFound.state.name !== StateNamesEnum.NORMAL) {
+          if (message.content.startsWith("exit") && stateFound.state.name !== StateNamesEnum.NORMAL) {
             message.channel.startTyping(1)
 
             StateManagerService.getInstance().setBotState(message.author.id, {
@@ -60,11 +59,11 @@ export class MessageManagerService {
               state: {
                 name: StateNamesEnum.NORMAL,
                 step: 0,
-                data: ''
-              }
+                data: "",
+              },
             })
 
-            DisplayMessageService.getInstance().message(message, 'You just exited what you were doing.')
+            DisplayMessageService.getInstance().message(message, "You just exited what you were doing.")
 
             return message.channel.stopTyping(true)
           }
@@ -74,15 +73,13 @@ export class MessageManagerService {
 
             if (stateFound.state.step === 1) {
               CharacterCreationService.getInstance().setCharacterName(message)
-            }
-            else if (stateFound.state.step === 2) {
+            } else if (stateFound.state.step === 2) {
               CharacterCreationService.getInstance().setCharacterFirstBonus(message)
             }
 
             return message.channel.stopTyping(true)
           }
         })
-      }
     }
   }
 }

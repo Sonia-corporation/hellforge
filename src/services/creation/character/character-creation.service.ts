@@ -11,7 +11,7 @@ export class CharacterCreationService {
   private static _instance: CharacterCreationService
 
   public static getInstance(): CharacterCreationService {
-    if(_.isNil(CharacterCreationService._instance)) {
+    if (_.isNil(CharacterCreationService._instance)) {
       CharacterCreationService._instance = new CharacterCreationService()
     }
     return CharacterCreationService._instance
@@ -19,25 +19,24 @@ export class CharacterCreationService {
 
   public init(message: Message): void {
     CharacterService.getInstance().getEntity(message.author.id)
-    .then((characterFound): void => {
-      if (!characterFound) {
-        const memberId = message.author.id
+      .then((characterFound): void => {
+        if (!characterFound) {
+          const memberId = message.author.id
 
-        StateManagerService.getInstance().setBotState(memberId, {
-          memberId,
-          state: {
-            name: StateNamesEnum.CHARACTER_CREATION,
-            step: 1,
-            data: ''
-          }
-        }) // The data from the state will have a CSV format value.
-        DisplayMessageService.getInstance().message(message, `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.`)
-      }
-      else {
-        const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
-        DisplayMessageService.getInstance().message(message, `You already have a character, their name is: ${boldCharacterName}`)
-      }
-    })
+          StateManagerService.getInstance().setBotState(memberId, {
+            memberId,
+            state: {
+              name: StateNamesEnum.CHARACTER_CREATION,
+              step: 1,
+              data: "",
+            },
+          }) // The data from the state will have a CSV format value.
+          DisplayMessageService.getInstance().message(message, "Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.")
+        } else {
+          const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
+          DisplayMessageService.getInstance().message(message, `You already have a character, their name is: ${boldCharacterName}`)
+        }
+      })
   }
 
   public setCharacterName(message: Message): void {
@@ -48,8 +47,8 @@ export class CharacterCreationService {
       state: {
         name: StateNamesEnum.CHARACTER_CREATION,
         step: 2,
-        data: `${stateFound.state.data},${message.content},`
-      }
+        data: `${stateFound.state.data},${message.content},`,
+      },
     })
 
     const formattedCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, message.content)
@@ -64,8 +63,8 @@ export class CharacterCreationService {
       state: {
         name: StateNamesEnum.CHARACTER_CREATION,
         step: 3,
-        data: `${stateFound.state.data},${message.content},`
-      }
+        data: `${stateFound.state.data},${message.content},`,
+      },
     })
 
     const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(TextFormats.ITALIC_BOLD, message.content)

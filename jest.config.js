@@ -14,7 +14,7 @@ module.exports = {
   cache: true,
 
   // The directory where Jest should store its cached dependency information
-  cacheDirectory: `./.cache-jest`,
+  cacheDirectory: "./.cache-jest",
 
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
@@ -26,7 +26,7 @@ module.exports = {
   // collectCoverageFrom: undefined,
 
   // The directory where Jest should output its coverage files
-  coverageDirectory: `coverage`,
+  coverageDirectory: "coverage",
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -34,7 +34,7 @@ module.exports = {
   // ],
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: [`json`, `text-summary`, `lcov`],
+  coverageReporters: ["json", "text-summary", "lcov"],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -43,8 +43,8 @@ module.exports = {
   // dependencyExtractor: undefined,
 
   displayName: {
-    color: `red`,
-    name: `Hellforge`,
+    color: "red",
+    name: "Hellforge",
   },
 
   // Make calling deprecated APIs throw helpful error messages
@@ -65,7 +65,7 @@ module.exports = {
   maxConcurrency: 5,
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  moduleDirectories: [`./node_modules`],
+  moduleDirectories: ["./node_modules"],
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
   // moduleNameMapper: {},
@@ -74,19 +74,19 @@ module.exports = {
   // modulePathIgnorePatterns: [],
 
   // An array of file extensions your modules use
-  moduleFileExtensions: [`js`, `json`, `ts`, `node`],
+  moduleFileExtensions: ["js", "json", "ts", "node"],
 
   // Activates notifications for test results
   notify: true,
 
   // An enum that specifies notification mode. Requires { notify: true }
-  notifyMode: `failure-change`,
+  notifyMode: "failure-change",
 
   // Run tests from one or more projects
   // projects: undefined,
 
   // A preset that is used as a base for Jest's configuration
-  preset: `ts-jest/presets/js-with-ts`,
+  preset: "ts-jest/presets/js-with-ts",
 
   // Automatically reset mock state between every test
   resetMocks: true,
@@ -107,18 +107,16 @@ module.exports = {
   // runner: "jest-runner",
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: [`./src`],
-
+  roots: ["./src"],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
-
 
   // Prevent tests from printing messages through the console
   silent: true,
 
   // The test environment that will be used for testing
-  testEnvironment: `node`,
+  testEnvironment: "node",
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},
@@ -152,7 +150,7 @@ module.exports = {
   testTimeout: 5000,
 
   // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-  timers: `fake`,
+  timers: "fake",
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -164,7 +162,7 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    ".ts": `ts-jest`,
+    ".ts": "ts-jest",
   },
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode

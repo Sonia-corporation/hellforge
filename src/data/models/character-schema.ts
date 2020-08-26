@@ -1,13 +1,13 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
 const characterSchema = new mongoose.Schema({
   ownerId: String,
   name: String,
   gender: {
     type: String,
-    enum: ['Male', 'Female', 'Other'],
-    default: 'Other',
-    required: true
+    enum: ["Male", "Female", "Other"],
+    default: "Other",
+    required: true,
   },
   level: Number,
   experience: Number,
@@ -22,7 +22,7 @@ const characterSchema = new mongoose.Schema({
     charisma: Number,
     mind: Number,
     spirit: Number,
-    willpower: Number
+    willpower: Number,
   },
   luck: Number,
   credits: Number,
@@ -30,11 +30,11 @@ const characterSchema = new mongoose.Schema({
   inventory: [{
     name: String,
     quantity: Number,
-    type: String
-  }]
+    type: String,
+  }],
 },
 {
-  versionKey: false 
+  versionKey: false,
 })
 
 export = mongoose.model("characters", characterSchema, "characters")

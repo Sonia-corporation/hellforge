@@ -1,4 +1,4 @@
-import { StatNamesEnum } from '../../enums/stat-names.enum';
+import { StatNamesEnum } from "../../enums/stat-names.enum"
 
 export interface IStat {
   name: StatNamesEnum

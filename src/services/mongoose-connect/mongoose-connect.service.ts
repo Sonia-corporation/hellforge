@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _ from "lodash"
 import mongoose from "mongoose"
 import { login, password } from "../../../credentials.json"
 
@@ -6,7 +6,7 @@ export class MongooseConnectService {
   private static _instance: MongooseConnectService
 
   public static getInstance(): MongooseConnectService {
-    if(_.isNil(MongooseConnectService._instance)) {
+    if (_.isNil(MongooseConnectService._instance)) {
       MongooseConnectService._instance = new MongooseConnectService()
     }
     return MongooseConnectService._instance
@@ -16,12 +16,11 @@ export class MongooseConnectService {
     mongoose.connect(`mongodb+srv://${login}:${password}@cluster0.zmch1.gcp.mongodb.net/hellforge-bot-db?retryWrites=true&w=majority`,
       {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
       }, (error: Error) => {
         if (error) throw error
 
-        console.log('Connected to MongoDB!')
-      }
-    )
+        console.log("Connected to MongoDB!")
+      })
   }
 }

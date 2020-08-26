@@ -1,15 +1,15 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 
 const stateSchama = new mongoose.Schema({
   memberId: String,
   state: {
     name: String,
     step: Number,
-    data: String
-  }
+    data: String,
+  },
 },
 {
-  versionKey: false 
+  versionKey: false,
 })
 
 export = mongoose.model("states", stateSchama, "states")
