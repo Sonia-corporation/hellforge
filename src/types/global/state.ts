@@ -1,10 +1,10 @@
 import { StateNamesEnum } from "../../enums/state-names.enum"
 
 export interface IState {
-  memberId: string,
+  memberId: string;
   state: {
-    name: StateNamesEnum,
-    step: number,
-    data: string
-  }
+    name: StateNamesEnum;
+    step: number;
+    data: string;
+  };
 }

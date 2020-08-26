@@ -10,5 +10,5 @@ export enum StatNamesEnum {
   MIND = "Mind",
   SPIRIT = "Spirit",
   WILLPOWER = "Willpower",
-  LUCK = "Luck"
+  LUCK = "Luck",
 }

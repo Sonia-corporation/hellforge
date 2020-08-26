@@ -9,7 +9,9 @@ describe("MessageManagerService", () => {
 
       MessageManagerService = MessageManagerService.getInstance()
 
-      expect(MessageManagerService).toStrictEqual(expect.any(MessageManagerService))
+      expect(MessageManagerService).toStrictEqual(
+        expect.any(MessageManagerService),
+      )
     })
   })
 })

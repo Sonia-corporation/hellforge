@@ -2,7 +2,7 @@ import _ from "lodash"
 import { ActivityType, ClientUser } from "discord.js"
 
 export class ActivityService {
-  private static _instance: ActivityService
+  private static _instance: ActivityService;
 
   public static getInstance(): ActivityService {
     if (_.isNil(ActivityService._instance)) {

@@ -2,7 +2,7 @@ import _ from "lodash"
 import { BotPrefixesEnum } from "../../enums/bot-prefixes.enum"
 
 export class PrefixManagerService {
-  private static _instance: PrefixManagerService
+  private static _instance: PrefixManagerService;
 
   public static getInstance(): PrefixManagerService {
     if (_.isNil(PrefixManagerService._instance)) {

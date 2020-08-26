@@ -2,7 +2,7 @@ import _ from "lodash"
 import { Message } from "discord.js"
 
 export class ArgumentsManagerService {
-  private static _instance: ArgumentsManagerService
+  private static _instance: ArgumentsManagerService;
 
   public static getInstance(): ArgumentsManagerService {
     if (_.isNil(ArgumentsManagerService._instance)) {
