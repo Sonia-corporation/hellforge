@@ -4,7 +4,7 @@
   "description": "A Discord bot game set in Hell",
   "main": "./dist/src/features/hellforge/hellforge.js",
   "scripts": {
-    "lint": "npx eslint 'src/**'",
+    "lint": "npx eslint --fix --ext .js,.ts --cache src/",
     "start": "concurrently \"tsc --watch\" \"nodemon ./dist/src/features/hellforge/hellforge.js\"",
     "test": "jest"
   },

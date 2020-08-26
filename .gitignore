@@ -4,3 +4,4 @@ coverage
 dist
 credentials.json
 .idea
+.eslintcache
