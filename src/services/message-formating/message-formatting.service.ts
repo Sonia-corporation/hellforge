@@ -2,7 +2,7 @@ import _ from "lodash"
 import { TextFormats } from "../../enums/text-formats.enum"
 
 export class MessageFormattingService {
-  private static _instance: MessageFormattingService
+  private static _instance: MessageFormattingService;
 
   public static getInstance(): MessageFormattingService {
     if (_.isNil(MessageFormattingService._instance)) {

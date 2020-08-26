@@ -4,7 +4,7 @@ import { AppReadyService } from "../../services/app-ready/app-ready.service"
 import { MessageManagerService } from "../../services/message-manager/message-manager.service"
 
 class Hellforge {
-  private _client = new Client()
+  private _client = new Client();
 
   constructor() {
     AppReadyService.getInstance().init(this._client)

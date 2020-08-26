@@ -5,7 +5,7 @@ import { MongooseConnectService } from '../../services/mongoose-connect/mongoose
 import { ActivityService } from '../activity/activity.service';
 
 export class AppReadyService {
-  private static _instance: AppReadyService;
+  private static _instance: AppReadyService
 
   public static getInstance(): AppReadyService {
     if (_.isNil(AppReadyService._instance)) {

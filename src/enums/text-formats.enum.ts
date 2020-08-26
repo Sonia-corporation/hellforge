@@ -3,5 +3,5 @@ export enum TextFormats {
   ITALIC = "italic",
   ITALIC_BOLD = "italicBold",
   LINE_THROUGH = "lineThrough",
-  UNDERLINE = "underline"
+  UNDERLINE = "underline",
 }

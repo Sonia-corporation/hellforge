@@ -12,7 +12,7 @@ import { CharacterCreationService } from "../creation/character/character-creati
 import { StateManagerService } from "../state-manager/state-manager.service"
 
 export class MessageManagerService {
-  private static _instance: MessageManagerService
+  private static _instance: MessageManagerService;
 
   public static getInstance(): MessageManagerService {
     if (_.isNil(MessageManagerService._instance)) {
@@ -31,16 +31,25 @@ export class MessageManagerService {
     if (message.guild) {
       if (message.author.bot) return
 
-      const prefix: string = PrefixManagerService.getInstance().getReadablePrefix(message.content)
+      const prefix: string = PrefixManagerService.getInstance().getReadablePrefix(
+        message.content,
+      )
 
       if (message.content.startsWith(prefix)) {
         message.channel.startTyping(1)
 
-        const args = ArgumentsManagerService.getInstance().getArguments(message, prefix)
-        const command = ArgumentsManagerService.getInstance().extractCommand(args)
+        const args = ArgumentsManagerService.getInstance().getArguments(
+          message,
+          prefix,
+        )
+        const command = ArgumentsManagerService.getInstance().extractCommand(
+          args,
+        )
 
         if (command === CommandsEnum.CHARACTER) {
-          const createArg = args.find((arg) => arg === SubcommandsEnum.CHARACTER_CREATION)
+          const createArg = args.find(
+            (arg) => arg === SubcommandsEnum.CHARACTER_CREATION,
+          )
 
           if (createArg) CharacterCreationService.getInstance().init(message)
           else CharacterCommandService.getInstance().message(message)
@@ -49,9 +58,13 @@ export class MessageManagerService {
         return message.channel.stopTyping(true)
       }
 
-      StateManagerService.getInstance().getBotState(message.author.id)
+      StateManagerService.getInstance()
+        .getBotState(message.author.id)
         .then((stateFound): void => {
-          if (message.content.startsWith("exit") && stateFound.state.name !== StateNamesEnum.NORMAL) {
+          if (
+            message.content.startsWith("exit")
+            && stateFound.state.name !== StateNamesEnum.NORMAL
+          ) {
             message.channel.startTyping(1)
 
             StateManagerService.getInstance().setBotState(message.author.id, {
@@ -63,7 +76,10 @@ export class MessageManagerService {
               },
             })
 
-            DisplayMessageService.getInstance().message(message, "You just exited what you were doing.")
+            DisplayMessageService.getInstance().message(
+              message,
+              "You just exited what you were doing.",
+            )
 
             return message.channel.stopTyping(true)
           }
@@ -74,7 +90,9 @@ export class MessageManagerService {
             if (stateFound.state.step === 1) {
               CharacterCreationService.getInstance().setCharacterName(message)
             } else if (stateFound.state.step === 2) {
-              CharacterCreationService.getInstance().setCharacterFirstBonus(message)
+              CharacterCreationService.getInstance().setCharacterFirstBonus(
+                message,
+              )
             }
 
             return message.channel.stopTyping(true)

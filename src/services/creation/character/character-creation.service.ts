@@ -8,7 +8,7 @@ import { StateManagerService } from "../../state-manager/state-manager.service"
 import { StateNamesEnum } from "../../../enums/state-names.enum"
 
 export class CharacterCreationService {
-  private static _instance: CharacterCreationService
+  private static _instance: CharacterCreationService;
 
   public static getInstance(): CharacterCreationService {
     if (_.isNil(CharacterCreationService._instance)) {
@@ -18,7 +18,8 @@ export class CharacterCreationService {
   }
 
   public init(message: Message): void {
-    CharacterService.getInstance().getEntity(message.author.id)
+    CharacterService.getInstance()
+      .getEntity(message.author.id)
       .then((characterFound): void => {
         if (!characterFound) {
           const memberId = message.author.id
@@ -31,10 +32,19 @@ export class CharacterCreationService {
               data: "",
             },
           }) // The data from the state will have a CSV format value.
-          DisplayMessageService.getInstance().message(message, "Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.")
+          DisplayMessageService.getInstance().message(
+            message,
+            "Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.",
+          )
         } else {
-          const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
-          DisplayMessageService.getInstance().message(message, `You already have a character, their name is: ${boldCharacterName}`)
+          const boldCharacterName = MessageFormattingService.getInstance().format(
+            TextFormats.BOLD,
+            characterFound.name,
+          )
+          DisplayMessageService.getInstance().message(
+            message,
+            `You already have a character, their name is: ${boldCharacterName}`,
+          )
         }
       })
   }
@@ -51,8 +61,14 @@ export class CharacterCreationService {
       },
     })
 
-    const formattedCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, message.content)
-    DisplayMessageService.getInstance().message(message, `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`)
+    const formattedCharacterName = MessageFormattingService.getInstance().format(
+      TextFormats.BOLD,
+      message.content,
+    )
+    DisplayMessageService.getInstance().message(
+      message,
+      `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`,
+    )
   }
 
   public setCharacterFirstBonus(message: Message): void {
@@ -67,7 +83,13 @@ export class CharacterCreationService {
       },
     })
 
-    const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(TextFormats.ITALIC_BOLD, message.content)
-    DisplayMessageService.getInstance().message(message, `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`)
+    const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(
+      TextFormats.ITALIC_BOLD,
+      message.content,
+    )
+    DisplayMessageService.getInstance().message(
+      message,
+      `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`,
+    )
   }
 }
