@@ -11,7 +11,7 @@ export class MessageFormattingService {
     return MessageFormattingService._instance;
   }
 
-  public format(formatToApply: TextFormats, text: string) {
+  public format(formatToApply: TextFormats, text: string): string {
     return this[formatToApply](text);
   }
 
