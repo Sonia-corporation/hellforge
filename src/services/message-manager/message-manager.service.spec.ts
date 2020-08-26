@@ -1,9 +1,9 @@
 import { MessageManagerService } from "./message-manager.service";
 
-describe(`MessageManagerService`, () => {
+describe(`MessageManagerService`, (): void => {
   let messageManagerService: MessageManagerService;
 
-  describe(`getInstance()`, () => {
+  describe(`getInstance()`, (): void => {
     it(`should instanciate MessageManagerService`, (): void => {
       expect.assertions(1);
 
