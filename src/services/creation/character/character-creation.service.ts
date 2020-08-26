@@ -19,19 +19,19 @@ export class CharacterCreationService {
 
   public init(message: Message): void {
     CharacterService.getInstance().getEntity(message.author.id)
-    .then((characterFound) => {
+    .then((characterFound): void => {
       if (!characterFound) {
-        const currentState = StateManagerService.getInstance().getBotState()
+        const memberId = message.author.id
 
-        if (currentState.state === 'Normal') {
-          StateManagerService.getInstance().setBotState({
-            memberId: message.author.id,
-            state: StateNamesEnum.CHARACTER_CREATION,
+        StateManagerService.getInstance().setBotState(memberId, {
+          memberId,
+          state: {
+            name: StateNamesEnum.CHARACTER_CREATION,
             step: 1,
             data: ''
-          }) // The data from the state will have a CSV format value.
-          DisplayMessageService.getInstance().message(message, `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.`)
-        }
+          }
+        }) // The data from the state will have a CSV format value.
+        DisplayMessageService.getInstance().message(message, `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.`)
       }
       else {
         const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
@@ -41,27 +41,33 @@ export class CharacterCreationService {
   }
 
   public setCharacterName(message: Message): void {
-    const newData = `${message.content},`
-    const oldData = StateManagerService.getInstance().getBotState().data
-    StateManagerService.getInstance().setBotState({
-      memberId: message.author.id,
-      state: StateNamesEnum.CHARACTER_CREATION,
-      step: 2,
-      data: `${oldData},${newData},`
+    const memberId = message.author.id
+
+    StateManagerService.getInstance().setBotState(memberId, {
+      memberId,
+      state: {
+        name: StateNamesEnum.CHARACTER_CREATION,
+        step: 2,
+        data: `${stateFound.state.data},${message.content},`
+      }
     })
+
     const formattedCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, message.content)
     DisplayMessageService.getInstance().message(message, `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`)
   }
 
   public setCharacterFirstBonus(message: Message): void {
-    const newData = `${StateManagerService.getInstance().getBotState().data}${message.content},`
-    const oldData = StateManagerService.getInstance().getBotState().data
-    StateManagerService.getInstance().setBotState({
-      memberId: message.author.id,
-      state: StateNamesEnum.CHARACTER_CREATION,
-      step: 3,
-      data: `${oldData},${newData},`
+    const memberId = message.author.id
+
+    StateManagerService.getInstance().setBotState(memberId, {
+      memberId,
+      state: {
+        name: StateNamesEnum.CHARACTER_CREATION,
+        step: 3,
+        data: `${stateFound.state.data},${message.content},`
+      }
     })
+
     const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(TextFormats.ITALIC_BOLD, message.content)
     DisplayMessageService.getInstance().message(message, `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`)
   }
