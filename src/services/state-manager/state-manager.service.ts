@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { IState } from '../../types/global/state'
-import { StateNamesEnum } from 'src/enums/state-names.enum'
+import { StateNamesEnum } from '../../enums/state-names.enum'
 
 export class StateManagerService {
   private static _instance: StateManagerService
