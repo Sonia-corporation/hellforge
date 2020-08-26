@@ -1,3 +1,3 @@
 export enum SubcommandsEnum {
-  CHARACTER_CREATION = "create",
+  CHARACTER_CREATION = `create`,
 }

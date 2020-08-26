@@ -1,15 +1,15 @@
-import { AppReadyService } from "./app-ready.service"
+import { AppReadyService } from "./app-ready.service";
 
-describe("AppReadyServivce", () => {
-  let appReady: AppReadyService
+describe(`AppReadyServivce`, () => {
+  let appReady: AppReadyService;
 
-  describe("getInstance()", () => {
-    it("should instanciate AppReadyService", () => {
-      expect.assertions(1)
+  describe(`getInstance()`, () => {
+    it(`should instanciate AppReadyService`, () => {
+      expect.assertions(1);
 
-      appReady = AppReadyService.getInstance()
+      appReady = AppReadyService.getInstance();
 
-      expect(appReady).toStrictEqual(expect.any(AppReadyService))
-    })
-  })
-})
+      expect(appReady).toStrictEqual(expect.any(AppReadyService));
+    });
+  });
+});

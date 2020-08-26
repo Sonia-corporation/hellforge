@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const characterSchema = new mongoose.Schema(
   {
@@ -6,8 +6,8 @@ const characterSchema = new mongoose.Schema(
     name: String,
     gender: {
       type: String,
-      enum: ["Male", "Female", "Other"],
-      default: "Other",
+      enum: [`Male`, `Female`, `Other`],
+      default: `Other`,
       required: true,
     },
     level: Number,
@@ -38,7 +38,7 @@ const characterSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-  },
-)
+  }
+);
 
-export = mongoose.model("characters", characterSchema, "characters");
+export = mongoose.model(`characters`, characterSchema, `characters`);

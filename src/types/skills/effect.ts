@@ -1,6 +1,6 @@
 export interface IEffect {
-  name: string;
   description: string;
-  spread: number;
+  name: string;
   power: number;
+  spread: number;
 }

@@ -1,17 +1,17 @@
-import _ from "lodash"
-import { ActivityType, ClientUser } from "discord.js"
+import { ActivityType, ClientUser } from "discord.js";
+import _ from "lodash";
 
 export class ActivityService {
   private static _instance: ActivityService;
 
   public static getInstance(): ActivityService {
     if (_.isNil(ActivityService._instance)) {
-      ActivityService._instance = new ActivityService()
+      ActivityService._instance = new ActivityService();
     }
-    return ActivityService._instance
+    return ActivityService._instance;
   }
 
   public setActivity(user: ClientUser, activity: ActivityType) {
-    user?.setActivity("!hell help", { type: activity })
+    user?.setActivity(`!hell help`, { type: activity });
   }
 }

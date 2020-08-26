@@ -1,11 +1,9 @@
-import { Client } from 'discord.js';
-import _ from 'lodash';
-import { token } from '../../../credentials.json';
-import { MongooseConnectService } from '../../services/mongoose-connect/mongoose-connect.service';
-import { ActivityService } from '../activity/activity.service';
+import { Client } from "discord.js";
+import _ from "lodash";
+import { ActivityService } from "../activity/activity.service";
 
 export class AppReadyService {
-  private static _instance: AppReadyService
+  private static _instance: AppReadyService;
 
   public static getInstance(): AppReadyService {
     if (_.isNil(AppReadyService._instance)) {
@@ -15,16 +13,18 @@ export class AppReadyService {
   }
 
   public init(client: Client): void {
-    MongooseConnectService.getInstance().init();
+    // @todo fix init method before
+    // MongooseConnectService.getInstance().init();
 
-    client.on('ready', () => {
+    client.on(`ready`, () => {
       if (client.user) {
-        ActivityService.getInstance().setActivity(client.user, 'WATCHING');
+        ActivityService.getInstance().setActivity(client.user, `WATCHING`);
         this._log(client.user.tag);
       }
     });
 
-    client.login(token);
+    // @todo fix it
+    // client.login(token);
   }
 
   private _log(usertag: string): void {

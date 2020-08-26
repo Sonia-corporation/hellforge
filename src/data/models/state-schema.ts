@@ -1,6 +1,6 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
-const stateSchama = new mongoose.Schema(
+const stateSchema = new mongoose.Schema(
   {
     memberId: String,
     state: {
@@ -11,7 +11,7 @@ const stateSchama = new mongoose.Schema(
   },
   {
     versionKey: false,
-  },
-)
+  }
+);
 
-export = mongoose.model("states", stateSchama, "states");
+export = mongoose.model(`states`, stateSchema, `states`);

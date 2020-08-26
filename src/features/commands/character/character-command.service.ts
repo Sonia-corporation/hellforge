@@ -1,18 +1,16 @@
-import _ from "lodash"
-import { Message } from "discord.js"
-import { TextFormats } from "../../../enums/text-formats.enum"
-import { CharacterService } from "../../../services/character/character.service"
-import { DisplayMessageService } from "../../../services/display-message/display-message.service"
-import { MessageFormattingService } from "../../../services/message-formating/message-formatting.service"
+import { Message } from "discord.js";
+import _ from "lodash";
+import { CharacterService } from "../../../services/character/character.service";
+import { DisplayMessageService } from "../../../services/display-message/display-message.service";
 
 export class CharacterCommandService {
   private static _instance: CharacterCommandService;
 
   public static getInstance(): CharacterCommandService {
     if (_.isNil(CharacterCommandService._instance)) {
-      CharacterCommandService._instance = new CharacterCommandService()
+      CharacterCommandService._instance = new CharacterCommandService();
     }
-    return CharacterCommandService._instance
+    return CharacterCommandService._instance;
   }
 
   public message(message: Message): void {
@@ -20,20 +18,21 @@ export class CharacterCommandService {
       .getEntity(message.author.id)
       .then((characterFound) => {
         if (characterFound) {
-          const boldCharacterName = MessageFormattingService.getInstance().format(
-            TextFormats.BOLD,
-            characterFound.name,
-          )
-          DisplayMessageService.getInstance().message(
-            message,
-            `Your character's name is: ${boldCharacterName}`,
-          )
+          // @todo fix
+          // const boldCharacterName = MessageFormattingService.getInstance().format(
+          //   TextFormats.BOLD,
+          //   characterFound.name
+          // );
+          // DisplayMessageService.getInstance().message(
+          //   message,
+          //   `Your character's name is: ${boldCharacterName}`
+          // );
         } else {
           DisplayMessageService.getInstance().message(
             message,
-            "Character not found.",
-          )
+            `Character not found.`
+          );
         }
-      })
+      });
   }
 }
