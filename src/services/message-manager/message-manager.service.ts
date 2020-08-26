@@ -1,10 +1,11 @@
 import _ from "lodash"
-import { Message, Client } from "discord.js"
+import { Message, Client, MessageEmbed } from "discord.js"
 import { PrefixManagerService } from "../prefix-manager/prefix-manager.service"
 
 import { StateNamesEnum } from '../../enums/state-names.enum'
 import { SubcommandsEnum } from '../../enums/subcommands.enum'
 import { CommandsEnum } from '../../enums/commands.enum'
+import { EmbedColorsEnum } from '../../enums/embed-colors.enum'
 import { CharacterCommandService } from "../../features/commands/character/character-command.service"
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service"
 import { DisplayMessageService } from '../display-message/display-message.service'
@@ -45,7 +46,14 @@ export class MessageManagerService {
           if (createArg) CharacterCreationService.getInstance().init(message)
           else CharacterCommandService.getInstance().message(message)
         }
-        else DisplayMessageService.getInstance().message(message, ':smiling_imp:')
+        else {
+          const embed = new MessageEmbed({
+            color: EmbedColorsEnum.ERROR,
+            title: ':smiling_imp:',
+          })
+
+          DisplayMessageService.getInstance().message(message, embed)
+        }
 
         return message.channel.stopTyping(true)
       }
@@ -64,7 +72,13 @@ export class MessageManagerService {
               }
             })
 
-            DisplayMessageService.getInstance().message(message, 'You just exited what you were doing.')
+            const embed = new MessageEmbed({
+              color: EmbedColorsEnum.INFO,
+              title: 'Process burned',
+              description: 'You just cancelled what you were doing.'
+            })
+
+            DisplayMessageService.getInstance().message(message, embed)
 
             return message.channel.stopTyping(true)
           }

@@ -1,11 +1,12 @@
 import _ from "lodash"
-import { Message } from "discord.js"
+import { Message, MessageEmbed } from "discord.js"
 import { TextFormats } from "../../../enums/text-formats.enum"
+import { StateNamesEnum } from "../../../enums/state-names.enum"
+import { EmbedColorsEnum } from '../../../enums/embed-colors.enum'
 import { DisplayMessageService } from "../../display-message/display-message.service"
 import { CharacterService } from "../../character/character.service"
 import { MessageFormattingService } from "../../message-formating/message-formatting.service"
 import { StateManagerService } from "../../state-manager/state-manager.service"
-import { StateNamesEnum } from "../../../enums/state-names.enum"
 
 export class CharacterCreationService {
   private static _instance: CharacterCreationService
@@ -31,11 +32,21 @@ export class CharacterCreationService {
             data: ''
           }
         }) // The data from the state will have a CSV format value.
-        DisplayMessageService.getInstance().message(message, `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.`)
+        const embed = new MessageEmbed({
+          color: EmbedColorsEnum.INFO,
+          title: `CHaracter Creation`,
+          description: `Welcome! Type in the name of your character below. You can type 'exit' to quit this mode.`
+        })
+        DisplayMessageService.getInstance().message(message, embed)
       }
       else {
         const boldCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, characterFound.name)
-        DisplayMessageService.getInstance().message(message, `You already have a character, their name is: ${boldCharacterName}`)
+        const embed = new MessageEmbed({
+          color: EmbedColorsEnum.ERROR,
+          title: `ERROR`,
+          description: `You already have a character, their name is: ${boldCharacterName}`
+        })
+        DisplayMessageService.getInstance().message(message, embed)
       }
     })
   }
@@ -53,7 +64,12 @@ export class CharacterCreationService {
     })
 
     const formattedCharacterName = MessageFormattingService.getInstance().format(TextFormats.BOLD, message.content)
-    DisplayMessageService.getInstance().message(message, `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`)
+    const embed = new MessageEmbed({
+      color: EmbedColorsEnum.INFO,
+      title: formattedCharacterName,
+      description: `Pleased to meet them... I'm sure we're gonna get along. What will be their foremost stat?`
+    })
+    DisplayMessageService.getInstance().message(message, embed)
   }
 
   public setCharacterFirstBonus(message: Message): void {
@@ -69,6 +85,11 @@ export class CharacterCreationService {
     })
 
     const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(TextFormats.ITALIC_BOLD, message.content)
-    DisplayMessageService.getInstance().message(message, `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`)
+    const embed = new MessageEmbed({
+      color: EmbedColorsEnum.INFO,
+      title: formattedCharacterFisrtStatBonus,
+      description: `So, they will be proficient in that field, I hope they will have a good use of it.`
+    })
+    DisplayMessageService.getInstance().message(message, embed)
   }
 }

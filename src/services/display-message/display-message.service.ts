@@ -1,5 +1,5 @@
 import _ from "lodash"
-import { Message } from "discord.js"
+import { Message, MessageEmbed } from "discord.js"
 
 export class DisplayMessageService {
   private static _instance: DisplayMessageService
@@ -11,7 +11,7 @@ export class DisplayMessageService {
     return DisplayMessageService._instance
   }
 
-  public message(messageToAnswer: Message, messageToSend: string): void {
-    messageToAnswer.channel.send(messageToSend)
+  public message(messageToAnswer: Message, embedToSend: MessageEmbed): void {
+    messageToAnswer.channel.send({ embed: embedToSend })
   }
 }
