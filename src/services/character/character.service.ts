@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { Document } from 'mongoose'
-import characters from '../../data/models/character-schema'
 import { ICharacter } from '../../types/character/character'
+import characters from '../../data/models/character-schema'
 
 export class CharacterService {
   private static _instance: CharacterService
@@ -13,9 +13,9 @@ export class CharacterService {
     return CharacterService._instance
   }
 
-  public async getEntity(id: string):Promise<Document | void> {
-    return await characters.findOne({ ownerId: id }, (err: Error, characterFound) => {        
-      if (characterFound) return characterFound
+  public async getEntity(ownerId: string):Promise<Document | void> {
+    return await characters.findOne({ ownerId }, (err: Error, characterFound: Document): ICharacter => {        
+      if (characterFound) return characterFound.schema.obj
     })
     .catch((err): void => {
       console.log(`Error: Character not found because: ${err}`)
@@ -23,8 +23,8 @@ export class CharacterService {
     })
   }
 
-  public setEntity(id: string, characterToInsert: ICharacter): void {
-    characters.update({ ownerId: id }, characterToInsert, (err: Error): void => {
+  public setEntity(ownerId: string, characterToInsert: ICharacter): void {
+    characters.update({ ownerId }, characterToInsert, (err: Error): void => {
       if (err) throw err
     })
   }
