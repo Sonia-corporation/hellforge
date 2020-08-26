@@ -1,5 +1,6 @@
-import { Message } from "discord.js";
 import _ from "lodash";
+import { Message } from "discord.js";
+import { CommandsEnum } from "../../enums/commands.enum";
 
 export class ArgumentsManagerService {
   private static _instance: ArgumentsManagerService;
@@ -11,19 +12,17 @@ export class ArgumentsManagerService {
     return ArgumentsManagerService._instance;
   }
 
-  public getArguments(message: Message, botPrefix: string) {
+  public getArguments(message: Message, botPrefix: string): string[] {
     return message.content.slice(botPrefix.length).split(/ +/);
   }
 
-  // @todo fix return type
-  public extractCommand(entries: string[]): unknown {
+  public extractCommand(entries: string[]): string {
     const usableBotCommand = entries.shift();
 
     if (usableBotCommand) {
       return usableBotCommand.toLowerCase();
     }
 
-    // @todo check which return type is necessary
-    return null;
+    return CommandsEnum.NONE;
   }
 }
