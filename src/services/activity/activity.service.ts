@@ -11,7 +11,14 @@ export class ActivityService {
     return ActivityService._instance;
   }
 
-  public setActivity(user: ClientUser, activity: ActivityType) {
-    user?.setActivity(`!hell help`, { type: activity });
+  public setActivity(user: ClientUser, activity: ActivityType): void {
+    user
+      .setActivity(`!hell help`, { type: activity })
+      .then((): void => {
+        console.info(`The bot activity was set to ${activity}`);
+      })
+      .catch((err: string): void => {
+        console.error(`The bot encountered an error that was: ${err}`);
+      });
   }
 }
