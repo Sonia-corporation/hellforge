@@ -51,7 +51,7 @@ export class MessageManagerService {
       }
       else {
         StateManagerService.getInstance().getBotState(message.author.id)
-        .then((stateFound) => {
+        .then((stateFound): void => {
           if (message.content.startsWith('exit') && stateFound.state.name !== StateNamesEnum.NORMAL) {
             message.channel.startTyping(1)
 
@@ -75,9 +75,9 @@ export class MessageManagerService {
             if (stateFound.state.step === 1) {
               CharacterCreationService.getInstance().setCharacterName(message)
             }
-            else if (stateFound.state.step === 2) [
+            else if (stateFound.state.step === 2) {
               CharacterCreationService.getInstance().setCharacterFirstBonus(message)
-            ]
+            }
 
             return message.channel.stopTyping(true)
           }
