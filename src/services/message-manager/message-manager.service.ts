@@ -32,7 +32,6 @@ export class MessageManagerService {
       if (message.author.bot) return
 
       const prefix: string = PrefixManagerService.getInstance().getReadablePrefix(message.content)
-      const currentState = StateManagerService.getInstance().getBotState()
 
       if (message.content.startsWith(prefix)) {
         message.channel.startTyping(1)
@@ -50,10 +49,18 @@ export class MessageManagerService {
 
         return message.channel.stopTyping(true)
       }
-      else if (currentState.memberId === message.author.id && currentState.state === StateNamesEnum.CHARACTER_CREATION) {
-        if (currentState.step === 1) {
-          CharacterCreationService.getInstance().setCharacterName(message)
-        }
+      else {
+        StateManagerService.getInstance().getBotState(message.author.id)
+        .then((stateFound) => {
+          if (stateFound.state.name === StateNamesEnum.CHARACTER_CREATION) {
+            if (stateFound.state.step === 1) {
+              CharacterCreationService.getInstance().setCharacterName(message)
+            }
+            else if (stateFound.state.step === 2) [
+              CharacterCreationService.getInstance().setCharacterFirstBonus(message)
+            ]
+          }
+        })
       }
     }
   }
