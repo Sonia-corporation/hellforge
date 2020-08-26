@@ -5,7 +5,7 @@ import { IState } from "../../types/global/state";
 export class StateManagerService {
   private static _instance: StateManagerService;
 
-  public static getInstance() {
+  public static getInstance(): StateManagerService {
     if (_.isNil(StateManagerService._instance)) {
       StateManagerService._instance = new StateManagerService();
     }
