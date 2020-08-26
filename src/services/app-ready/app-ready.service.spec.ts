@@ -1,10 +1,10 @@
 import { AppReadyService } from "./app-ready.service";
 
-describe(`AppReadyServivce`, () => {
+describe(`AppReadyService`, (): void => {
   let appReady: AppReadyService;
 
-  describe(`getInstance()`, () => {
-    it(`should instanciate AppReadyService`, () => {
+  describe(`getInstance()`, (): void => {
+    it(`should instanciate AppReadyService`, (): void => {
       expect.assertions(1);
 
       appReady = AppReadyService.getInstance();

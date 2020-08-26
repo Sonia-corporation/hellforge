@@ -16,7 +16,7 @@ export class AppReadyService {
     // @todo fix init method before
     // MongooseConnectService.getInstance().init();
 
-    client.on(`ready`, () => {
+    client.on(`ready`, (): void => {
       if (client.user) {
         ActivityService.getInstance().setActivity(client.user, `WATCHING`);
         this._log(client.user.tag);
