@@ -1,15 +1,10 @@
 import _ from "lodash"
-import { IState } from '../../types/global/state'
-import { StateNamesEnum } from '../../enums/state-names.enum'
+import { Document } from "mongoose"
+import { IState } from "../../types/global/state"
+import states from "../../data/models/state-schema"
 
 export class StateManagerService {
   private static _instance: StateManagerService
-  private _currentBotState: IState = {
-    memberId: '',
-    state: StateNamesEnum.NORMAL,
-    step: 0,
-    data: ''
-  }
 
   public static getInstance() {
     if (_.isNil(StateManagerService._instance)) {
@@ -18,14 +13,27 @@ export class StateManagerService {
     return StateManagerService._instance
   }
 
-  public getBotState(): IState {
-    return this._currentBotState
+  public async getBotState(memberId: string): Promise<Document | void> {
+    return await states.findOne({ memberId }, (err: Error, stateFound: Document): IState => {
+      if (stateFound) return stateFound.schema.obj
+    })
+    .catch((err): void => {
+      console.log(`Error: State not found because: ${err}`)
+      return
+    })
   }
 
-  public setBotState(newState: IState): void{
-    this._currentBotState.memberId = newState.memberId
-    this._currentBotState.state = newState.state
-    this._currentBotState.step = newState.step
-    this._currentBotState.data = newState.data
+  public setBotState(memberId: string, newState: IState): void {
+    this.getBotState(memberId)
+    .then((stateFound): void => {
+      if (stateFound) {
+        states.update({ memberId }, newState, (err: Error) => {
+          if (err) throw err
+        })
+      }
+      else {
+        states.create(newState)
+      }
+    })
   }
 }
