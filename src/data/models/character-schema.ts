@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ICharacter } from "../../types/character/character";
 
 const characterSchema = new mongoose.Schema(
   {
@@ -41,4 +42,8 @@ const characterSchema = new mongoose.Schema(
   }
 );
 
-export = mongoose.model(`characters`, characterSchema, `characters`);
+export = mongoose.model<ICharacter>(
+  `characters`,
+  characterSchema,
+  `characters`
+);

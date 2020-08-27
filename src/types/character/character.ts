@@ -1,8 +1,9 @@
+import { Document } from "mongoose";
 import { IItem } from "../shop/item";
 import { IEffect } from "../skills/effect";
 import { IStat } from "./stat";
 
-export interface ICharacter {
+export interface ICharacter extends Document {
   credits: number;
   effects: IEffect[];
   experience: number;

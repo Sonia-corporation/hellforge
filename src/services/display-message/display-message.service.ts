@@ -12,6 +12,6 @@ export class DisplayMessageService {
   }
 
   public message(messageToAnswer: Message, messageToSend: string): void {
-    messageToAnswer.channel.send(messageToSend);
+    void messageToAnswer.channel.send(messageToSend);
   }
 }

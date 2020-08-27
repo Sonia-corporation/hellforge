@@ -1,4 +1,4 @@
-export enum TextFormats {
+export enum TextFormatsEnum {
   BOLD = `bold`,
   ITALIC = `italic`,
   ITALIC_BOLD = `italicBold`,

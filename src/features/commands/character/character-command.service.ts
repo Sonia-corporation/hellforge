@@ -1,6 +1,6 @@
 import { Message } from "discord.js";
 import _ from "lodash";
-import { TextFormats } from "../../../enums/text-formats.enum";
+import { TextFormatsEnum } from "../../../enums/text-formats.enum";
 import { CharacterService } from "../../../services/character/character.service";
 import { DisplayMessageService } from "../../../services/display-message/display-message.service";
 import { MessageFormattingService } from "../../../services/message-formating/message-formatting.service";
@@ -20,7 +20,7 @@ export class CharacterCommandService {
       .getEntity(message.author.id)
       .then((characterFound): void => {
         const boldCharacterName = MessageFormattingService.getInstance().format(
-          TextFormats.BOLD,
+          TextFormatsEnum.BOLD,
           characterFound.name
         );
         DisplayMessageService.getInstance().message(
