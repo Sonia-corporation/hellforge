@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Document } from 'mongoose';
+import { Document } from "mongoose";
 import { ICharacter } from "../../types/character/character";
 import characterSchema from "../../data/models/character-schema";
 
@@ -13,20 +13,27 @@ export class CharacterService {
     return CharacterService._instance;
   }
 
-  public getEntity(_ownerId: string): void {
-    // @todo fix it
-    // return await characterSchema
-    //   .findOne(
-    //     { ownerId },
-    //     (_err: Error, _characterFound: Document): ICharacter | null => {
-    //       // @todo fix it
-    //       // if (characterFound) return characterFound.schema.obj;
-    //       return null;
-    //     },
-    //   )
-    //   .catch((err): void => {
-    //     console.log(`Error: Character not found because: ${err}`);
-    //   });
+  private _isEntity(_entity: unknown): _entity is ICharacter {
+    return (_entity as ICharacter) !== null
+  }
+
+  public getEntity(_ownerId: string): Promise<ICharacter | never> {
+    return new Promise((resolve, reject): void => {
+      characterSchema
+        .findOne(
+          { ownerId: _ownerId }
+        )
+        .then((foundCharacter: Document | null): void => {
+          if (this._isEntity(foundCharacter)) {
+            console.log(`Character found with name: ${foundCharacter.name}`);
+
+            resolve(foundCharacter);
+          }
+          else {
+            reject(Error(`Couldn't find it with the provided owner: ${_ownerId}`))
+          }
+        })
+    });
   }
 
   public setEntity(_ownerId: string, _characterToInsert: ICharacter): void {
@@ -35,8 +42,8 @@ export class CharacterService {
       .then((): void => {
         console.info(`A user created their character`);
       })
-      .catch((err: string): void => {
-        console.error(`An error occured: ${err}`);
+      .catch((_err: string): void => {
+        console.error(`An error occured while creating the character: ${_err}`);
       });
   }
 }

@@ -1,4 +1,6 @@
 import _ from "lodash";
+import mongoose from "mongoose";
+import { login, password } from "../../../credentials.json";
 
 export class MongooseConnectService {
   private static _instance: MongooseConnectService;
@@ -10,21 +12,22 @@ export class MongooseConnectService {
     return MongooseConnectService._instance;
   }
 
-  // @todo fix it
-  // public init() {
-  //   mongoose.connect(
-  //     `mongodb+srv://${login}:${password}@cluster0.zmch1.gcp.mongodb.net/hellforge-bot-db?retryWrites=true&w=majority`,
-  //     {
-  //       useNewUrlParser: true,
-  //       useUnifiedTopology: true,
-  //     },
-  //     (error: Error) => {
-  //       if (error) {
-  //         throw error;
-  //       }
-  //
-  //       console.log(`Connected to MongoDB!`);
-  //     }
-  //   );
-  // }
+  public init(): void {
+    mongoose
+      .connect(
+        `mongodb+srv://${login}:${password}@cluster0.zmch1.gcp.mongodb.net/hellforge-bot-db?retryWrites=true&w=majority`,
+        {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        }
+      )
+      .then((_connection: unknown): void => {
+        if (_connection) {
+          console.log(`Connected to MongoDB!`);
+        }
+      })
+      .catch((_err: string): void => {
+        console.log(`Failed to connect to MongoDB because of: ${_err}`);
+      });
+  }
 }

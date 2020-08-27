@@ -4,6 +4,8 @@ import { StateNamesEnum } from "../../../enums/state-names.enum";
 import { CharacterService } from "../../character/character.service";
 import { DisplayMessageService } from "../../display-message/display-message.service";
 import { StateManagerService } from "../../state-manager/state-manager.service";
+import { MessageFormattingService } from "../../message-formating/message-formatting.service";
+import { TextFormats } from "../../../enums/text-formats.enum";
 
 export class CharacterCreationService {
   private static _instance: CharacterCreationService;
@@ -25,71 +27,79 @@ export class CharacterCreationService {
           StateManagerService.getInstance().setBotState(memberId, {
             memberId,
             state: {
+              data: ``, // The data from the state will have a CSV format value.
               name: StateNamesEnum.CHARACTER_CREATION,
               step: 1,
-              data: ``,
             },
-          }); // The data from the state will have a CSV format value.
+          });
+
           DisplayMessageService.getInstance().message(
             message,
-            `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode, or 'save' to end the process but still continue it later.`
+            `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode.`
           );
         } else {
-          // @todo fix it
-          // const boldCharacterName = MessageFormattingService.getInstance().format(
-          //   TextFormats.BOLD,
-          //   characterFound.name
-          // );
-          // DisplayMessageService.getInstance().message(
-          //   message,
-          //   `You already have a character, their name is: ${boldCharacterName}`
-          // );
+          const boldCharacterName = MessageFormattingService.getInstance().format(
+            TextFormats.BOLD,
+            characterFound.name
+          );
+          DisplayMessageService.getInstance().message(
+            message,
+            `You already have a character, their name is: ${boldCharacterName}`
+          );
         }
+      })
+      .catch((_err: string): void => {
+        console.log(`The character retrieveing failed.`);
       });
   }
 
-  // @todo fix it
-  // public setCharacterName(message: Message): void {
-  //   const memberId = message.author.id;
-  //
-  //   StateManagerService.getInstance().setBotState(memberId, {
-  //     memberId,
-  //     state: {
-  //       name: StateNamesEnum.CHARACTER_CREATION,
-  //       step: 2,
-  //       data: `${stateFound.state.data},${message.content},`,
-  //     },
-  //   });
-  //
-  //   const formattedCharacterName = MessageFormattingService.getInstance().format(
-  //     TextFormats.BOLD,
-  //     message.content
-  //   );
-  //   DisplayMessageService.getInstance().message(
-  //     message,
-  //     `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`
-  //   );
-  // }
+  public async setCharacterName(message: Message): Promise<void> {
+    const memberId = message.author.id;
+    const previousState = await StateManagerService.getInstance().getBotState(
+      memberId
+    );
 
-  // @todo fix it
-  // public setCharacterFirstBonus(message: Message): void {
-  //   const memberId = message.author.id;
-  //   StateManagerService.getInstance().setBotState(memberId, {
-  //     memberId,
-  //     state: {
-  //       name: StateNamesEnum.CHARACTER_CREATION,
-  //       step: 3,
-  //       data: `${stateFound.state.data},${message.content},`,
-  //     },
-  //   });
-  //
-  //   const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(
-  //     TextFormats.ITALIC_BOLD,
-  //     message.content
-  //   );
-  //   DisplayMessageService.getInstance().message(
-  //     message,
-  //     `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`
-  //   );
-  // }
+    StateManagerService.getInstance().setBotState(memberId, {
+      memberId,
+      state: {
+        data: `${previousState.state.data},${message.content},`,
+        name: StateNamesEnum.CHARACTER_CREATION,
+        step: 2,
+      },
+    });
+
+    const formattedCharacterName = MessageFormattingService.getInstance().format(
+      TextFormats.BOLD,
+      message.content
+    );
+    DisplayMessageService.getInstance().message(
+      message,
+      `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`
+    );
+  }
+
+  public async setCharacterFirstBonus(message: Message): Promise<void> {
+    const memberId = message.author.id;
+    const previousState = await StateManagerService.getInstance().getBotState(
+      memberId
+    );
+
+    StateManagerService.getInstance().setBotState(memberId, {
+      memberId,
+      state: {
+        data: `${previousState.state.data},${message.content},`,
+        name: StateNamesEnum.CHARACTER_CREATION,
+        step: 3,
+      },
+    });
+
+    const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(
+      TextFormats.ITALIC_BOLD,
+      message.content
+    );
+    DisplayMessageService.getInstance().message(
+      message,
+      `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`
+    );
+  }
 }

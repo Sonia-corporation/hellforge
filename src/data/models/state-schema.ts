@@ -4,9 +4,9 @@ const stateSchema = new mongoose.Schema(
   {
     memberId: String,
     state: {
+      data: String,
       name: String,
       step: Number,
-      data: String,
     },
   },
   {

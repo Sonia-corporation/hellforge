@@ -1,6 +1,8 @@
-import { Client } from "discord.js";
 import _ from "lodash";
+import { Client } from "discord.js";
+import { token } from "../../../credentials.json";
 import { ActivityService } from "../activity/activity.service";
+import { MongooseConnectService } from "../mongoose-connect/mongoose-connect.service";
 
 export class AppReadyService {
   private static _instance: AppReadyService;
@@ -13,21 +15,17 @@ export class AppReadyService {
   }
 
   public init(client: Client): void {
-    // @todo fix init method before
-    // MongooseConnectService.getInstance().init();
+    MongooseConnectService.getInstance().init();
 
     client.on(`ready`, (): void => {
       if (client.user) {
         ActivityService.getInstance().setActivity(client.user, `WATCHING`);
-        this._log(client.user.tag);
+        console.log(`Logged in as ${client.user.tag}!`);
       }
     });
 
-    // @todo fix it
-    // client.login(token);
-  }
-
-  private _log(usertag: string): void {
-    return console.log(`Logged in as ${usertag}!`);
+    client.login(token).catch((_err: string): void => {
+      console.log(`Failed to log in because of: ${_err}`);
+    });
   }
 }

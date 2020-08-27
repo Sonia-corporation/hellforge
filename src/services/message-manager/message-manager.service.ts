@@ -3,6 +3,7 @@ import _ from "lodash";
 import { CommandsEnum } from "../../enums/commands.enum";
 
 import { SubcommandsEnum } from "../../enums/subcommands.enum";
+import { StateNamesEnum } from "../../enums/state-names.enum";
 import { CharacterCommandService } from "../../features/commands/character/character-command.service";
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service";
 import { CharacterCreationService } from "../creation/character/character-creation.service";
@@ -21,7 +22,7 @@ export class MessageManagerService {
   }
 
   public messageEvent(client: Client): void {
-    client.on(`message`, (msg: Message) => {
+    client.on(`message`, (msg: Message): void => {
       this._manageMessage(msg);
     });
   }
@@ -37,7 +38,11 @@ export class MessageManagerService {
       );
 
       if (message.content.startsWith(prefix)) {
-        message.channel.startTyping(1);
+        message.channel.startTyping(1).catch((_err: string): void => {
+          console.log(
+            `The bot couldn't write in the channel: ${message.channel.id}`
+          );
+        });
 
         const args = ArgumentsManagerService.getInstance().getArguments(
           message,
@@ -49,7 +54,7 @@ export class MessageManagerService {
 
         if (command === CommandsEnum.CHARACTER) {
           const createArg = args.find(
-            (arg) => arg === SubcommandsEnum.CHARACTER_CREATION
+            (arg): boolean => arg === SubcommandsEnum.CHARACTER_CREATION
           );
 
           if (createArg) {
@@ -66,44 +71,60 @@ export class MessageManagerService {
 
       StateManagerService.getInstance()
         .getBotState(message.author.id)
-        .then((): void => {
-          // @todo fix it
-          // if (
-          //   message.content.startsWith(`exit`) &&
-          //   stateFound.state.name !== StateNamesEnum.NORMAL
-          // ) {
-          //   message.channel.startTyping(1);
-          //
-          //   StateManagerService.getInstance().setBotState(message.author.id, {
-          //     memberId: message.author.id,
-          //     state: {
-          //       name: StateNamesEnum.NORMAL,
-          //       step: 0,
-          //       data: ``,
-          //     },
-          //   });
-          //
-          //   DisplayMessageService.getInstance().message(
-          //     message,
-          //     `You just exited what you were doing.`
-          //   );
-          //
-          //   return message.channel.stopTyping(true);
-          // }
-          //
-          // if (stateFound.state.name === StateNamesEnum.CHARACTER_CREATION) {
-          //   message.channel.startTyping(1);
-          //
-          //   if (stateFound.state.step === 1) {
-          //     CharacterCreationService.getInstance().setCharacterName(message);
-          //   } else if (stateFound.state.step === 2) {
-          //     CharacterCreationService.getInstance().setCharacterFirstBonus(
-          //       message
-          //     );
-          //   }
-          //
-          //   return message.channel.stopTyping(true);
-          // }
+        .then((_foundstate): void => {
+          if (
+            message.content.startsWith(`exit`) &&
+            _foundstate.state.name !== StateNamesEnum.NORMAL
+          ) {
+            message.channel.startTyping(1).catch((_err: string): void => {
+              console.log(
+                `The bot couldn't write in the channel: ${message.channel.id}`
+              );
+            });
+
+            StateManagerService.getInstance().setBotState(message.author.id, {
+              memberId: message.author.id,
+              state: {
+                data: ``,
+                name: StateNamesEnum.NORMAL,
+                step: 0,
+              },
+            });
+
+            DisplayMessageService.getInstance().message(
+              message,
+              `You just exited what you were doing.`
+            );
+
+            return message.channel.stopTyping(true);
+          }
+
+          if (_foundstate.state.name === StateNamesEnum.CHARACTER_CREATION) {
+            message.channel.startTyping(1).catch((_err: string): void => {
+              console.log(
+                `The bot couldn't write in the channel: ${message.channel.id}`
+              );
+            });
+
+            if (_foundstate.state.step === 2) {
+              CharacterCreationService.getInstance()
+                .setCharacterName(message)
+                .catch((_err: string): void => {
+                  console.log(`Couldn't get to step 2 because of: ${_err}`);
+                });
+            } else if (_foundstate.state.step === 3) {
+              CharacterCreationService.getInstance()
+                .setCharacterFirstBonus(message)
+                .catch((_err: string): void => {
+                  console.log(`Couldn't get to step 3 because of: ${_err}`);
+                });
+            }
+
+            return message.channel.stopTyping(true);
+          }
+        })
+        .catch((_err: string): void => {
+          console.log(`Couldn't get the state because of: ${_err}`);
         });
     }
   }
