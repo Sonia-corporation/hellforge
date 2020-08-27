@@ -5,7 +5,7 @@ import { CharacterService } from "../../character/character.service";
 import { DisplayMessageService } from "../../display-message/display-message.service";
 import { StateManagerService } from "../../state-manager/state-manager.service";
 import { MessageFormattingService } from "../../message-formating/message-formatting.service";
-import { TextFormats } from "../../../enums/text-formats.enum";
+import { TextFormatsEnum } from "../../../enums/text-formats.enum";
 
 export class CharacterCreationService {
   private static _instance: CharacterCreationService;
@@ -39,7 +39,7 @@ export class CharacterCreationService {
           );
         } else {
           const boldCharacterName = MessageFormattingService.getInstance().format(
-            TextFormats.BOLD,
+            TextFormatsEnum.BOLD,
             characterFound.name
           );
           DisplayMessageService.getInstance().message(
@@ -69,7 +69,7 @@ export class CharacterCreationService {
     });
 
     const formattedCharacterName = MessageFormattingService.getInstance().format(
-      TextFormats.BOLD,
+      TextFormatsEnum.BOLD,
       message.content
     );
     DisplayMessageService.getInstance().message(
@@ -94,7 +94,7 @@ export class CharacterCreationService {
     });
 
     const formattedCharacterFisrtStatBonus = MessageFormattingService.getInstance().format(
-      TextFormats.ITALIC_BOLD,
+      TextFormatsEnum.ITALIC_BOLD,
       message.content
     );
     DisplayMessageService.getInstance().message(
