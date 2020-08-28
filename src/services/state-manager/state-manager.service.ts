@@ -1,39 +1,55 @@
-import _ from "lodash"
-import { Document } from "mongoose"
-import { IState } from "../../types/global/state"
-import states from "../../data/models/state-schema"
+import _ from "lodash";
+import mongoose, { Document } from "mongoose";
+import { IState } from "../../types/global/state";
 
 export class StateManagerService {
-  private static _instance: StateManagerService
+  private static _instance: StateManagerService;
 
-  public static getInstance() {
+  public static getInstance(): StateManagerService {
     if (_.isNil(StateManagerService._instance)) {
-      StateManagerService._instance = new StateManagerService()
+      StateManagerService._instance = new StateManagerService();
     }
-    return StateManagerService._instance
+    return StateManagerService._instance;
   }
 
-  public async getBotState(memberId: string): Promise<Document | void> {
-    return await states.findOne({ memberId }, (err: Error, stateFound: Document): IState => {
-      if (stateFound) return stateFound.schema.obj
-    })
-    .catch((err): void => {
-      console.log(`Error: State not found because: ${err}`)
-      return
-    })
+  private _currentState: IState = new Document().toObject();
+
+  public async getBotState(memberId: string): Promise<IState | void> {
+    return mongoose
+      .model(`stateSchema`)
+      .findOne({ memberId })
+      .then(
+        (foundState: mongoose.Document | null): Promise<IState | void> => {
+          if (this._isState(foundState)) {
+            return Promise.resolve(foundState);
+          }
+
+          return Promise.reject(
+            Error(
+              `Couldn't find the state with the provided member id: ${memberId}`
+            )
+          );
+        }
+      );
   }
 
-  public setBotState(memberId: string, newState: IState): void {
-    this.getBotState(memberId)
-    .then((stateFound): void => {
-      if (stateFound) {
-        states.update({ memberId }, newState, (err: Error) => {
-          if (err) throw err
-        })
-      }
-      else {
-        states.create(newState)
-      }
-    })
+  public async setBotState(
+    memberId: string,
+    newState: IState
+  ): Promise<Document | void> {
+    if (this._currentState.memberId === memberId) {
+      return mongoose.model(`stateSchema`).update({ memberId }, newState);
+    }
+
+    this._currentState.memberId = newState.memberId;
+    this._currentState.state.data = newState.state.data;
+    this._currentState.state.name = newState.state.name;
+    this._currentState.state.step = newState.state.step;
+
+    return mongoose.model(`stateSchema`).create(newState);
+  }
+
+  private _isState(state: unknown): state is IState {
+    return (state as IState) !== null;
   }
 }

@@ -1,15 +1,18 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
+import { IState } from "../../types/global/state";
 
-const stateSchama = new mongoose.Schema({
-  memberId: String,
-  state: {
-    name: String,
-    step: Number,
-    data: String
+const stateSchema = new mongoose.Schema(
+  {
+    memberId: String,
+    state: {
+      data: String,
+      name: String,
+      step: Number,
+    },
+  },
+  {
+    versionKey: false,
   }
-},
-{
-  versionKey: false 
-})
+);
 
-export = mongoose.model("states", stateSchama, "states")
+export = mongoose.model<IState>(`states`, stateSchema, `states`);

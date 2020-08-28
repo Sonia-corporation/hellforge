@@ -1,3 +1,4 @@
 export enum CommandsEnum {
-  CHARACTER = 'character'
+  CHARACTER = `character`,
+  NONE = `none`,
 }

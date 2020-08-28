@@ -1,15 +1,17 @@
-import { MessageManagerService } from "./message-manager.service"
+import { MessageManagerService } from "./message-manager.service";
 
-describe('MessageManagerService', () => {
-  let MessageManagerService: MessageManagerService
+describe(`MessageManagerService`, (): void => {
+  let messageManagerService: MessageManagerService;
 
-  describe('getInstance()', () => {
-    it('should instanciate MessageManagerService', () => {
-      expect.assertions(1)
+  describe(`getInstance()`, (): void => {
+    it(`should instanciate MessageManagerService`, (): void => {
+      expect.assertions(1);
 
-      MessageManagerService = MessageManagerService.getInstance()
+      messageManagerService = MessageManagerService.getInstance();
 
-      expect(MessageManagerService).toStrictEqual(expect.any(MessageManagerService))
-    })
-  })
-})
+      expect(messageManagerService).toStrictEqual(
+        expect.any(MessageManagerService)
+      );
+    });
+  });
+});

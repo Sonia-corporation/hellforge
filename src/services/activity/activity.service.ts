@@ -1,17 +1,24 @@
-import _ from "lodash"
-import { ActivityType, ClientUser } from 'discord.js'
+import { ActivityType, ClientUser } from "discord.js";
+import _ from "lodash";
 
 export class ActivityService {
-  private static _instance: ActivityService
+  private static _instance: ActivityService;
 
   public static getInstance(): ActivityService {
-    if(_.isNil(ActivityService._instance)) {
-      ActivityService._instance = new ActivityService()
+    if (_.isNil(ActivityService._instance)) {
+      ActivityService._instance = new ActivityService();
     }
-    return ActivityService._instance
+    return ActivityService._instance;
   }
 
-  public setActivity(user: ClientUser, activity: ActivityType) {
-    user?.setActivity("!hell help", { type: activity })
+  public setActivity(user: ClientUser, activity: ActivityType): Promise<void> {
+    return user
+      .setActivity(`!hell help`, { type: activity })
+      .then((): void => {
+        console.info(`The bot activity was set to: ${activity}`);
+      })
+      .catch((err: string): void => {
+        console.error(`The bot encountered an error that was: ${err}`);
+      });
   }
 }

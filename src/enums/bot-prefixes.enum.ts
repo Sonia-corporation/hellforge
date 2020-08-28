@@ -1,6 +1,6 @@
 export enum BotPrefixesEnum {
-  LONG = "!hellforge",
-  AVERAGE = "!hell",
-  SHORT = "!hf",
-  TINY = "!h"
+  AVERAGE = `!hell`,
+  LONG = `!hellforge`,
+  SHORT = `!hf`,
+  TINY = `!h`,
 }

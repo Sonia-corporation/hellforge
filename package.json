@@ -2,10 +2,15 @@
   "name": "hellforge",
   "version": "0.0.1",
   "description": "A Discord bot game set in Hell",
-  "main": "./dist/src/features/hellforge/hellforge.js",
+  "main": "./src/features/hellforge/hellforge.ts",
   "scripts": {
+    "lint": "eslint --fix --ext .js,.ts --cache src/ jest.config.js config.ts",
+    "lint:ci": "eslint --ext .js,.ts src/ jest.config.js config.ts",
     "start": "concurrently \"tsc --watch\" \"nodemon ./dist/src/features/hellforge/hellforge.js\"",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": "jest --watchAll --unhandled-rejections=strict",
+    "test:ci": "jest --bail=1 --ci",
+    "test:ci:coverage": "jest --collectCoverage --bail=1 --ci"
   },
   "repository": {
     "type": "git",
@@ -29,12 +34,35 @@
     "mongoose": "^5.10.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.10",
     "@types/lodash": "^4.14.159",
     "@types/mongoose": "^5.7.36",
+    "@types/node": "^14.6.0",
     "@types/ws": "^7.2.6",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "concurrently": "^5.3.0",
-    "jest": "^26.4.1",
-    "ts-jest": "^26.2.0",
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-recommended": "^4.1.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.20.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-rxjs": "0.0.2-beta.29",
+    "eslint-plugin-typescript-sort-keys": "^1.3.0",
+    "husky": "^4.2.5",
+    "jest": "^26.4.2",
+    "jest-extended": "^0.11.5",
+    "jest-silent-reporter": "^0.2.1",
+    "jest-ts-auto-mock": "^1.0.11",
+    "lint-staged": "^10.2.13",
+    "prettier": "^2.1.1",
+    "prettier-eslint": "^11.0.0",
+    "ts-auto-mock": "^2.3.4",
+    "ts-jest": "^26.3.0",
+    "ttypescript": "^1.5.11",
     "typescript": "^4.0.2"
   }
 }
