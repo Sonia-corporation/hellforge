@@ -22,7 +22,7 @@ export class StateManagerService {
     },
   };
 
-  public async getBotState(memberId: string): Promise<IState> {
+  public async getBotState(memberId: string): Promise<IState | never> {
     return new Promise((resolve, reject): void => {
       void mongoose
         .model(`stateSchema`)
