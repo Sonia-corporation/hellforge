@@ -1,5 +1,5 @@
 import _ from "lodash";
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { ICharacter } from "../../types/character/character";
 
 export class CharacterService {
@@ -34,15 +34,18 @@ export class CharacterService {
   public setEntity(
     ownerId: string,
     characterToInsert: ICharacter
-  ): Promise<void> {
+  ): Promise<Document | void> {
     return mongoose
       .model(`characterSchema`)
       .update({ ownerId }, characterToInsert)
-      .then((): void => {
-        console.info(`A user created their character`);
-      })
+      .then(
+        (updatedCharacter: Document): Promise<Document> => {
+          console.info(`A user updated their character`);
+          return Promise.resolve(updatedCharacter);
+        }
+      )
       .catch((err: string): void => {
-        console.error(`An error occured while creating the character: ${err}`);
+        console.error(`An error occured while updating the character: ${err}`);
       });
   }
 

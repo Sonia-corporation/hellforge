@@ -11,8 +11,8 @@ export class ActivityService {
     return ActivityService._instance;
   }
 
-  public setActivity(user: ClientUser, activity: ActivityType): void {
-    user
+  public setActivity(user: ClientUser, activity: ActivityType): Promise<void> {
+    return user
       .setActivity(`!hell help`, { type: activity })
       .then((): void => {
         console.info(`The bot activity was set to: ${activity}`);

@@ -21,7 +21,7 @@ export class MongooseConnectService {
           useUnifiedTopology: true,
         }
       )
-      .then((connection: unknown): void => {
+      .then((connection: mongoose.Mongoose): void => {
         if (connection) {
           console.log(`Connected to MongoDB!`);
         }
