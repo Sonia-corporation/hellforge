@@ -12,8 +12,8 @@ export class MongooseConnectService {
     return MongooseConnectService._instance;
   }
 
-  public init(): void {
-    mongoose
+  public init(): Promise<void> {
+    return mongoose
       .connect(
         `mongodb+srv://${login}:${password}@cluster0.zmch1.gcp.mongodb.net/hellforge-bot-db?retryWrites=true&w=majority`,
         {
