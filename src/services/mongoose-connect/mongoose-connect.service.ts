@@ -21,13 +21,13 @@ export class MongooseConnectService {
           useUnifiedTopology: true,
         }
       )
-      .then((_connection: unknown): void => {
-        if (_connection) {
+      .then((connection: unknown): void => {
+        if (connection) {
           console.log(`Connected to MongoDB!`);
         }
       })
-      .catch((_err: string): void => {
-        console.log(`Failed to connect to MongoDB because of: ${_err}`);
+      .catch((err: string): void => {
+        console.log(`Failed to connect to MongoDB because of: ${err}`);
       });
   }
 }

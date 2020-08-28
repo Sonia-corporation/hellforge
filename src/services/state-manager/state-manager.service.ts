@@ -22,11 +22,11 @@ export class StateManagerService {
     },
   };
 
-  public async getBotState(_memberId: string): Promise<IState> {
+  public async getBotState(memberId: string): Promise<IState> {
     return new Promise((resolve, reject): void => {
       void mongoose
         .model(`stateSchema`)
-        .findOne({ memberId: _memberId })
+        .findOne({ memberId })
         .then((foundState: mongoose.Document | null): void => {
           if (this._isState(foundState)) {
             console.log(`Character found with name: ${foundState.state.name}`);
@@ -34,7 +34,7 @@ export class StateManagerService {
           } else {
             reject(
               Error(
-                `Couldn't find the character with the provided member id: ${_memberId}`
+                `Couldn't find the character with the provided member id: ${memberId}`
               )
             );
           }
@@ -42,17 +42,15 @@ export class StateManagerService {
     });
   }
 
-  public setBotState(_memberId: string, _newState: IState): void {
-    if (this._currentState.memberId === _memberId) {
-      void mongoose
-        .model(`stateSchema`)
-        .update({ memberId: _memberId }, _newState);
+  public setBotState(memberId: string, newState: IState): void {
+    if (this._currentState.memberId === memberId) {
+      void mongoose.model(`stateSchema`).update({ memberId }, newState);
     } else {
-      void mongoose.model(`stateSchema`).create(_newState);
+      void mongoose.model(`stateSchema`).create(newState);
     }
   }
 
-  private _isState(_state: unknown): _state is IState {
-    return (_state as IState) !== null;
+  private _isState(state: unknown): state is IState {
+    return (state as IState) !== null;
   }
 }

@@ -38,11 +38,7 @@ export class MessageManagerService {
       );
 
       if (message.content.startsWith(prefix)) {
-        message.channel.startTyping(1).catch((_err: string): void => {
-          console.log(
-            `The bot couldn't write in the channel: ${message.channel.id}`
-          );
-        });
+        void message.channel.startTyping(1);
 
         const args = ArgumentsManagerService.getInstance().getArguments(
           message,
@@ -71,16 +67,12 @@ export class MessageManagerService {
 
       StateManagerService.getInstance()
         .getBotState(message.author.id)
-        .then((_foundstate): void => {
+        .then((foundstate): void => {
           if (
             message.content.startsWith(`exit`) &&
-            _foundstate.state.name !== StateNamesEnum.NORMAL
+            foundstate.state.name !== StateNamesEnum.NORMAL
           ) {
-            message.channel.startTyping(1).catch((_err: string): void => {
-              console.log(
-                `The bot couldn't write in the channel: ${message.channel.id}`
-              );
-            });
+            void message.channel.startTyping(1);
 
             StateManagerService.getInstance().setBotState(message.author.id, {
               memberId: message.author.id,
@@ -99,32 +91,28 @@ export class MessageManagerService {
             return message.channel.stopTyping(true);
           }
 
-          if (_foundstate.state.name === StateNamesEnum.CHARACTER_CREATION) {
-            message.channel.startTyping(1).catch((_err: string): void => {
-              console.log(
-                `The bot couldn't write in the channel: ${message.channel.id}`
-              );
-            });
+          if (foundstate.state.name === StateNamesEnum.CHARACTER_CREATION) {
+            void message.channel.startTyping(1);
 
-            if (_foundstate.state.step === 2) {
+            if (foundstate.state.step === 2) {
               CharacterCreationService.getInstance()
                 .setCharacterName(message)
-                .catch((_err: string): void => {
-                  console.log(`Couldn't get to step 2 because of: ${_err}`);
+                .catch((err: string): void => {
+                  console.log(`Couldn't get to step 2 because of: ${err}`);
                 });
-            } else if (_foundstate.state.step === 3) {
+            } else if (foundstate.state.step === 3) {
               CharacterCreationService.getInstance()
                 .setCharacterFirstBonus(message)
-                .catch((_err: string): void => {
-                  console.log(`Couldn't get to step 3 because of: ${_err}`);
+                .catch((err: string): void => {
+                  console.log(`Couldn't get to step 3 because of: ${err}`);
                 });
             }
 
             return message.channel.stopTyping(true);
           }
         })
-        .catch((_err: string): void => {
-          console.log(`Couldn't get the state because of: ${_err}`);
+        .catch((err: string): void => {
+          console.log(`Couldn't get the state because of: ${err}`);
         });
     }
   }

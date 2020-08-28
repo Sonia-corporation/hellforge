@@ -24,8 +24,6 @@ export class AppReadyService {
       }
     });
 
-    client.login(token).catch((_err: string): void => {
-      console.log(`Failed to log in because of: ${_err}`);
-    });
+    void client.login(token);
   }
 }
