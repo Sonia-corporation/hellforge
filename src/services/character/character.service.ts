@@ -16,17 +16,19 @@ export class CharacterService {
     return mongoose
       .model(`characterSchema`)
       .findOne({ ownerId })
-      .then((foundCharacter: mongoose.Document | null): void => {
-        if (this._isEntity(foundCharacter)) {
-          console.log(`Character found with name: ${foundCharacter.name}`);
+      .then(
+        (foundCharacter: mongoose.Document | null): Promise<ICharacter> => {
+          if (this._isEntity(foundCharacter)) {
+            console.log(`Character found with name: ${foundCharacter.name}`);
 
-          void Promise.resolve(foundCharacter);
-        } else {
-          void Promise.reject(
+            return Promise.resolve(foundCharacter);
+          }
+
+          return Promise.reject(
             Error(`Couldn't find it with the provided owner: ${ownerId}`)
           );
         }
-      });
+      );
   }
 
   public setEntity(
