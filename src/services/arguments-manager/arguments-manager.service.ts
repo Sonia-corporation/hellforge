@@ -16,7 +16,7 @@ export class ArgumentsManagerService {
     return message.content.slice(botPrefix.length).split(/ +/);
   }
 
-  public extractCommand(entries: string[]): string {
+  public extractCommand(entries: string[]): string | CommandsEnum.NONE {
     const usableBotCommand = entries.shift();
 
     if (usableBotCommand) {
