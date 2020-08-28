@@ -11,7 +11,10 @@ export class DisplayMessageService {
     return DisplayMessageService._instance;
   }
 
-  public message(messageToAnswer: Message, messageToSend: string): void {
-    void messageToAnswer.channel.send(messageToSend);
+  public message(
+    messageToAnswer: Message,
+    messageToSend: string
+  ): Promise<Message> {
+    return messageToAnswer.channel.send(messageToSend);
   }
 }
