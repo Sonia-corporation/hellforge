@@ -59,9 +59,9 @@ export class CharacterCreationService {
       });
   }
 
-  public setCharacterName(message: Message): void {
+  public setCharacterName(message: Message): Promise<void> {
     const memberId = message.author.id;
-    void StateManagerService.getInstance()
+    return StateManagerService.getInstance()
       .getBotState(memberId)
       .then((foundState: IState | void): void => {
         if (foundState) {
@@ -90,9 +90,9 @@ export class CharacterCreationService {
       });
   }
 
-  public setCharacterFirstBonus(message: Message): void {
+  public setCharacterFirstBonus(message: Message): Promise<void> {
     const memberId = message.author.id;
-    void StateManagerService.getInstance()
+    return StateManagerService.getInstance()
       .getBotState(memberId)
       .then((foundState: IState | void): void => {
         if (foundState) {
