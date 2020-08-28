@@ -22,24 +22,22 @@ export class StateManagerService {
     },
   };
 
-  public async getBotState(memberId: string): Promise<IState | never> {
-    return new Promise((resolve, reject): void => {
-      void mongoose
-        .model(`stateSchema`)
-        .findOne({ memberId })
-        .then((foundState: mongoose.Document | null): void => {
-          if (this._isState(foundState)) {
-            console.log(`Character found with name: ${foundState.state.name}`);
-            resolve(foundState);
-          } else {
-            reject(
-              Error(
-                `Couldn't find the character with the provided member id: ${memberId}`
-              )
-            );
-          }
-        });
-    });
+  public async getBotState(memberId: string): Promise<IState | void> {
+    return mongoose
+      .model(`stateSchema`)
+      .findOne({ memberId })
+      .then((foundState: mongoose.Document | null): void => {
+        if (this._isState(foundState)) {
+          console.log(`Character found with name: ${foundState.state.name}`);
+          void Promise.resolve(foundState);
+        } else {
+          void Promise.reject(
+            Error(
+              `Couldn't find the character with the provided member id: ${memberId}`
+            )
+          );
+        }
+      });
   }
 
   public setBotState(memberId: string, newState: IState): void {
