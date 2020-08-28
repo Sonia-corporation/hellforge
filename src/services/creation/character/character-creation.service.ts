@@ -17,8 +17,8 @@ export class CharacterCreationService {
     return CharacterCreationService._instance;
   }
 
-  public init(message: Message): void {
-    CharacterService.getInstance()
+  public init(message: Message): Promise<void> {
+    return CharacterService.getInstance()
       .getEntity(message.author.id)
       .then((characterFound): void => {
         if (!characterFound) {
@@ -48,7 +48,7 @@ export class CharacterCreationService {
           );
         }
       })
-      .catch((_err: string): void => {
+      .catch((): void => {
         console.log(`The character retrieveing failed.`);
       });
   }

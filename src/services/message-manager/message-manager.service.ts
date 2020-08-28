@@ -58,7 +58,7 @@ export class MessageManagerService {
           );
 
           if (createArg) {
-            CharacterCreationService.getInstance().init(message);
+            void CharacterCreationService.getInstance().init(message);
           } else {
             CharacterCommandService.getInstance().message(message);
           }
