@@ -12,27 +12,28 @@ export class CharacterService {
     return CharacterService._instance;
   }
 
-  public getEntity(ownerId: string): Promise<ICharacter | never> {
-    return new Promise((resolve, reject): void => {
-      void mongoose
-        .model(`characterSchema`)
-        .findOne({ ownerId })
-        .then((foundCharacter: mongoose.Document | null): void => {
-          if (this._isEntity(foundCharacter)) {
-            console.log(`Character found with name: ${foundCharacter.name}`);
+  public getEntity(ownerId: string): Promise<ICharacter | void> {
+    return mongoose
+      .model(`characterSchema`)
+      .findOne({ ownerId })
+      .then((foundCharacter: mongoose.Document | null): void => {
+        if (this._isEntity(foundCharacter)) {
+          console.log(`Character found with name: ${foundCharacter.name}`);
 
-            resolve(foundCharacter);
-          } else {
-            reject(
-              Error(`Couldn't find it with the provided owner: ${ownerId}`)
-            );
-          }
-        });
-    });
+          void Promise.resolve(foundCharacter);
+        } else {
+          void Promise.reject(
+            Error(`Couldn't find it with the provided owner: ${ownerId}`)
+          );
+        }
+      });
   }
 
-  public setEntity(ownerId: string, characterToInsert: ICharacter): void {
-    mongoose
+  public setEntity(
+    ownerId: string,
+    characterToInsert: ICharacter
+  ): Promise<void> {
+    return mongoose
       .model(`characterSchema`)
       .update({ ownerId }, characterToInsert)
       .then((): void => {
