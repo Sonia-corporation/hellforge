@@ -15,4 +15,4 @@ const stateSchema = new mongoose.Schema(
   }
 );
 
-export = mongoose.model<IState>(`states`, stateSchema, `states`);
+export default mongoose.model<IState>(`States`, stateSchema, `states`);
