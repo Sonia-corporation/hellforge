@@ -1,6 +1,7 @@
 import _ from "lodash";
 import mongoose, { Document } from "mongoose";
 import { IState } from "../../types/global/state";
+import States from "../../data/models/state-schema";
 
 export class StateManagerService {
   private static _instance: StateManagerService;
@@ -15,22 +16,19 @@ export class StateManagerService {
   private _currentState: IState = new Document().toObject();
 
   public async getBotState(memberId: string): Promise<IState | void> {
-    return mongoose
-      .model(`stateSchema`)
-      .findOne({ memberId })
-      .then(
-        (foundState: mongoose.Document | null): Promise<IState | void> => {
-          if (this._isState(foundState)) {
-            return Promise.resolve(foundState);
-          }
-
-          return Promise.reject(
-            Error(
-              `Couldn't find the state with the provided member id: ${memberId}`
-            )
-          );
+    return States.findOne({ memberId }).then(
+      (foundState: mongoose.Document | null): Promise<IState | void> => {
+        if (this._isState(foundState)) {
+          return Promise.resolve(foundState);
         }
-      );
+
+        return Promise.reject(
+          Error(
+            `Couldn't find the state with the provided member id: ${memberId}`
+          )
+        );
+      }
+    );
   }
 
   public async setBotState(
@@ -38,7 +36,7 @@ export class StateManagerService {
     newState: IState
   ): Promise<Document | void> {
     if (this._currentState.memberId === memberId) {
-      return mongoose.model(`stateSchema`).update({ memberId }, newState);
+      return States.update({ memberId }, newState);
     }
 
     this._currentState.memberId = newState.memberId;
@@ -46,7 +44,7 @@ export class StateManagerService {
     this._currentState.state.name = newState.state.name;
     this._currentState.state.step = newState.state.step;
 
-    return mongoose.model(`stateSchema`).create(newState);
+    return States.create(newState);
   }
 
   private _isState(state: unknown): state is IState {

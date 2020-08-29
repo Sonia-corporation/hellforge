@@ -1,6 +1,7 @@
 import _ from "lodash";
-import mongoose, { Document } from "mongoose";
+import { Document } from "mongoose";
 import { ICharacter } from "../../types/character/character";
+import Characters from "../../data/models/character-schema";
 
 export class CharacterService {
   private static _instance: CharacterService;
@@ -13,31 +14,26 @@ export class CharacterService {
   }
 
   public getEntity(ownerId: string): Promise<ICharacter | void> {
-    return mongoose
-      .model(`characterSchema`)
-      .findOne({ ownerId })
-      .then(
-        (foundCharacter: mongoose.Document | null): Promise<ICharacter> => {
-          if (this._isEntity(foundCharacter)) {
-            console.log(`Character found with name: ${foundCharacter.name}`);
+    return Characters.findOne({ ownerId }).then(
+      (foundCharacter: Document | null): Promise<ICharacter> => {
+        if (this._isEntity(foundCharacter)) {
+          console.log(`Character found with name: ${foundCharacter.name}`);
 
-            return Promise.resolve(foundCharacter);
-          }
-
-          return Promise.reject(
-            Error(`Couldn't find it with the provided owner: ${ownerId}`)
-          );
+          return Promise.resolve(foundCharacter);
         }
-      );
+
+        return Promise.reject(
+          Error(`Couldn't find it with the provided owner: ${ownerId}`)
+        );
+      }
+    );
   }
 
   public setEntity(
     ownerId: string,
     characterToInsert: ICharacter
   ): Promise<Document | void> {
-    return mongoose
-      .model(`characterSchema`)
-      .update({ ownerId }, characterToInsert)
+    return Characters.update({ ownerId }, characterToInsert)
       .then(
         (updatedCharacter: Document): Promise<Document> => {
           console.info(`A user updated their character`);
