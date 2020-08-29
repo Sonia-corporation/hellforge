@@ -19,14 +19,16 @@ export class CharacterCommandService {
     return CharacterService.getInstance()
       .getEntity(message.author.id)
       .then((characterFound): void => {
-        const boldCharacterName = MessageFormattingService.getInstance().format(
-          TextFormatsEnum.BOLD,
-          characterFound.name
-        );
-        void DisplayMessageService.getInstance().message(
-          message,
-          `Your character's name is: ${boldCharacterName}`
-        );
+        if (characterFound) {
+          const boldCharacterName = MessageFormattingService.getInstance().format(
+            TextFormatsEnum.BOLD,
+            characterFound.name
+          );
+          void DisplayMessageService.getInstance().message(
+            message,
+            `Your character's name is: ${boldCharacterName}`
+          );
+        }
       })
       .catch((): void => {
         void DisplayMessageService.getInstance().message(
