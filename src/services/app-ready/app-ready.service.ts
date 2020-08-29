@@ -15,11 +15,11 @@ export class AppReadyService {
   }
 
   public init(client: Client): void {
-    MongooseConnectService.getInstance().init();
+    void MongooseConnectService.getInstance().init();
 
     client.on(`ready`, (): void => {
       if (client.user) {
-        ActivityService.getInstance().setActivity(client.user, `WATCHING`);
+        void ActivityService.getInstance().setActivity(client.user, `WATCHING`);
         console.log(`Logged in as ${client.user.tag}!`);
       }
     });
