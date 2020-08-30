@@ -15,26 +15,30 @@ export class ForgeCommandService {
     return ForgeCommandService._instance;
   }
 
-  public message(message: Message): Promise<void> {
+  public message(message: Message): Promise<Message> {
     return ForgeService.getInstance()
       .getEntity(message.author.id)
-      .then((forgeFound): void => {
-        if (forgeFound) {
-          const boldForgeName = MessageFormattingService.getInstance().format(
-            TextFormatsEnum.BOLD,
-            forgeFound.name
-          );
-          void DisplayMessageService.getInstance().message(
-            message,
-            `Your forge's name is: ${boldForgeName}`
+      .then(
+        (forgeFound): Promise<Message> => {
+          if (forgeFound) {
+            const boldForgeName = MessageFormattingService.getInstance().format(
+              TextFormatsEnum.BOLD,
+              forgeFound.name
+            );
+
+            return DisplayMessageService.getInstance().message(
+              message,
+              `Your forge's name is: ${boldForgeName}`
+            );
+          }
+
+          return Promise.reject(
+            DisplayMessageService.getInstance().message(
+              message,
+              `Forge not found.`
+            )
           );
         }
-      })
-      .catch((): void => {
-        void DisplayMessageService.getInstance().message(
-          message,
-          `Forge not found.`
-        );
-      });
+      );
   }
 }

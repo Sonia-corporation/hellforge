@@ -15,26 +15,31 @@ export class CharacterCommandService {
     return CharacterCommandService._instance;
   }
 
-  public message(message: Message): Promise<void> {
+  public message(message: Message): Promise<Message> {
     return CharacterService.getInstance()
       .getEntity(message.author.id)
-      .then((characterFound): void => {
-        if (characterFound) {
-          const boldCharacterName = MessageFormattingService.getInstance().format(
-            TextFormatsEnum.BOLD,
-            characterFound.name
-          );
-          void DisplayMessageService.getInstance().message(
-            message,
-            `Your character's name is: ${boldCharacterName}`
+      .then(
+        (characterFound): Promise<Message> => {
+          if (characterFound) {
+            const boldCharacterName = MessageFormattingService.getInstance().format(
+              TextFormatsEnum.BOLD,
+              characterFound.name
+            );
+            return Promise.resolve(
+              DisplayMessageService.getInstance().message(
+                message,
+                `Your character's name is: ${boldCharacterName}`
+              )
+            );
+          }
+
+          return Promise.reject(
+            DisplayMessageService.getInstance().message(
+              message,
+              `Character not found.`
+            )
           );
         }
-      })
-      .catch((): void => {
-        void DisplayMessageService.getInstance().message(
-          message,
-          `Character not found.`
-        );
-      });
+      );
   }
 }
