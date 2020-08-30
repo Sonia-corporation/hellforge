@@ -23,7 +23,7 @@ export class CharacterCreationService {
     return CharacterService.getInstance()
       .getEntity(message.author.id)
       .then(
-        (characterFound): Promise<Message> => {
+        async (characterFound): Promise<Message> => {
           if (!characterFound) {
             const memberId = message.author.id;
 
@@ -35,7 +35,7 @@ export class CharacterCreationService {
               step: 1,
             };
 
-            void StateManagerService.getInstance().setBotState(
+            await StateManagerService.getInstance().setBotState(
               memberId,
               newState
             );
