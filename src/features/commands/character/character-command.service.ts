@@ -25,19 +25,14 @@ export class CharacterCommandService {
               TextFormatsEnum.BOLD,
               characterFound.name
             );
-            return Promise.resolve(
-              DisplayMessageService.getInstance().message(
-                message,
-                `Your character's name is: ${boldCharacterName}`
-              )
+            return DisplayMessageService.getInstance().message(
+              message,
+              `Your character's name is: ${boldCharacterName}`
             );
           }
 
           return Promise.reject(
-            DisplayMessageService.getInstance().message(
-              message,
-              `Character not found.`
-            )
+            Error(`Could not find the character from the given message.`)
           );
         }
       );

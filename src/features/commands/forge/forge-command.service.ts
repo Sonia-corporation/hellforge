@@ -33,10 +33,7 @@ export class ForgeCommandService {
           }
 
           return Promise.reject(
-            DisplayMessageService.getInstance().message(
-              message,
-              `Forge not found.`
-            )
+            Error(`Could not find the forge from the given message.`)
           );
         }
       );
