@@ -55,7 +55,7 @@ export class CharacterCreationService {
         }
       })
       .catch((): void => {
-        console.log(`The character retrieveing failed.`);
+        console.log(`The character retrieval failed.`);
       });
   }
 
