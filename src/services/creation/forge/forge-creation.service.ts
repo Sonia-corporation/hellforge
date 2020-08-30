@@ -19,41 +19,43 @@ export class ForgeCreationService {
     return ForgeCreationService._instance;
   }
 
-  public init(message: Message): Promise<void> {
+  public init(message: Message): Promise<Message | void> {
     return ForgeService.getInstance()
       .getEntity(message.author.id)
-      .then((forgeFound): void => {
-        if (!forgeFound) {
-          const memberId = message.author.id;
+      .then(
+        async (forgeFound): Promise<Message> => {
+          if (!forgeFound) {
+            const memberId = message.author.id;
 
-          const newState: IState = new Document().toObject();
-          newState.memberId = message.author.id;
-          newState.state = {
-            data: ``,
-            name: StateNamesEnum.FORGE_CREATION,
-            step: 1,
-          };
+            const newState: IState = new Document().toObject();
+            newState.memberId = message.author.id;
+            newState.state = {
+              data: ``,
+              name: StateNamesEnum.FORGE_CREATION,
+              step: 1,
+            };
 
-          void StateManagerService.getInstance().setBotState(
-            memberId,
-            newState
-          );
+            await StateManagerService.getInstance().setBotState(
+              memberId,
+              newState
+            );
 
-          void DisplayMessageService.getInstance().message(
-            message,
-            `Welcome to the forge creation. Type in the name of your forge below. You can type 'exit' to quit this mode.`
-          );
-        } else {
+            return DisplayMessageService.getInstance().message(
+              message,
+              `Welcome to the forge creation. Type in the name of your forge below. You can type 'exit' to quit this mode.`
+            );
+          }
+
           const boldCharacterName = MessageFormattingService.getInstance().format(
             TextFormatsEnum.BOLD,
             forgeFound.name
           );
-          void DisplayMessageService.getInstance().message(
+          return DisplayMessageService.getInstance().message(
             message,
             `You already have a forge, its name is: ${boldCharacterName}`
           );
         }
-      })
+      )
       .catch((): void => {
         console.log(`The forge retrieval failed.`);
       });

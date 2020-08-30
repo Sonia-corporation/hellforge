@@ -19,31 +19,33 @@ export class CharacterCreationService {
     return CharacterCreationService._instance;
   }
 
-  public init(message: Message): Promise<void> {
+  public init(message: Message): Promise<Message | void> {
     return CharacterService.getInstance()
       .getEntity(message.author.id)
-      .then((characterFound): void => {
-        if (!characterFound) {
-          const memberId = message.author.id;
+      .then(
+        (characterFound): Promise<Message> => {
+          if (!characterFound) {
+            const memberId = message.author.id;
 
-          const newState: IState = new Document().toObject();
-          newState.memberId = message.author.id;
-          newState.state = {
-            data: ``,
-            name: StateNamesEnum.CHARACTER_CREATION,
-            step: 1,
-          };
+            const newState: IState = new Document().toObject();
+            newState.memberId = message.author.id;
+            newState.state = {
+              data: ``,
+              name: StateNamesEnum.CHARACTER_CREATION,
+              step: 1,
+            };
 
-          void StateManagerService.getInstance().setBotState(
-            memberId,
-            newState
-          );
+            void StateManagerService.getInstance().setBotState(
+              memberId,
+              newState
+            );
 
-          void DisplayMessageService.getInstance().message(
-            message,
-            `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode.`
-          );
-        } else {
+            void DisplayMessageService.getInstance().message(
+              message,
+              `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode.`
+            );
+          }
+
           const boldCharacterName = MessageFormattingService.getInstance().format(
             TextFormatsEnum.BOLD,
             characterFound.name
@@ -53,7 +55,7 @@ export class CharacterCreationService {
             `You already have a character, their name is: ${boldCharacterName}`
           );
         }
-      })
+      )
       .catch((): void => {
         console.log(`The character retrieval failed.`);
       });
