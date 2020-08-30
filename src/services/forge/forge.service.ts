@@ -30,7 +30,7 @@ export class ForgeService {
 
   public setEntity(
     ownerId: string,
-    forgeToInsert: ICharacter
+    forgeToInsert: IForge
   ): Promise<Document | void> {
     return Forges.update({ ownerId }, forgeToInsert)
       .then(
