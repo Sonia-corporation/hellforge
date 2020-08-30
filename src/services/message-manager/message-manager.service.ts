@@ -1,16 +1,18 @@
-import { Client, Message } from "discord.js";
 import _ from "lodash";
-import { CommandsEnum } from "../../enums/commands.enum";
+import { Document } from "mongoose";
+import { Client, Message } from "discord.js";
 
+import { CommandsEnum } from "../../enums/commands.enum";
 import { SubcommandsEnum } from "../../enums/subcommands.enum";
 import { StateNamesEnum } from "../../enums/state-names.enum";
+
 import { CharacterCommandService } from "../../features/commands/character/character-command.service";
+import { ForgeCommandService } from "../../features/commands/forge/forge-command.service";
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service";
 import { CharacterCreationService } from "../creation/character/character-creation.service";
 import { DisplayMessageService } from "../display-message/display-message.service";
 import { PrefixManagerService } from "../prefix-manager/prefix-manager.service";
 import { StateManagerService } from "../state-manager/state-manager.service";
-import { Document } from "mongoose";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService;
@@ -59,6 +61,8 @@ export class MessageManagerService {
           } else {
             void CharacterCommandService.getInstance().message(message);
           }
+        } else if (command === CommandsEnum.FORGE) {
+          void ForgeCommandService.getInstance().message(message);
         } else {
           void DisplayMessageService.getInstance().message(
             message,

@@ -17,8 +17,6 @@ export class CharacterService {
     return Characters.findOne({ ownerId }).then(
       (foundCharacter: Document | null): Promise<ICharacter> => {
         if (this._isEntity(foundCharacter)) {
-          console.log(`Character found with name: ${foundCharacter.name}`);
-
           return Promise.resolve(foundCharacter);
         }
 
