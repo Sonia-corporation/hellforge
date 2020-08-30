@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { ICharacter } from "../character/character";
+import { ILocation } from "./location";
 
 export interface IForge extends Document {
   angelMash: number;
@@ -7,5 +8,6 @@ export interface IForge extends Document {
   experience: number;
   furnitures: string[];
   level: number;
+  location: ILocation;
   name: string;
 }

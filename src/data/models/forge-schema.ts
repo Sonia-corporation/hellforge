@@ -17,6 +17,11 @@ const forgeSchema = new mongoose.Schema(
       },
     ],
     level: Number,
+    location: {
+      name: String,
+      x: Number,
+      y: Number,
+    },
     name: String,
   },
   {
