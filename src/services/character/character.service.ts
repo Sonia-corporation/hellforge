@@ -33,10 +33,8 @@ export class CharacterService {
   ): Promise<Document | void> {
     return Characters.update({ ownerId }, characterToInsert)
       .then(
-        (updatedCharacter: Document): Promise<Document> => {
-          console.info(`A user updated their character`);
-          return Promise.resolve(updatedCharacter);
-        }
+        (updatedCharacter: Document): Promise<Document> =>
+          Promise.resolve(updatedCharacter)
       )
       .catch((err: string): void => {
         console.error(`An error occured while updating the character: ${err}`);
