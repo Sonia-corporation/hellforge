@@ -10,6 +10,7 @@ import { CharacterCommandService } from "../../features/commands/character/chara
 import { ForgeCommandService } from "../../features/commands/forge/forge-command.service";
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service";
 import { CharacterCreationService } from "../creation/character/character-creation.service";
+import { ForgeCreationService } from "../creation/forge/forge-creation.service";
 import { DisplayMessageService } from "../display-message/display-message.service";
 import { PrefixManagerService } from "../prefix-manager/prefix-manager.service";
 import { StateManagerService } from "../state-manager/state-manager.service";
@@ -53,7 +54,7 @@ export class MessageManagerService {
 
         if (command === CommandsEnum.CHARACTER) {
           const createArg = args.find(
-            (arg): boolean => arg === SubcommandsEnum.CHARACTER_CREATION
+            (arg): boolean => arg === SubcommandsEnum.CREATION
           );
 
           if (createArg) {
@@ -62,7 +63,15 @@ export class MessageManagerService {
             void CharacterCommandService.getInstance().message(message);
           }
         } else if (command === CommandsEnum.FORGE) {
-          void ForgeCommandService.getInstance().message(message);
+          const createArg = args.find(
+            (arg): boolean => arg === SubcommandsEnum.CREATION
+          );
+
+          if (createArg) {
+            void ForgeCreationService.getInstance().init(message);
+          } else {
+            void ForgeCommandService.getInstance().message(message);
+          }
         } else {
           void DisplayMessageService.getInstance().message(
             message,

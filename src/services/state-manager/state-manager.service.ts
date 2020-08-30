@@ -13,8 +13,6 @@ export class StateManagerService {
     return StateManagerService._instance;
   }
 
-  private _currentState: IState = new Document().toObject();
-
   public async getBotState(memberId: string): Promise<IState | void> {
     return States.findOne({ memberId }).then(
       (foundState: mongoose.Document | null): Promise<IState | void> => {
@@ -35,14 +33,11 @@ export class StateManagerService {
     memberId: string,
     newState: IState
   ): Promise<Document | void> {
-    if (this._currentState.memberId === memberId) {
+    const currentStateForMemberId = await this.getBotState(memberId);
+
+    if (currentStateForMemberId) {
       return States.update({ memberId }, newState);
     }
-
-    this._currentState.memberId = newState.memberId;
-    this._currentState.state.data = newState.state.data;
-    this._currentState.state.name = newState.state.name;
-    this._currentState.state.step = newState.state.step;
 
     return States.create(newState);
   }
