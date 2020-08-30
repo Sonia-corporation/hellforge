@@ -10,6 +10,7 @@ import { CharacterCreationService } from "../creation/character/character-creati
 import { DisplayMessageService } from "../display-message/display-message.service";
 import { PrefixManagerService } from "../prefix-manager/prefix-manager.service";
 import { StateManagerService } from "../state-manager/state-manager.service";
+import { Document } from "mongoose";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService;
@@ -56,10 +57,13 @@ export class MessageManagerService {
           if (createArg) {
             void CharacterCreationService.getInstance().init(message);
           } else {
-            CharacterCommandService.getInstance().message(message);
+            void CharacterCommandService.getInstance().message(message);
           }
         } else {
-          DisplayMessageService.getInstance().message(message, `:smiling_imp:`);
+          void DisplayMessageService.getInstance().message(
+            message,
+            `:smiling_imp:`
+          );
         }
 
         return message.channel.stopTyping(true);
@@ -74,16 +78,22 @@ export class MessageManagerService {
           ) {
             void message.channel.startTyping(1);
 
-            StateManagerService.getInstance().setBotState(message.author.id, {
+            let newState = new Document().toObject();
+            newState = {
               memberId: message.author.id,
               state: {
                 data: ``,
                 name: StateNamesEnum.NORMAL,
                 step: 0,
               },
-            });
+            };
 
-            DisplayMessageService.getInstance().message(
+            void StateManagerService.getInstance().setBotState(
+              message.author.id,
+              newState
+            );
+
+            void DisplayMessageService.getInstance().message(
               message,
               `You just exited what you were doing.`
             );

@@ -42,8 +42,8 @@ const characterSchema = new mongoose.Schema(
   }
 );
 
-export = mongoose.model<ICharacter>(
-  `characters`,
+export default mongoose.model<ICharacter>(
+  `Characters`,
   characterSchema,
   `characters`
 );
