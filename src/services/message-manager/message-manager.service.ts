@@ -14,6 +14,8 @@ import { ForgeCreationService } from "../creation/forge/forge-creation.service";
 import { DisplayMessageService } from "../display-message/display-message.service";
 import { PrefixManagerService } from "../prefix-manager/prefix-manager.service";
 import { StateManagerService } from "../state-manager/state-manager.service";
+import { CharacterRenamingService } from "../renaming/character/character-renaming.service";
+import { ForgeRenamingService } from "../renaming/forge/forge-renaming.service";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService;
@@ -56,9 +58,17 @@ export class MessageManagerService {
           const createArg = args.find(
             (arg): boolean => arg === SubcommandsEnum.CREATION
           );
+          const renameArg = args.find(
+            (arg): boolean => arg === SubcommandsEnum.RENAMING
+          );
 
           if (createArg) {
             void CharacterCreationService.getInstance().init(message);
+          } else if (renameArg) {
+            void CharacterRenamingService.getInstance().extractName(
+              message,
+              args
+            );
           } else {
             void CharacterCommandService.getInstance().message(message);
           }
@@ -66,9 +76,14 @@ export class MessageManagerService {
           const createArg = args.find(
             (arg): boolean => arg === SubcommandsEnum.CREATION
           );
+          const renameArg = args.find(
+            (arg): boolean => arg === SubcommandsEnum.RENAMING
+          );
 
           if (createArg) {
             void ForgeCreationService.getInstance().init(message);
+          } else if (renameArg) {
+            void ForgeRenamingService.getInstance().extractName(message, args);
           } else {
             void ForgeCommandService.getInstance().message(message);
           }
