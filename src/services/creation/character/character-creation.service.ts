@@ -40,7 +40,7 @@ export class CharacterCreationService {
               newState
             );
 
-            void DisplayMessageService.getInstance().message(
+            return DisplayMessageService.getInstance().message(
               message,
               `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode.`
             );
@@ -50,7 +50,8 @@ export class CharacterCreationService {
             TextFormatsEnum.BOLD,
             characterFound.name
           );
-          void DisplayMessageService.getInstance().message(
+
+          return DisplayMessageService.getInstance().message(
             message,
             `You already have a character, their name is: ${boldCharacterName}`
           );
