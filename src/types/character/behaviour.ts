@@ -1,6 +1,7 @@
-import { SmithBehaviourEnum } from "../../enums/smith-behaviour";
+import { SmithBehaviourNameEnum } from "../../enums/smith/behaviour-name";
+import { SmithBehaviourDescriptionEnum } from "../../enums/smith/behaviour-description";
 
 export interface IBehaviour {
-  description: string;
-  name: SmithBehaviourEnum;
+  description: SmithBehaviourDescriptionEnum;
+  name: SmithBehaviourNameEnum;
 }
