@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Document } from "mongoose";
+import { Smith } from "../../../classes/smith/smith";
 import names from "../../../data/texts/smiths/names.json";
 import { ISmith } from "../../../types/character/smith";
 import { IStat } from "../../../types/character/stat";
@@ -25,19 +25,22 @@ export class SmithCommandService {
 
   public async generate(): Promise<ISmith> {
     const behaviour = this._generateBehaviour();
+    const description = ``;
     const name = this._generateName();
     const startingLevel = _.random(1, 10);
     const stats = this._generateStats();
     const type = this._generateType();
     const weapons = this._generateWeapons(_.random(1, 3));
 
-    const smith: ISmith = new Document().toObject();
-    smith.behaviour = behaviour;
-    smith.name = name;
-    smith.startingLevel = startingLevel;
-    smith.stats = stats;
-    smith.type = type;
-    smith.weapons = weapons;
+    const smith: ISmith = new Smith({
+      behaviour,
+      description,
+      name,
+      startingLevel,
+      stats,
+      type,
+      weapons,
+    });
 
     void Smiths.create(smith);
 
