@@ -5,10 +5,13 @@ import { Client, Message } from "discord.js";
 import { CommandsEnum } from "../../enums/commands.enum";
 import { SubcommandsEnum } from "../../enums/subcommands.enum";
 import { StateNamesEnum } from "../../enums/state-names.enum";
+import { HelpsEnum } from "../../enums/helps.enum";
 
 import { ISmith } from "../../types/character/smith";
 import { CharacterCommandService } from "../../features/commands/character/character-command.service";
 import { ForgeCommandService } from "../../features/commands/forge/forge-command.service";
+import { SmithCommandService } from "../../features/commands/smith/smith-command.service";
+import { HelpCommandService } from "../../features/commands/help/help-command.service";
 import { ArgumentsManagerService } from "../arguments-manager/arguments-manager.service";
 import { CharacterCreationService } from "../creation/character/character-creation.service";
 import { ForgeCreationService } from "../creation/forge/forge-creation.service";
@@ -17,7 +20,6 @@ import { PrefixManagerService } from "../prefix-manager/prefix-manager.service";
 import { StateManagerService } from "../state-manager/state-manager.service";
 import { CharacterRenamingService } from "../renaming/character/character-renaming.service";
 import { ForgeRenamingService } from "../renaming/forge/forge-renaming.service";
-import { SmithCommandService } from "../../features/commands/smith/smith-command.service";
 
 export class MessageManagerService {
   private static _instance: MessageManagerService;
@@ -107,6 +109,22 @@ export class MessageManagerService {
               });
           } else {
             // @todo
+          }
+        } else if (command === CommandsEnum.HELP) {
+          const characterArg = args.find(
+            (arg): boolean => arg === HelpsEnum.CHARACTER
+          );
+
+          if (characterArg === CommandsEnum.CHARACTER) {
+            void DisplayMessageService.getInstance().message(
+              message,
+              `Help for the __character__ command`
+            );
+          } else {
+            void HelpCommandService.getInstance().message(
+              message,
+              HelpsEnum.HELP
+            );
           }
         } else {
           void DisplayMessageService.getInstance().message(
