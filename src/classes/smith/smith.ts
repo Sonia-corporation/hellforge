@@ -5,14 +5,17 @@ import { IItem } from "../../types/shop/item";
 import { ISmith } from "../../types/character/smith";
 import { IStat } from "../../types/character/stat";
 import { IWeapon } from "../../types/shop/weapon";
-import { SmithTypesEnum } from "../../enums/smith-types.enum";
+import { SmithTypesEnum } from "../../enums/smith/types.enum";
 import { EquipmentSpotsEnum } from "../../enums/equipment-spots.enum";
 import { ObjectTypesEnum } from "../../enums/object-types.enum";
 import { StatNamesEnum } from "../../enums/stat-names.enum";
-import { SmithBehaviourEnum } from "../../enums/smith-behaviour";
-import { WeaponCategoriesEnum } from "../../enums/weapon-categories.enum";
+import { SmithBehaviourNameEnum } from "../../enums/smith/behaviour-name";
+import { WeaponCategoriesEnum } from "../../enums/weapons/categories.enum";
+import { SmithBehaviourDescriptionEnum } from "../../enums/smith/behaviour-description";
+import { SmithBehaviourEnum } from "../../enums/smith/behaviour";
+import { SmithNamesEnum } from "../../enums/smith/name";
+import { WeaponNamesEnum } from "../../enums/weapons/names";
 import Smiths from "../../data/models/smith-schema";
-import names from "../../data/texts/smiths/names.json";
 
 export class Smith implements ISmith {
   public behaviour: IBehaviour;
@@ -25,9 +28,9 @@ export class Smith implements ISmith {
   public type: SmithTypesEnum;
   public weapons?: IWeapon[];
 
-  constructor() {
+  public constructor() {
     this.behaviour = this._generateBehaviour();
-    this.description = ``;
+    this.description = this._generateDescription();
     this.name = this._generateName();
     this.startingLevel = this._generateStartingLevel(10);
     this.stats = this._generateStats();
@@ -46,27 +49,25 @@ export class Smith implements ISmith {
       weapons: this.weapons,
     };
 
-    void Smiths.create(smith);
-
-    return Promise.resolve(smith);
+    return Smiths.create(smith);
   }
 
   private _generateBehaviour(): IBehaviour {
-    const behaviour: IBehaviour = {
-      description: ``,
-      name: _.sample(SmithBehaviourEnum) || SmithBehaviourEnum.SHY,
-    };
+    const smithBehaviour =
+      _.sample(SmithBehaviourEnum) || SmithBehaviourEnum.SHY;
 
-    return behaviour;
+    return {
+      description: SmithBehaviourDescriptionEnum[smithBehaviour],
+      name: SmithBehaviourNameEnum[smithBehaviour],
+    };
+  }
+
+  private _generateDescription(): string {
+    return `Description`;
   }
 
   private _generateName(): string {
-    const name = _.sample(names.names);
-
-    if (name) {
-      return name;
-    }
-    return `Bob`;
+    return _.sample(SmithNamesEnum) || SmithNamesEnum.BOB;
   }
 
   private _generateStartingLevel(max: number): number {
@@ -74,49 +75,40 @@ export class Smith implements ISmith {
   }
 
   private _generateStats(): IStat[] {
-    const generatedStats: IStat[] = [];
-
-    _.forEach(StatNamesEnum, (statName: StatNamesEnum): void => {
-      if (statName !== StatNamesEnum.LUCK) {
-        generatedStats.push({
-          description: ``,
+    return _.reduce(
+      StatNamesEnum,
+      (generatedStats: IStat[], statName: StatNamesEnum): IStat[] => {
+        const generatedStat = {
+          description: `Stat description`,
           name: statName,
           value: _.random(4, 11),
-        });
-      } else {
-        generatedStats.push({
-          description: ``,
-          name: StatNamesEnum.LUCK,
-          value: _.random(0, 5),
-        });
-      }
-    });
+        };
 
-    return generatedStats;
+        if (statName === StatNamesEnum.LUCK) {
+          generatedStat.value = _.random(0, 5);
+        }
+
+        return _.concat(generatedStats, generatedStat);
+      },
+      []
+    );
   }
 
   private _generateType(): SmithTypesEnum {
-    const type = _.sample(SmithTypesEnum);
-
-    if (type) {
-      return type;
-    }
-
-    return SmithTypesEnum.BLACKSMITH;
+    return _.sample(SmithTypesEnum) || SmithTypesEnum.BLACKSMITH;
   }
 
   private _generateWeapons(weaponsNumber: number): IWeapon[] | undefined {
     const weapons: IWeapon[] = [];
-
-    for (let i = 1; i <= weaponsNumber; i++) {
+    _.times(weaponsNumber, (_index): void => {
       weapons.push({
         category: WeaponCategoriesEnum.BOW,
-        description: ``,
-        name: `Uber Weapon`,
+        description: `Weapon description`,
+        name: _.sample(WeaponNamesEnum) || WeaponNamesEnum.RUSTY_SWORD,
         spot: EquipmentSpotsEnum.PRIMARY_HAND,
         type: ObjectTypesEnum.EQUIPMENT,
       });
-    }
+    });
 
     return weapons;
   }
