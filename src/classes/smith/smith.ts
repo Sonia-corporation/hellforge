@@ -14,7 +14,7 @@ import { WeaponCategoriesEnum } from "../../enums/weapons/categories.enum";
 import { SmithBehaviourDescriptionEnum } from "../../enums/smith/behaviour-description";
 import { SmithBehaviourEnum } from "../../enums/smith/behaviour";
 import { SmithNamesEnum } from "../../enums/smith/name";
-import { WeaponNamesEnum } from "../../enums/weapons/names";
+import { WeaponNamesEnum } from "../../enums/weapons/names.enum";
 import Smiths from "../../data/models/smith-schema";
 
 export class Smith implements ISmith {
