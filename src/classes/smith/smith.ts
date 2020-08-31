@@ -10,22 +10,33 @@ import { EquipmentSpotsEnum } from "../../enums/equipment-spots.enum";
 import { ObjectTypesEnum } from "../../enums/object-types.enum";
 import { StatNamesEnum } from "../../enums/stat-names.enum";
 import { SmithBehaviourNameEnum } from "../../enums/smith/behaviour-name";
-import { WeaponCategoriesEnum } from "../../enums/weapon-categories.enum";
+import { WeaponCategoriesEnum } from "../../enums/weapons/categories.enum";
 import { SmithBehaviourDescriptionEnum } from "../../enums/smith/behaviour-description";
 import { SmithBehaviourEnum } from "../../enums/smith/behaviour";
+import { SmithNamesEnum } from "../../enums/smith/name";
+import { WeaponNamesEnum } from "../../enums/weapons/names";
 import Smiths from "../../data/models/smith-schema";
-import { SmithNamesEnum } from 'src/enums/smith/name';
 
 export class Smith implements ISmith {
-  public behaviour: IBehaviour = this._generateBehaviour();
-  public description: string = this._generateDescription();
+  public behaviour: IBehaviour;
+  public description: string;
   public equipment?: IEquipment[];
-  public name: string = this._generateName();
+  public name: string;
   public items?: IItem[];
-  public startingLevel: number = this._generateStartingLevel(10);
-  public stats: IStat[] = this._generateStats();
-  public type: SmithTypesEnum = this._generateType();
-  public weapons?: IWeapon[] = this._generateWeapons(_.random(1, 3));
+  public startingLevel: number;
+  public stats: IStat[];
+  public type: SmithTypesEnum;
+  public weapons?: IWeapon[];
+
+  public constructor() {
+    this.behaviour = this._generateBehaviour();
+    this.description = this._generateDescription();
+    this.name = this._generateName();
+    this.startingLevel = this._generateStartingLevel(10);
+    this.stats = this._generateStats();
+    this.type = this._generateType();
+    this.weapons = this._generateWeapons(_.random(1, 3));
+  }
 
   public async generateEntity(): Promise<ISmith> {
     const smith: ISmith = {
@@ -64,25 +75,23 @@ export class Smith implements ISmith {
   }
 
   private _generateStats(): IStat[] {
-    const generatedStats: IStat[] = [];
-
-    _.forEach(StatNamesEnum, (statName: StatNamesEnum): void => {
-      if (statName !== StatNamesEnum.LUCK) {
-        generatedStats.push({
-          description: ``,
+    return _.reduce(
+      StatNamesEnum,
+      (generatedStats: IStat[], statName: StatNamesEnum): IStat[] => {
+        const generatedStat = {
+          description: `Stat description`,
           name: statName,
           value: _.random(4, 11),
-        });
-      } else {
-        generatedStats.push({
-          description: ``,
-          name: StatNamesEnum.LUCK,
-          value: _.random(0, 5),
-        });
-      }
-    });
+        };
 
-    return generatedStats;
+        if (statName === StatNamesEnum.LUCK) {
+          generatedStat.value = _.random(0, 5);
+        }
+
+        return _.concat(generatedStats, generatedStat);
+      },
+      []
+    );
   }
 
   private _generateType(): SmithTypesEnum {
@@ -91,16 +100,15 @@ export class Smith implements ISmith {
 
   private _generateWeapons(weaponsNumber: number): IWeapon[] | undefined {
     const weapons: IWeapon[] = [];
-
-    for (let i = 1; i <= weaponsNumber; i++) {
+    _.times(weaponsNumber, (_index): void => {
       weapons.push({
         category: WeaponCategoriesEnum.BOW,
-        description: ``,
-        name: `Uber Weapon`,
+        description: `Weapon description`,
+        name: _.sample(WeaponNamesEnum) || WeaponNamesEnum.RUSTY_SWORD,
         spot: EquipmentSpotsEnum.PRIMARY_HAND,
         type: ObjectTypesEnum.EQUIPMENT,
       });
-    }
+    });
 
     return weapons;
   }
