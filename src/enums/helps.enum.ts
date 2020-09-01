@@ -1,7 +1,6 @@
-export enum CommandsEnum {
+export enum HelpsEnum {
   CHARACTER = `character`,
   FORGE = `forge`,
   HELP = `help`,
-  NONE = `none`,
   SMITH = `smith`,
 }
