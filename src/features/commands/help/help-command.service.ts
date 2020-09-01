@@ -13,9 +13,9 @@ export class HelpCommandService {
     return HelpCommandService._instance;
   }
 
-  public message(message: Message, targetHelp: HelpsEnum): Promise<Message> {
+  public message(message: Message, helpToDisplay: HelpsEnum): Promise<Message> {
     let messageToSend = ``;
-    if (targetHelp === HelpsEnum.HELP) {
+    if (helpToDisplay === HelpsEnum.HELP) {
       messageToSend = `Welcome to Hell. Your goal, as an inhabitant of the nether realm, is to create the most famous forge of all Hell: The Hellforge. In order to become that, here is what you can do to help you in your journey.`;
     }
     return DisplayMessageService.getInstance().message(message, messageToSend);
