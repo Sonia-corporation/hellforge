@@ -171,7 +171,7 @@ export class MessageManagerService {
             );
 
             const embed = new MessageEmbed({
-              color: EmbedColorsEnum.INFO,
+              color: EmbedColorsEnum.ERROR,
               description: `You just cancelled what you were doing.`,
               title: `Process burned`,
             });

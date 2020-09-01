@@ -46,6 +46,7 @@ export class CharacterCreationService {
               description: `Welcome! Type in the name of your character below. You can type 'exit' to quit this mode.`,
               title: `Character Creation`,
             });
+
             return DisplayMessageService.getInstance().message(message, embed);
           }
           const boldCharacterName = MessageFormattingService.getInstance().format(
@@ -124,6 +125,7 @@ export class CharacterCreationService {
             description: `So, they will be proficient in that specificity, I hope they will have a good use of it.`,
             title: formattedCharacterFisrtStatBonus,
           });
+
           void DisplayMessageService.getInstance().message(message, embed);
         }
       });

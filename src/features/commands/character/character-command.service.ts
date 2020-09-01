@@ -1,9 +1,8 @@
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import _ from "lodash";
-import { TextFormatsEnum } from "../../../enums/text-formats.enum";
+import { EmbedColorsEnum } from "../../../enums/embed-colors.enum";
 import { CharacterService } from "../../../services/character/character.service";
 import { DisplayMessageService } from "../../../services/display-message/display-message.service";
-import { MessageFormattingService } from "../../../services/message-formating/message-formatting.service";
 
 export class CharacterCommandService {
   private static _instance: CharacterCommandService;
@@ -21,14 +20,12 @@ export class CharacterCommandService {
       .then(
         (characterFound): Promise<Message> => {
           if (characterFound) {
-            const boldCharacterName = MessageFormattingService.getInstance().format(
-              TextFormatsEnum.BOLD,
-              characterFound.name
-            );
-            return DisplayMessageService.getInstance().message(
-              message,
-              `Your character's name is: ${boldCharacterName}`
-            );
+            const embed = new MessageEmbed({
+              color: EmbedColorsEnum.INFO,
+              title: characterFound.name,
+            });
+
+            return DisplayMessageService.getInstance().message(message, embed);
           }
 
           return Promise.reject(

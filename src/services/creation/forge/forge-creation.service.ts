@@ -1,8 +1,9 @@
 import _ from "lodash";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { Document } from "mongoose";
 import { StateNamesEnum } from "../../../enums/state-names.enum";
 import { TextFormatsEnum } from "../../../enums/text-formats.enum";
+import { EmbedColorsEnum } from "../../../enums/embed-colors.enum";
 import { IState } from "../../../types/global/state";
 import { ForgeService } from "../../forge/forge.service";
 import { StateManagerService } from "../../state-manager/state-manager.service";
@@ -40,20 +41,26 @@ export class ForgeCreationService {
               newState
             );
 
-            return DisplayMessageService.getInstance().message(
-              message,
-              `Welcome to the forge creation. Type in the name of your forge below. You can type 'exit' to quit this mode.`
-            );
+            const embed = new MessageEmbed({
+              color: EmbedColorsEnum.ERROR,
+              description: `Type in the name of your forge below. You can type 'exit' to quit this mode.`,
+              title: `Forge creation`,
+            });
+
+            return DisplayMessageService.getInstance().message(message, embed);
           }
 
           const boldCharacterName = MessageFormattingService.getInstance().format(
             TextFormatsEnum.BOLD,
             forgeFound.name
           );
-          return DisplayMessageService.getInstance().message(
-            message,
-            `You already have a forge, its name is: ${boldCharacterName}`
-          );
+          const embed = new MessageEmbed({
+            color: EmbedColorsEnum.ERROR,
+            description: `Its name is: ${boldCharacterName}`,
+            title: `You already have a forge`,
+          });
+
+          return DisplayMessageService.getInstance().message(message, embed);
         }
       )
       .catch((): void => {

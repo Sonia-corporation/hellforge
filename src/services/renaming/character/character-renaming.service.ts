@@ -1,6 +1,7 @@
 import _ from "lodash";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { SubcommandsEnum } from "../../../enums/subcommands.enum";
+import { EmbedColorsEnum } from "../../../enums/embed-colors.enum";
 import { ICharacter } from "../../../types/character/character";
 import { CharacterService } from "../../character/character.service";
 import { DisplayMessageService } from "../../display-message/display-message.service";
@@ -49,11 +50,13 @@ export class CharacterRenamingService {
       const newEntityNameBold = MessageFormattingService.getInstance().bold(
         newName
       );
+      const embed = new MessageEmbed({
+        color: EmbedColorsEnum.SUCCESS,
+        description: `To: ${newEntityNameBold}`,
+        title: `Character renamed`,
+      });
 
-      return DisplayMessageService.getInstance().message(
-        message,
-        `This was renamed to: ${newEntityNameBold}`
-      );
+      return DisplayMessageService.getInstance().message(message, embed);
     }
 
     return Promise.reject(

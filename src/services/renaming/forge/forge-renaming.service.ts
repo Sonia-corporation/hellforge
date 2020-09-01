@@ -1,6 +1,7 @@
 import _ from "lodash";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { SubcommandsEnum } from "../../../enums/subcommands.enum";
+import { EmbedColorsEnum } from "../../../enums/embed-colors.enum";
 import { IForge } from "../../../types/forge/forge";
 import { ForgeService } from "../../forge/forge.service";
 import { DisplayMessageService } from "../../display-message/display-message.service";
@@ -46,11 +47,13 @@ export class ForgeRenamingService {
       const newForgeNameBold = MessageFormattingService.getInstance().bold(
         newName
       );
+      const embed = new MessageEmbed({
+        color: EmbedColorsEnum.SUCCESS,
+        description: `To: ${newForgeNameBold}`,
+        title: `Forge renamed`,
+      });
 
-      return DisplayMessageService.getInstance().message(
-        message,
-        `Your character was renamed to: ${newForgeNameBold}`
-      );
+      return DisplayMessageService.getInstance().message(message, embed);
     }
 
     return Promise.reject(
