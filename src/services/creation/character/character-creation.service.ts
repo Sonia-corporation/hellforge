@@ -1,7 +1,8 @@
 import _ from "lodash";
-import { Message } from "discord.js";
+import { Message, MessageEmbed } from "discord.js";
 import { Document } from "mongoose";
 import { StateNamesEnum } from "../../../enums/state-names.enum";
+import { EmbedColorsEnum } from "../../../enums/embed-colors.enum";
 import { CharacterService } from "../../character/character.service";
 import { DisplayMessageService } from "../../display-message/display-message.service";
 import { StateManagerService } from "../../state-manager/state-manager.service";
@@ -40,26 +41,26 @@ export class CharacterCreationService {
               newState
             );
 
-            return DisplayMessageService.getInstance().message(
-              message,
-              `Welcome to the character creation. Type in the name of your character below. You can type 'exit' to quit this mode.`
-            );
-          }
+            const embed = new MessageEmbed({
+              color: EmbedColorsEnum.INFO,
+              description: `Welcome! Type in the name of your character below. You can type 'exit' to quit this mode.`,
+              title: `Character Creation`,
+            });
 
+            return DisplayMessageService.getInstance().message(message, embed);
+          }
           const boldCharacterName = MessageFormattingService.getInstance().format(
             TextFormatsEnum.BOLD,
             characterFound.name
           );
-
-          return DisplayMessageService.getInstance().message(
-            message,
-            `You already have a character, their name is: ${boldCharacterName}`
-          );
+          const embed = new MessageEmbed({
+            color: EmbedColorsEnum.ERROR,
+            description: `You already have a character, their name is: ${boldCharacterName}`,
+            title: `ERROR`,
+          });
+          return DisplayMessageService.getInstance().message(message, embed);
         }
-      )
-      .catch((): void => {
-        console.log(`The character retrieval failed.`);
-      });
+      );
   }
 
   public setCharacterName(message: Message): Promise<void> {
@@ -82,13 +83,16 @@ export class CharacterCreationService {
           );
 
           const formattedCharacterName = MessageFormattingService.getInstance().format(
-            TextFormatsEnum.ITALIC_BOLD,
+            TextFormatsEnum.BOLD,
             message.content
           );
-          void DisplayMessageService.getInstance().message(
-            message,
-            `Pleased to meet ${formattedCharacterName}... What will be their foremost stat?`
-          );
+          const embed = new MessageEmbed({
+            color: EmbedColorsEnum.INFO,
+            description: `Pleased to meet them... I'm sure we're gonna get along. What will be their foremost stat?`,
+            title: formattedCharacterName,
+          });
+
+          void DisplayMessageService.getInstance().message(message, embed);
         }
       });
   }
@@ -116,10 +120,13 @@ export class CharacterCreationService {
             TextFormatsEnum.ITALIC_BOLD,
             message.content
           );
-          void DisplayMessageService.getInstance().message(
-            message,
-            `So, they will be proficient at ${formattedCharacterFisrtStatBonus}, I hope they will have a good use of it.`
-          );
+          const embed = new MessageEmbed({
+            color: EmbedColorsEnum.INFO,
+            description: `So, they will be proficient in that specificity, I hope they will have a good use of it.`,
+            title: formattedCharacterFisrtStatBonus,
+          });
+
+          void DisplayMessageService.getInstance().message(message, embed);
         }
       });
   }

@@ -1,11 +1,12 @@
 import _ from "lodash";
 import { Document } from "mongoose";
-import { Client, Message } from "discord.js";
+import { Client, Message, MessageEmbed } from "discord.js";
 
 import { CommandsEnum } from "../../enums/commands.enum";
-import { SubcommandsEnum } from "../../enums/subcommands.enum";
-import { StateNamesEnum } from "../../enums/state-names.enum";
+import { EmbedColorsEnum } from "../../enums/embed-colors.enum";
 import { HelpsEnum } from "../../enums/helps.enum";
+import { StateNamesEnum } from "../../enums/state-names.enum";
+import { SubcommandsEnum } from "../../enums/subcommands.enum";
 
 import { ISmith } from "../../types/character/smith";
 import { CharacterCommandService } from "../../features/commands/character/character-command.service";
@@ -101,10 +102,15 @@ export class MessageManagerService {
               .generate()
               .then((smith: ISmith): void => {
                 const readableSmith = `I can offer you that smith:\r**${smith.name}** - Smith of type *${smith.type}*, level *${smith.startingLevel}*`;
+                const embed = new MessageEmbed({
+                  color: EmbedColorsEnum.HELP,
+                  description: readableSmith,
+                  title: `Smith employment`,
+                });
 
                 void DisplayMessageService.getInstance().message(
                   message,
-                  readableSmith
+                  embed
                 );
               });
           } else {
@@ -116,10 +122,12 @@ export class MessageManagerService {
           );
 
           if (characterArg === CommandsEnum.CHARACTER) {
-            void DisplayMessageService.getInstance().message(
-              message,
-              `Help for the __character__ command`
-            );
+            const embed = new MessageEmbed({
+              color: EmbedColorsEnum.HELP,
+              title: `Help for the __character__ command`,
+            });
+
+            void DisplayMessageService.getInstance().message(message, embed);
           } else {
             void HelpCommandService.getInstance().message(
               message,
@@ -127,10 +135,12 @@ export class MessageManagerService {
             );
           }
         } else {
-          void DisplayMessageService.getInstance().message(
-            message,
-            `:smiling_imp:`
-          );
+          const embed = new MessageEmbed({
+            color: EmbedColorsEnum.ERROR,
+            title: `:smiling_imp:`,
+          });
+
+          void DisplayMessageService.getInstance().message(message, embed);
         }
 
         return message.channel.stopTyping(true);
@@ -160,15 +170,21 @@ export class MessageManagerService {
               newState
             );
 
-            void DisplayMessageService.getInstance().message(
-              message,
-              `You just exited what you were doing.`
-            );
+            const embed = new MessageEmbed({
+              color: EmbedColorsEnum.ERROR,
+              description: `You just cancelled what you were doing.`,
+              title: `Process burned`,
+            });
+
+            void DisplayMessageService.getInstance().message(message, embed);
 
             return message.channel.stopTyping(true);
           }
 
-          if (foundstate.state.name === StateNamesEnum.CHARACTER_CREATION) {
+          if (
+            foundstate &&
+            foundstate.state.name === StateNamesEnum.CHARACTER_CREATION
+          ) {
             void message.channel.startTyping(1);
 
             if (foundstate.state.step === 2) {
