@@ -43,8 +43,8 @@ module.exports = {
   // dependencyExtractor: undefined,
 
   displayName: {
-    color: `red`,
-    name: `Hellforge`,
+    color: `magenta`,
+    name: `Sonia`,
   },
 
   // Make calling deprecated APIs throw helpful error messages
@@ -58,6 +58,13 @@ module.exports = {
 
   // A path to a module which exports an async function that is triggered once after all test suites
   // globalTeardown: undefined,
+
+  // A set of global variables that need to be available in all test environments
+  globals: {
+    "ts-jest": {
+      compiler: `ttypescript`,
+    },
+  },
 
   // The maximum amount of workers used to run your tests. Can be specified as % or a number. E.g. maxWorkers: 10% will use 10% of your CPU amount + 1 as the maximum worker number. maxWorkers: 2 will use a maximum of 2 workers.
   // maxWorkers: "50%",
@@ -88,6 +95,20 @@ module.exports = {
   // A preset that is used as a base for Jest's configuration
   preset: `ts-jest/presets/js-with-ts`,
 
+  prettierPath: `prettier`,
+
+  // Use this configuration option to add custom reporters to Jest
+  reporters: [
+    [
+      `jest-silent-reporter`,
+      {
+        showPaths: true,
+        showWarnings: true,
+        useDots: true,
+      },
+    ],
+  ],
+
   // Automatically reset mock state between every test
   resetMocks: true,
 
@@ -109,10 +130,14 @@ module.exports = {
   // A list of paths to directories that Jest should use to search for files in
   roots: [`./src`],
 
+  // The paths to modules that run some code to configure or set up the testing environment before each test
+  setupFiles: [`./config.ts`],
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
 
+  // A list of paths to modules that run some code to configure or set up the testing framework before each test
+  setupFilesAfterEnv: [`jest-extended`],
 
   // Prevent tests from printing messages through the console
   silent: true,
@@ -175,4 +200,4 @@ module.exports = {
 
   // Whether to use watchman for file crawling
   watchman: true,
-}
+};

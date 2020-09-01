@@ -1,7 +1,9 @@
-import { IEffect } from '../skills/effect'
+import { IEffect } from "../skills/effect";
+import { ObjectTypesEnum } from "../../enums/object-types.enum";
 
 export interface IItem {
-  name: string,
-  description: string,
-  effects: IEffect[]
+  description: string;
+  effects?: IEffect[];
+  name: string;
+  type: ObjectTypesEnum;
 }

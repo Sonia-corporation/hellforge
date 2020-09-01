@@ -1,40 +1,49 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
+import { ICharacter } from "../../types/character/character";
 
-const characterSchema = new mongoose.Schema({
-  ownerId: String,
-  name: String,
-  gender: {
-    type: String,
-    enum: ['Male', 'Female', 'Other'],
-    default: 'Other',
-    required: true
-  },
-  level: Number,
-  experience: Number,
-  stats: {
-    healthPoints: Number,
-    aetherisPoints: Number,
-    strength: Number,
-    dexterity: Number,
-    defense: Number,
-    reflexes: Number,
-    senses: Number,
-    charisma: Number,
-    mind: Number,
-    spirit: Number,
-    willpower: Number
-  },
-  luck: Number,
-  credits: Number,
-  inventorySpace: Number,
-  inventory: [{
+const characterSchema = new mongoose.Schema(
+  {
+    credits: Number,
+    experience: Number,
+    gender: {
+      default: `Other`,
+      enum: [`Male`, `Female`, `Other`],
+      required: true,
+      type: String,
+    },
+    inventory: [
+      {
+        name: String,
+        quantity: Number,
+        type: String,
+      },
+    ],
+    inventorySpace: Number,
+    level: Number,
+    luck: Number,
     name: String,
-    quantity: Number,
-    type: String
-  }]
-},
-{
-  versionKey: false 
-})
+    ownerId: String,
+    stats: {
+      aetherisPoints: Number,
+      charisma: Number,
+      defense: Number,
+      dexterity: Number,
+      healthPoints: Number,
+      mind: Number,
+      reflexes: Number,
+      senses: Number,
+      spirit: Number,
+      strength: Number,
+      willpower: Number,
+    },
+  },
+  {
+    versionKey: false,
+  }
+);
 
-export = mongoose.model("characters", characterSchema, "characters")
+export default mongoose.model<ICharacter>(
+  `Characters`,
+  characterSchema,
+  `characters`
+);

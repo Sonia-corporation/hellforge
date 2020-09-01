@@ -1,4 +1,5 @@
 export enum StateNamesEnum {
-  NORMAL = 'Normal',
-  CHARACTER_CREATION = 'CharacterCreation'
+  CHARACTER_CREATION = `CharacterCreation`,
+  FORGE_CREATION = `ForgeCreation`,
+  NORMAL = `Normal`,
 }
