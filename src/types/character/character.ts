@@ -1,18 +1,16 @@
-import { Document } from "mongoose";
 import { IItem } from "../shop/item";
-import { IEffect } from "../skills/effect";
+import { IEffect } from "../skill/effect";
 import { IStat } from "./stat";
 
-export interface ICharacter extends Document {
+export interface ICharacter {
   credits: number;
-  effects: IEffect[];
+  effects?: IEffect[];
   experience: number;
-  gender: string;
-  inventory: IItem[];
+  inventory?: IItem[];
   inventoryMax: number;
   inventorySpace: number;
   level: number;
   name: string;
   ownerId: string;
-  stats: IStat[];
+  stats?: IStat[];
 }

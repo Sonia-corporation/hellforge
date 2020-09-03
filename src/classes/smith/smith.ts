@@ -1,7 +1,6 @@
 import _ from "lodash";
+import { Document } from "mongoose";
 import { IBehaviour } from "../../types/character/behaviour";
-import { IEquipment } from "../../types/shop/equipment";
-import { IItem } from "../../types/shop/item";
 import { ISmith } from "../../types/character/smith";
 import { IStat } from "../../types/character/stat";
 import { IWeapon } from "../../types/shop/weapon";
@@ -17,18 +16,19 @@ import { SmithNamesEnum } from "../../enums/smith/name";
 import { WeaponNamesEnum } from "../../enums/weapons/names.enum";
 import Smiths from "../../data/models/smith-schema";
 
-export class Smith implements ISmith {
-  public behaviour: IBehaviour;
-  public description: string;
-  public equipment?: IEquipment[];
-  public name: string;
-  public items?: IItem[];
-  public startingLevel: number;
-  public stats: IStat[];
-  public type: SmithTypesEnum;
-  public weapons?: IWeapon[];
+export class Smith extends Document implements ISmith {
+  public behaviour: ISmith["behaviour"];
+  public description: ISmith["description"];
+  public equipment?: ISmith["equipment"];
+  public items?: ISmith["items"];
+  public name: ISmith["name"];
+  public startingLevel: ISmith["startingLevel"];
+  public stats: ISmith["stats"];
+  public type: ISmith["type"];
+  public weapons?: ISmith["weapons"];
 
   public constructor() {
+    super();
     this.behaviour = this._generateBehaviour();
     this.description = this._generateDescription();
     this.name = this._generateName();
@@ -99,15 +99,18 @@ export class Smith implements ISmith {
   }
 
   private _generateWeapons(weaponsNumber: number): IWeapon[] | undefined {
-    const weapons: IWeapon[] = [];
+    let weapons: IWeapon[] = [];
+
     _.times(weaponsNumber, (_index): void => {
-      weapons.push({
+      const newWeapon = {
         category: WeaponCategoriesEnum.BOW,
         description: `Weapon description`,
         name: _.sample(WeaponNamesEnum) || WeaponNamesEnum.RUSTY_SWORD,
         spot: EquipmentSpotsEnum.PRIMARY_HAND,
         type: ObjectTypesEnum.EQUIPMENT,
-      });
+      };
+
+      weapons = _.concat(weapons, newWeapon);
     });
 
     return weapons;

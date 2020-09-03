@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IState } from "../../types/global/state";
+import { State } from "../../classes/state/state";
 
 const stateSchema = new mongoose.Schema(
   {
@@ -15,4 +15,4 @@ const stateSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model<IState>(`States`, stateSchema, `states`);
+export default mongoose.model<State>(`States`, stateSchema, `states`);

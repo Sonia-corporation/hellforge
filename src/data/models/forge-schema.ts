@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { IForge } from "../../types/forge/forge";
+import { Forge } from "../../classes/forge/forge";
 
 const forgeSchema = new mongoose.Schema(
   {
@@ -29,4 +29,4 @@ const forgeSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model<IForge>(`Forges`, forgeSchema, `forges`);
+export default mongoose.model<Forge>(`Forges`, forgeSchema, `forges`);
