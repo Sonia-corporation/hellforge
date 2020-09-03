@@ -66,7 +66,9 @@ export class Character extends Document implements ICharacter {
   }
 
   public setEffect(effect: IEffect): void {
-    _.concat(this.effects, effect);
+    if (this.effects) {
+      this.effects = _.concat(this.effects, effect);
+    }
   }
 
   public setExperience(experience: ICharacter["experience"]): void {
@@ -74,7 +76,9 @@ export class Character extends Document implements ICharacter {
   }
 
   public setInventoryItem(item: IItem): void {
-    _.concat(this.inventory, item);
+    if (this.inventory) {
+      this.inventory = _.concat(this.inventory, item);
+    }
   }
 
   public setInventoryMax(inventoryMax: ICharacter["inventoryMax"]): void {
@@ -97,25 +101,27 @@ export class Character extends Document implements ICharacter {
     this.ownerId = ownerId;
   }
 
-  public setStat(stat: IStat): void {
-    _.concat(this.stats, stat);
+  public addStat(stat: IStat): void {
+    if (this.stats) {
+      this.stats = _.concat(this.stats, stat);
+    }
   }
 
   public removeEffect(effect: IEffect): void {
     if (this.effects) {
-      _.pull(this.effects, effect);
+      this.effects = _.pull(this.effects, effect);
     }
   }
 
   public removeInventory(item: IItem): void {
     if (this.inventory) {
-      _.pull(this.inventory, item);
+      this.inventory = _.pull(this.inventory, item);
     }
   }
 
   public removeStat(stat: IStat): void {
     if (this.stats) {
-      _.pull(this.stats, stat);
+      this.stats = _.pull(this.stats, stat);
     }
   }
 }

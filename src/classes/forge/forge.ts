@@ -4,26 +4,20 @@ import { IForge } from "../../types/forge/forge";
 import { LocationEnum } from "../../enums/location.enum";
 
 export class Forge extends Document implements IForge {
-  public angelMash: IForge["angelMash"];
-  public bossId: IForge["bossId"];
-  public experience: IForge["experience"];
+  public angelMash: IForge["angelMash"] = 100;
+  public bossId: IForge["bossId"] = `000000000000000000`;
+  public experience: IForge["experience"] = 0;
   public furnitures: IForge["furnitures"];
-  public level: IForge["level"];
-  public location: IForge["location"];
-  public name: IForge["name"];
+  public level: IForge["level"] = 1;
+  public location: IForge["location"] = {
+    name: LocationEnum.COMMON_FORGE,
+    x: 0,
+    y: 0,
+  };
+  public name: IForge["name"] = `My First Forge`;
 
   constructor() {
     super();
-    this.angelMash = 100;
-    this.bossId = `000000000000000000`;
-    this.experience = 0;
-    this.level = 1;
-    this.location = {
-      name: LocationEnum.COMMON_FORGE,
-      x: 0,
-      y: 0,
-    };
-    this.name = `My First Forge`;
   }
 
   public getAngelMash(): IForge["angelMash"] {
@@ -67,7 +61,9 @@ export class Forge extends Document implements IForge {
   }
 
   public setFurnitures(furniture: string): void {
-    _.concat(this.furnitures, furniture);
+    if (this.furnitures) {
+      this.furnitures = _.concat(this.furnitures, furniture);
+    }
   }
 
   public setLevel(level: IForge["level"]): void {
