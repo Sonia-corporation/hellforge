@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { Message, MessageEmbed } from "discord.js";
+import { Message, MessageEmbed, MessageAttachment } from "discord.js";
 
 export class DisplayMessageService {
   private static _instance: DisplayMessageService;
@@ -13,8 +13,12 @@ export class DisplayMessageService {
 
   public message(
     messageToAnswer: Message,
-    embedToSend: MessageEmbed
+    embedToSend: MessageEmbed,
+    attachment?: MessageAttachment
   ): Promise<Message> {
+    if (attachment) {
+      return messageToAnswer.channel.send(attachment);
+    }
     return messageToAnswer.channel.send({ embed: embedToSend });
   }
 }
