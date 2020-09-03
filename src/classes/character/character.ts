@@ -65,7 +65,7 @@ export class Character extends Document implements ICharacter {
     this.credits = credits;
   }
 
-  public setEffect(effect: IEffect): void {
+  public addEffect(effect: IEffect): void {
     if (this.effects) {
       this.effects = _.concat(this.effects, effect);
     }
@@ -75,7 +75,7 @@ export class Character extends Document implements ICharacter {
     this.experience = experience;
   }
 
-  public setInventoryItem(item: IItem): void {
+  public addInventoryItem(item: IItem): void {
     if (this.inventory) {
       this.inventory = _.concat(this.inventory, item);
     }
@@ -109,19 +109,19 @@ export class Character extends Document implements ICharacter {
 
   public removeEffect(effect: IEffect): void {
     if (this.effects) {
-      this.effects = _.pull(this.effects, effect);
+      _.pull(this.effects, effect);
     }
   }
 
   public removeInventory(item: IItem): void {
     if (this.inventory) {
-      this.inventory = _.pull(this.inventory, item);
+      _.pull(this.inventory, item);
     }
   }
 
   public removeStat(stat: IStat): void {
     if (this.stats) {
-      this.stats = _.pull(this.stats, stat);
+      _.pull(this.stats, stat);
     }
   }
 }

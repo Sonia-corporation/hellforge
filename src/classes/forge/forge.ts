@@ -60,7 +60,7 @@ export class Forge extends Document implements IForge {
     this.experience = experience;
   }
 
-  public setFurnitures(furniture: string): void {
+  public addFurnitures(furniture: string): void {
     if (this.furnitures) {
       this.furnitures = _.concat(this.furnitures, furniture);
     }
