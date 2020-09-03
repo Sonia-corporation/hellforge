@@ -6,16 +6,16 @@ import { IItem } from "../../types/shop/item";
 import { IEffect } from "../../types/skill/effect";
 
 export class Character extends Document implements ICharacter {
-  public credits: number;
-  public effects?: IEffect[] | undefined;
-  public experience: number;
-  public inventory?: IItem[] | undefined;
-  public inventoryMax: number;
-  public inventorySpace: number;
-  public level: number;
-  public name: string;
-  public ownerId: string;
-  public stats: IStat[] | undefined;
+  public credits: ICharacter["credits"];
+  public effects?: ICharacter["effects"];
+  public experience: ICharacter["experience"];
+  public inventory?: ICharacter["inventory"];
+  public inventoryMax: ICharacter["inventoryMax"];
+  public inventorySpace: ICharacter["inventorySpace"];
+  public level: ICharacter["level"];
+  public name: ICharacter["name"];
+  public ownerId: ICharacter["ownerId"];
+  public stats: ICharacter["stats"];
 
   public constructor() {
     super();
