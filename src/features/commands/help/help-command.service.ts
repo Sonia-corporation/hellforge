@@ -24,7 +24,6 @@ export class HelpCommandService {
     });
     if (helpToDisplay === HelpsEnum.HELP) {
       embed.title = `Welcome to Help`;
-      // embed.description = `Your goal, as an inhabitant of the nether realm, is to create the most famous forge of all Hell: The Hellforge. In order to become that, here is what you can do to help you in your journey.`;
       (embed.description = `Lasses and lads, you're requiring the gentle help of me, the almighty Nano? Then, let me demonsplain things to you.`),
         (embed.fields = [
           {
@@ -83,6 +82,38 @@ export class HelpCommandService {
             value: `Shows you if anyone wants to work in your forge, so you can hire them as ~~slaves~~ employees.`,
           },
         ]);
+    } else if (helpToDisplay === HelpsEnum.CHARACTER) {
+      embed.title = `Help for the __character__ command`;
+    } else if (helpToDisplay === HelpsEnum.LORE) {
+      embed.title = `Welcome to Hell`;
+      embed.description = `Your goal, as an inhabitant of the nether realm, is to create the most famous forge of all Hell: The Hellforge. In order to become that, here is what you can do to help you in your journey.`;
+      embed.fields = [
+        {
+          inline: false,
+          name: `Character`,
+          value: `First and foremost, I need to know who I will deal with. This the most important process. You can't do anything without an identity. You will have to type your name and you will be granted a mail in your private inbox with your ID card in it. :heart:`,
+        },
+        {
+          inline: false,
+          name: `Forge`,
+          value: `Secondly, if you want to participate in the Hellforge super duper contest, you will ne to found a forge. You will need to type in its name. At first, it will be located at the Common Forge, where anyone can start crafting their stuff. You will receive a mail in your private inbox when your forge registration will be confirmed. :heart:`,
+        },
+        {
+          inline: false,
+          name: `Crafting`,
+          value: `Once you have an identity and a forge name, you will be able to start creating amazing stuff, I'm pretty sure of it! You'll have to gather the materials first, though... :heart:`,
+        },
+        {
+          inline: false,
+          name: `Questing`,
+          value: `You will be able to fullfil some orders and requests in exchange of impies, materials or both. Gotta buy stuff you lack, right? :heart:`,
+        },
+        {
+          inline: false,
+          name: `Fighting`,
+          value: `Sometimes, people are mean. Sometimes, they need a good beat down as a punishment. And sometimes, you just have to hunt them down to retrieve material. Show them who's the boss, lass/lad! :heart:`,
+        },
+      ];
     }
 
     embed.footer = {

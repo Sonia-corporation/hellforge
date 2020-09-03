@@ -120,15 +120,25 @@ export class MessageManagerService {
           const characterArg = args.find(
             (arg): boolean => arg === HelpsEnum.CHARACTER
           );
+          const loreArg = args.find((arg): boolean => arg === HelpsEnum.LORE);
+          let helpArgs: (string | undefined)[] = [];
+          helpArgs = _.concat(helpArgs, [characterArg, loreArg]);
 
-          if (characterArg === CommandsEnum.CHARACTER) {
-            const embed = new MessageEmbed({
-              color: EmbedColorsEnum.HELP,
-              title: `Help for the __character__ command`,
-            });
+          if (characterArg) {
+            void HelpCommandService.getInstance().message(
+              message,
+              HelpsEnum.CHARACTER
+            );
+          }
 
-            void DisplayMessageService.getInstance().message(message, embed);
-          } else {
+          if (loreArg) {
+            void HelpCommandService.getInstance().message(
+              message,
+              HelpsEnum.LORE
+            );
+          }
+
+          if (helpArgs.length === 0) {
             void HelpCommandService.getInstance().message(
               message,
               HelpsEnum.HELP
