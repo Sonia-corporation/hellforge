@@ -101,13 +101,15 @@ export class Smith extends Document implements ISmith {
   private _generateWeapons(weaponsNumber: number): IWeapon[] | undefined {
     const weapons: IWeapon[] = [];
     _.times(weaponsNumber, (_index): void => {
-      weapons.push({
+      const newWeapon = {
         category: WeaponCategoriesEnum.BOW,
         description: `Weapon description`,
         name: _.sample(WeaponNamesEnum) || WeaponNamesEnum.RUSTY_SWORD,
         spot: EquipmentSpotsEnum.PRIMARY_HAND,
         type: ObjectTypesEnum.EQUIPMENT,
-      });
+      };
+
+      _.concat(weapons, newWeapon);
     });
 
     return weapons;
