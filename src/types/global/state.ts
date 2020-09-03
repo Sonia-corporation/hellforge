@@ -1,10 +1,9 @@
-import { Document } from "mongoose";
 import { StateNamesEnum } from "../../enums/state-names.enum";
 
-export interface IState extends Document {
+export interface IState {
   memberId: string;
   state: {
-    data: string;
+    data?: string;
     name: StateNamesEnum;
     step: number;
   };
