@@ -1,12 +1,11 @@
-import { Document } from "mongoose";
 import { ICharacter } from "../character/character";
 import { ILocation } from "./location";
 
-export interface IForge extends Document {
+export interface IForge {
   angelMash: number;
   bossId: ICharacter["ownerId"];
   experience: number;
-  furnitures: string[];
+  furnitures?: string[];
   level: number;
   location: ILocation;
   name: string;
