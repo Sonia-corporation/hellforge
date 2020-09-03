@@ -13,7 +13,9 @@ export class StateManagerService {
     return StateManagerService._instance;
   }
 
-  public async getBotState(memberId: string): Promise<IState | void> {
+  public async getBotState(
+    memberId: IState["memberId"]
+  ): Promise<IState | void> {
     return States.findOne({ memberId }).then(
       (foundState: mongoose.Document | null): Promise<IState | void> => {
         if (this._isState(foundState)) {
@@ -30,7 +32,7 @@ export class StateManagerService {
   }
 
   public async setBotState(
-    memberId: string,
+    memberId: IState["memberId"],
     newState: IState
   ): Promise<Document | void> {
     const currentStateForMemberId = await this.getBotState(memberId);
