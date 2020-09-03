@@ -1,6 +1,6 @@
 {
   "name": "hellforge",
-  "version": "0.0.1",
+  "version": "0.4.0",
   "description": "A Discord bot game set in Hell",
   "main": "./src/features/hellforge/hellforge.ts",
   "scripts": {
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/Sonia-corporation/hellforge#readme",
   "dependencies": {
+    "canvas": "^2.6.1",
     "discord.js": "^12.3.1",
     "lodash": "^4.17.20",
     "mongoose": "^5.10.0"
