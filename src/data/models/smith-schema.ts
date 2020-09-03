@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { ISmith } from "../../types/character/smith";
+import { Smith } from "../../classes/smith/smith";
 
 const smithSchema = new mongoose.Schema(
   {
@@ -35,4 +35,4 @@ const smithSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model<ISmith>(`Smiths`, smithSchema, `smiths`);
+export default mongoose.model<Smith>(`Smiths`, smithSchema, `smiths`);

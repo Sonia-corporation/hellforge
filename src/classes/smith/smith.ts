@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { Document } from "mongoose";
 import { IBehaviour } from "../../types/character/behaviour";
 import { IEquipment } from "../../types/shop/equipment";
 import { IItem } from "../../types/shop/item";
@@ -17,7 +18,7 @@ import { SmithNamesEnum } from "../../enums/smith/name";
 import { WeaponNamesEnum } from "../../enums/weapons/names.enum";
 import Smiths from "../../data/models/smith-schema";
 
-export class Smith implements ISmith {
+export class Smith extends Document implements ISmith {
   public behaviour: IBehaviour;
   public description: string;
   public equipment?: IEquipment[];
@@ -29,6 +30,7 @@ export class Smith implements ISmith {
   public weapons?: IWeapon[];
 
   public constructor() {
+    super();
     this.behaviour = this._generateBehaviour();
     this.description = this._generateDescription();
     this.name = this._generateName();
