@@ -6,26 +6,19 @@ import { IItem } from "../../types/shop/item";
 import { IEffect } from "../../types/skill/effect";
 
 export class Character extends Document implements ICharacter {
-  public credits: ICharacter["credits"];
+  public credits: ICharacter["credits"] = 300;
   public effects?: ICharacter["effects"];
-  public experience: ICharacter["experience"];
+  public experience: ICharacter["experience"] = 0;
   public inventory?: ICharacter["inventory"];
-  public inventoryMax: ICharacter["inventoryMax"];
-  public inventorySpace: ICharacter["inventorySpace"];
-  public level: ICharacter["level"];
-  public name: ICharacter["name"];
-  public ownerId: ICharacter["ownerId"];
+  public inventoryMax: ICharacter["inventoryMax"] = 250;
+  public inventorySpace: ICharacter["inventorySpace"] = 0;
+  public level: ICharacter["level"] = 1;
+  public name: ICharacter["name"] = `Character Name`;
+  public ownerId: ICharacter["ownerId"] = `000000000000000000`;
   public stats: ICharacter["stats"];
 
   public constructor() {
     super();
-    this.credits = 300;
-    this.experience = 0;
-    this.inventoryMax = 250;
-    this.inventorySpace = 0;
-    this.level = 1;
-    this.name = `Character Name`;
-    this.ownerId = `000000000000000000`;
   }
 
   public getCredits(): ICharacter["credits"] {
@@ -72,16 +65,20 @@ export class Character extends Document implements ICharacter {
     this.credits = credits;
   }
 
-  public setEffect(effect: IEffect): void {
-    _.concat(this.effects, effect);
+  public addEffect(effect: IEffect): void {
+    if (this.effects) {
+      this.effects = _.concat(this.effects, effect);
+    }
   }
 
   public setExperience(experience: ICharacter["experience"]): void {
     this.experience = experience;
   }
 
-  public setInventoryItem(item: IItem): void {
-    _.concat(this.inventory, item);
+  public addInventoryItem(item: IItem): void {
+    if (this.inventory) {
+      this.inventory = _.concat(this.inventory, item);
+    }
   }
 
   public setInventoryMax(inventoryMax: ICharacter["inventoryMax"]): void {
@@ -104,8 +101,10 @@ export class Character extends Document implements ICharacter {
     this.ownerId = ownerId;
   }
 
-  public setStat(stat: IStat): void {
-    _.concat(this.stats, stat);
+  public addStat(stat: IStat): void {
+    if (this.stats) {
+      this.stats = _.concat(this.stats, stat);
+    }
   }
 
   public removeEffect(effect: IEffect): void {

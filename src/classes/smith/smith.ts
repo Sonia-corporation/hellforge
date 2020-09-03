@@ -99,7 +99,8 @@ export class Smith extends Document implements ISmith {
   }
 
   private _generateWeapons(weaponsNumber: number): IWeapon[] | undefined {
-    const weapons: IWeapon[] = [];
+    let weapons: IWeapon[] = [];
+
     _.times(weaponsNumber, (_index): void => {
       const newWeapon = {
         category: WeaponCategoriesEnum.BOW,
@@ -109,7 +110,7 @@ export class Smith extends Document implements ISmith {
         type: ObjectTypesEnum.EQUIPMENT,
       };
 
-      _.concat(weapons, newWeapon);
+      weapons = _.concat(weapons, newWeapon);
     });
 
     return weapons;
